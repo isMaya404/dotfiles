@@ -1,6 +1,6 @@
 #!/bin/bash
 
-URL="https://www.facebook.com/messages/"
+URL="https://www.github.com/isMaya404"
 
 # Open Messenger in an existing Firefox window or launch a new instance
 if pgrep -x "firefox" > /dev/null; then
