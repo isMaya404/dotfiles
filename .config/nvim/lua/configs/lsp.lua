@@ -1,4 +1,5 @@
 -- require('neoconf').setup {}
+local lspconfig = require 'lspconfig'
 require('fidget').setup {}
 
 vim.diagnostic.config {
@@ -102,7 +103,7 @@ local servers = {
                 }
                 for _, client in ipairs(clients) do
                     if client.settings then
-                        client.settings.python = vim.tbl_deep_extend('force', lient.settings.python, { pythonPath = path })
+                        client.settings.python = vim.tbl_deep_extend('force', client.settings.python, { pythonPath = path })
                     else
                         client.config.settings = vim.tbl_deep_extend('force', client.config.settings, { python = { pythonPath = path } })
                     end
@@ -211,10 +212,10 @@ local servers = {
     --     filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
     --     root_dir = function(fname)
     --         -- disable tsserver inside any folder that has deno.json
-    --         if util.root_pattern('deno.json', 'deno.jsonc')(fname) then
+    --         if lspconfig.util.root_pattern('deno.json', 'deno.jsonc')(fname) then
     --             return nil
     --         end
-    --         return util.root_pattern('tsconfig.json', 'package.json', '.git')(fname)
+    --         return lspconfig.util.root_pattern('tsconfig.json', 'package.json', '.git')(fname)
     --     end,
     --     single_file_support = true,
     --     init_options = {

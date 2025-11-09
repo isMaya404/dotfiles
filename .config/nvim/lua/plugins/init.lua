@@ -266,16 +266,16 @@ return {
     },
 
     -- linter
-    {
-        'nvimtools/none-ls.nvim',
-        dependencies = {
-            'nvimtools/none-ls-extras.nvim',
-        },
-        event = 'VeryLazy',
-        opts = function()
-            return require 'configs.none_ls'
-        end,
-    },
+    -- {
+    --     'nvimtools/none-ls.nvim',
+    --     dependencies = {
+    --         'nvimtools/none-ls-extras.nvim',
+    --     },
+    --     event = 'VeryLazy',
+    --     opts = function()
+    --         return require 'configs.none_ls'
+    --     end,
+    -- },
 
     -- formatter
     {
