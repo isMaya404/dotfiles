@@ -380,7 +380,7 @@ return {
         --     surr*ound_words             osiw)           (surround_words)
         --     *make strings               os$"            "make strings"
         --     [delete ar*ound me!]        ds[             delete around me!
-        --     remove <b>HTML t*ags</b>    dst             remove HTML tags
+        --     remove <h1>HTML t*ags</h1>    dst             remove HTML tags
         --     <h1>or tag* types</h1>        csth1<CR>       <h1>or tag types</h1>
         --     'change quot*es'            cs'"            "change quotes"
     },
@@ -459,7 +459,7 @@ return {
     -- enhances the native commentstring on react
     {
         'folke/ts-comments.nvim',
-        enabled = vim.fn.has 'nvim-0.10.0' == 1,
+        enabled =true,
         filetypes = { 'typescriptreact', 'javascriptreact' },
         opts = {
             lang = {
