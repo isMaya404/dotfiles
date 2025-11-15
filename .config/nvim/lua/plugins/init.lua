@@ -321,6 +321,9 @@ return {
         'zbirenbaum/copilot.lua',
         cmd = 'Copilot',
         event = 'InsertEnter',
+        requires = {
+            'copilotlsp-nvim/copilot-lsp', -- NES functionality
+        },
         config = function()
             require 'configs.copilot'
         end,
@@ -385,7 +388,6 @@ return {
         --     'change quot*es'            cs'"            "change quotes"
     },
 
-    -- idk, might never use this again
     -- {
     --     'akinsho/bufferline.nvim',
     --     event = 'VeryLazy',

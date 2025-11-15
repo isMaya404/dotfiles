@@ -74,7 +74,7 @@ if not vim.g.vscode then
     require 'custom.autocmds'
     require 'custom.opts'
     require 'custom.status'
-    require 'custom.tabs'
+    -- require 'custom.tabs'
     require 'custom.transpose'
     require 'custom.commands'
     vim.schedule(function()

@@ -1,5 +1,5 @@
 -- require('neoconf').setup {}
-local lspconfig = require 'lspconfig'
+-- local lspconfig = require 'lspconfig'
 require('fidget').setup {}
 
 vim.diagnostic.config {

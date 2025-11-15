@@ -17,7 +17,7 @@ map({ 'n', 'v' }, '<leader>bd', [["_d]], { desc = 'blackhole delete' })
 
 map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'substitute all matching word under cursor in buf' })
 map('n', '<leader>s', '<cmd>w<cr>', { desc = 'write' })
-map('n', '<leader>q', '<cmd>qa<CR>', { desc = 'quit all' })
+map('n', '<leader>Q', '<cmd>qa<CR>', { desc = 'quit all' })
 
 -- Toggle spell checker. More useful paired with 'z=' to check spelling suggestions
 map('n', '<leader>og', '<cmd>setlocal spell! spelllang=en_us<CR>', { desc = 'orthography' })
@@ -107,6 +107,7 @@ map({ 'n', 'x' }, '<C-w><C-k>', '<Nop>')
 map({ 'n', 'x' }, '<C-w>l', '<Nop>')
 map({ 'n', 'x' }, '<C-w><C-l>', '<Nop>')
 
+-- map new window navigations
 map({ 'n', 'x' }, '<C-j>', '<C-w>h')
 map({ 'n', 'x' }, '<C-k>', '<C-w>j')
 map({ 'n', 'x' }, '<C-l>', '<C-w>k')
@@ -125,7 +126,7 @@ map({ 'n', 'x' }, '<leader><Left>', ':silent! vertical resize -10<CR>')
 
 map({ 'n', 'x' }, '<C-w>r', '<C-l>', { desc = 'redraw screen' })
 
--- Script
+-- Scripts
 map({ 'n' }, '<M-m>', ':!tmux-windowizer $(git rev-parse --abbrev-ref HEAD) pnpm dev<CR><CR>')
 map({ 'n' }, '<M-1>', ':!tmux-windowizer nn ')
 map({ 'n' }, '<M-0>', ':!tmux-windowizer dev:fe pnpm dev:frontend<CR><CR>')
@@ -220,18 +221,14 @@ map('n', '<leader>ai', function()
 end, { desc = 'Toggle Copilot Auto Suggestion' })
 
 -- Bufferline
--- map('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', { desc = 'Next Buffer' })
--- map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>', { desc = 'Prev Buffer' })
+map('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', { desc = 'Next Buffer' })
+map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>', { desc = 'Prev Buffer' })
 
 -- Whichkey
 map('n', '<leader>wK', '<cmd>WhichKey <CR>', { desc = 'whichkey all keymaps' })
 map('n', '<leader>wk', function()
     vim.cmd('WhichKey ' .. vim.fn.input 'WhichKey: ')
 end, { desc = 'whichkey query lookup' })
-
--- Tailwind Tools
-map('n', '<leader>twt', ':TailwindConcealToggle<CR>', { desc = 'Toggle Tailwind Conceal' })
-map('n', '<leader>tws', ':TailwindSortSync<CR>', { desc = 'Tailwind Sort (Sync)' })
 
 -- Neotest
 

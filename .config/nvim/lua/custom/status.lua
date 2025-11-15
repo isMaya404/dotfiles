@@ -67,16 +67,18 @@ _G.diag = function()
 end
 
 _G.statusline = function()
-    local path = vim.fn.expand '%:f' -- :t
-    if path == '' then
-        path = '[No Name]'
+    -- local path = vim.fn.expand '%:f' -- :t
+    local path = vim.fn.expand '%:p'
+    local short = vim.fn.fnamemodify(path, ':p:~:h:t') .. '/' .. vim.fn.expand '%:t'
+    if short == '' then
+        short = '[No Name]'
     end
     local diag = _G.diag()
     local harpoon_list = _G.harpoon_statusline()
 
     return table.concat {
         '%#StatusLinePath# ',
-        path,
+        short,
         ' ',
         '%#StatusLine#',
         -- ' %m %r %h %q ',

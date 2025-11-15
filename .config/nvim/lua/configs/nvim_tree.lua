@@ -66,7 +66,7 @@ local opts = {
     },
     view = {
         side = 'left',
-        width = 30,
+        width = 35,
         preserve_window_proportions = true,
     },
     actions = {
@@ -75,7 +75,7 @@ local opts = {
         },
     },
     diagnostics = {
-        enable = true,
+        enable = false,
         show_on_dirs = true,
         show_on_open_dirs = false,
         icons = {
