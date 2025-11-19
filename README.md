@@ -1,5 +1,5 @@
 <h2 align="center">
-  Arch Linux
+  Arch
   <img src="arch-linux.svg" width="30" style="vertical-align:middle;"/>
   &nbsp; | &nbsp;
   Hyprland
