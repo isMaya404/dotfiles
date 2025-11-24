@@ -57,7 +57,7 @@ local opts = {
             '^node_modules$',
         },
     },
-    disable_netrw = true,
+    disable_netrw = false,
     hijack_cursor = true,
     sync_root_with_cwd = true,
     update_focused_file = {
@@ -65,8 +65,8 @@ local opts = {
         update_root = false,
     },
     view = {
-        side = 'middle',
-        width = 38,
+        side = 'left',
+        width = 42,
         preserve_window_proportions = true,
     },
     actions = {

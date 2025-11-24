@@ -98,7 +98,7 @@ vim.api.nvim_create_autocmd({ 'DiagnosticChanged' }, {
     end,
 })
 
-vim.api.nvim_set_hl(0, 'HarpoonActive', { fg = '#61afef', bold = true })
+vim.api.nvim_set_hl(0, 'HarpoonActive', { fg = '#0d3b66', bold = true })
 vim.api.nvim_set_hl(0, 'StatusLinePath', { bg = '#2E3440', fg = '#e0e0e0' })
 
 vim.o.statusline = '%!v:lua.statusline()'
