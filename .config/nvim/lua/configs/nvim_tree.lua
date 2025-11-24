@@ -65,8 +65,8 @@ local opts = {
         update_root = false,
     },
     view = {
-        side = 'left',
-        width = 35,
+        side = 'middle',
+        width = 38,
         preserve_window_proportions = true,
     },
     actions = {

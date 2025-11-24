@@ -27,11 +27,11 @@ vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#303030' })
 vim.api.nvim_set_hl(0, 'MiniIndentscopeSymbol', { fg = '#2E3440' })
 vim.api.nvim_set_hl(0, 'ModeMsg', { fg = '#d19a66' })
 
--- vim.api.nvim_set_hl(0, '@number', { fg = '#B48EAD' })
--- if vim.g.colors_name == 'nord' then
---     vim.api.nvim_set_hl(0, 'String', { fg = '#D0D0D0' })
---     vim.api.nvim_set_hl(0, '@string', { fg = '#E5E9F0' }) -- treesitter
--- elseif vim.g.colors_name == 'plain' then
---     vim.api.nvim_set_hl(0, '@string', { fg = '#E5E9F0' }) -- treesitter
---     vim.api.nvim_set_hl(0, '@boolean', { fg = '#E5E9F0' }) -- treesitter
--- end
+if vim.g.colors_name == 'nord' then
+    vim.api.nvim_set_hl(0, '@number', { fg = '#B48EAD' })
+    vim.api.nvim_set_hl(0, 'String', { fg = '#D0D0D0' })
+    vim.api.nvim_set_hl(0, '@string', { fg = '#E5E9F0' }) -- treesitter
+elseif vim.g.colors_name == 'plain' then
+    vim.api.nvim_set_hl(0, '@string', { fg = '#E5E9F0' }) -- treesitter
+    vim.api.nvim_set_hl(0, '@boolean', { fg = '#E5E9F0' }) -- treesitter
+end

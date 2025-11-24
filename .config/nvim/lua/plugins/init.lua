@@ -2,71 +2,26 @@ return {
     { 'nvim-lua/plenary.nvim', event = 'VeryLazy' },
 
     -- colorscheme
+
     {
-        'svrana/neosolarized.nvim',
+        'gbprod/nord.nvim',
         lazy = false,
         priority = 1000,
         config = function()
-            require('neosolarized').setup {
-                comment_italics = true,
-                background_set = false,
+            require('nord').setup {
+                transparent = false,
             }
-            vim.cmd.colorscheme 'neosolarized'
+            vim.cmd.colorscheme 'nord'
         end,
-        dependencies = {
-            'tjdevries/colorbuddy.nvim',
-        },
+    },
+    install = {
+        colorscheme = { 'nord' },
     },
 
     -- {
-    --     'gbprod/nord.nvim',
-    --     lazy = false,
-    --     priority = 1000,
-    --     config = function()
-    --         require('nord').setup {
-    --             transparent = false,
-    --         }
-    --         vim.cmd.colorscheme 'nord'
-    --     end,
-    -- },
-    -- install = {
-    --     colorscheme = { 'nord' },
-    -- },
-    -- {
     --     'rose-pine/neovim',
     --     lazy = false,
     --     priority = 1000,
-    --     name = 'rose-pine',
-    --     config = function()
-    --         vim.cmd 'colorscheme rose-pine'
-    --     end,
-    -- },
-    -- {
-    --     'craftzdog/solarized-osaka.nvim',
-    --     lazy = false,
-    --     priority = 1000,
-    --     opts = {},
-    --     config = function()
-    --         vim.cmd 'colorscheme solarized-osaka'
-    --     end,
-    -- },
-
-    -- {
-    --     'projekt0n/github-nvim-theme',
-    --     name = 'github-theme',
-    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    --     priority = 1000, -- make sure to load this before all the other start plugins
-    --     config = function()
-    --         require('github-theme').setup {
-    --             -- ...
-    --         }
-    --
-    --         vim.cmd 'colorscheme github_dark_dimmed'
-    --     end,
-    -- },
-
-    -- {
-    --     'rose-pine/neovim',
     --     name = 'rose-pine',
     --     config = function()
     --         vim.cmd 'colorscheme rose-pine'
@@ -84,49 +39,49 @@ return {
     -- },
 
     -- session manaager
-    -- {
-    --     'rmagatti/auto-session',
-    --     event = 'VimEnter',
-    --     config = function()
-    --         require 'configs.auto_session'
-    --     end,
-    -- },
-
-    -- session manager (saves even tabs)
     {
-        'stevearc/resession.nvim',
-        lazy = false,
-        dependencies = {
-            {
-                'tiagovla/scope.nvim',
-                lazy = false,
-                config = true,
-            },
-        },
-        opts = {
-            buf_filter = function(bufnr)
-                local buftype = vim.bo[bufnr].buftype
-                if buftype == 'help' then
-                    return true
-                end
-                if buftype ~= '' and buftype ~= 'acwrite' then
-                    return false
-                end
-                if vim.api.nvim_buf_get_name(bufnr) == '' then
-                    return false
-                end
-
-                return true
-            end,
-            extensions = { scope = {} },
-            dir = 'sessions', -- The name of the directory to store sessions in
-            load_detail = false,
-        },
-        config = function(_, opts)
-            require('resession').setup(opts)
-            require 'configs.resession'
+        'rmagatti/auto-session',
+        event = 'VimEnter',
+        config = function()
+            require 'configs.auto_session'
         end,
     },
+
+    -- session manager (saves even tabs, but slow af)
+    -- {
+    --     'stevearc/resession.nvim',
+    --     lazy = false,
+    --     dependencies = {
+    --         {
+    --             'tiagovla/scope.nvim',
+    --             lazy = false,
+    --             config = true,
+    --         },
+    --     },
+    --     opts = {
+    --         buf_filter = function(bufnr)
+    --             local buftype = vim.bo[bufnr].buftype
+    --             if buftype == 'help' then
+    --                 return true
+    --             end
+    --             if buftype ~= '' and buftype ~= 'acwrite' then
+    --                 return false
+    --             end
+    --             if vim.api.nvim_buf_get_name(bufnr) == '' then
+    --                 return false
+    --             end
+    --
+    --             return true
+    --         end,
+    --         extensions = { scope = {} },
+    --         dir = 'sessions', -- The name of the directory to store sessions in
+    --         load_detail = false,
+    --     },
+    --     config = function(_, opts)
+    --         require('resession').setup(opts)
+    --         require 'configs.resession'
+    --     end,
+    -- },
 
     -- editorconfig support
     -- {
@@ -141,7 +96,7 @@ return {
         event = 'VeryLazy',
     },
 
-    -- auto inserts and deletes matching pairs of paren, brackets, quotes, etc.
+    -- auto pair paren, brackets, quotes, etc.
     {
         'windwp/nvim-autopairs',
         event = 'VeryLazy',
@@ -186,7 +141,7 @@ return {
     -- file tree
     {
         'nvim-tree/nvim-tree.lua',
-        dependencies = { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+        -- dependencies = { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
         cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
         config = function()
             require 'configs.nvim_tree'
