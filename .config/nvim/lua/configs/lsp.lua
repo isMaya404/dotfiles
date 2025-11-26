@@ -1,9 +1,9 @@
 -- require('neoconf').setup {}
-local lspconfig = require 'lspconfig'
+-- local lspconfig = require 'lspconfig'
 require('fidget').setup {}
 
 vim.diagnostic.config {
-    virtual_text = false,
+    virtual_text = true,
     float = { border = 'rounded', source = 'if_many' },
     severity_sort = true,
     underline = false,

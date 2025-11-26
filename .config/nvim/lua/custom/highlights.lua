@@ -47,3 +47,5 @@ elseif vim.g.colors_name == 'plain' or 'off' then
     -- vim.api.nvim_set_hl(0, 'Number', { fg = '#8B0000' })
     -- vim.api.nvim_set_hl(0, '@boolean', { fg = '#E5E9F0' })
 end
+
+vim.cmd [[highlight PmenuSel guibg=#4a4a4a ]]
