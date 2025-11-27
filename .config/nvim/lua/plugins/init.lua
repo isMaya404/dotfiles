@@ -47,6 +47,10 @@ return {
             require 'configs.auto_session'
         end,
     },
+    {
+        'esmuellert/vscode-diff.nvim',
+        dependencies = { 'MunifTanjim/nui.nvim' },
+    },
 
     -- session manager (saves even tabs, but slow af)
     -- {
@@ -111,25 +115,14 @@ return {
         end,
     },
 
-    -- git integration
+    -- git integrations
 
     {
         'tpope/vim-fugitive',
         event = 'VeryLazy',
     },
 
-    -- {
-    --     'NeogitOrg/neogit',
-    --     -- event = 'VeryLazy',
-    --     dependencies = {
-    --         'nvim-lua/plenary.nvim',
-    --         'sindrets/diffview.nvim',
-    --         'nvim-telescope/telescope.nvim',
-    --     },
-    --     config = function()
-    --         require 'configs.neogit'
-    --     end,
-    -- },
+    { 'sindrets/diffview.nvim' },
 
     {
         'lewis6991/gitsigns.nvim',

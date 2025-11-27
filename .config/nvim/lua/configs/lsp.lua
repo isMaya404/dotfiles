@@ -421,116 +421,116 @@ local servers = {
         end,
     },
 
-    -- denols = {
-    --     cmd = { 'deno', 'lsp' },
-    --     cmd_env = { NO_COLOR = true },
-    --     filetypes = {
-    --         'javascript',
-    --         'javascriptreact',
-    --         'javascript.jsx',
-    --         'typescript',
-    --         'typescriptreact',
-    --         'typescript.tsx',
-    --     },
-    --     root_dir = function(bufnr, on_dir)
-    --         local deno_markers = { 'deno.json', 'deno.jsonc', 'deno.lock' }
-    --         local node_markers = { 'package.json', 'vite.config.ts', 'package-lock.json' }
-    --
-    --         local has_node = vim.fs.root(bufnr, node_markers)
-    --         local has_deno = vim.fs.root(bufnr, deno_markers)
-    --
-    --         -- Only skip Deno if package.json exists AND no deno.json/deno.jsonc
-    --         if has_node and not has_deno then
-    --             return
-    --         end
-    --
-    --         local project_root = vim.fs.root(bufnr, deno_markers)
-    --         on_dir(project_root)
-    --     end,
-    --     settings = {
-    --         deno = {
-    --             enable = true,
-    --             lint = true,
-    --             unstable = true,
-    --             suggest = {
-    --                 imports = {
-    --                     hosts = {
-    --                         ['https://deno.land'] = true,
-    --                         -- ['https://jsr.io'] = true,
-    --                         -- ['https://esm.sh'] = true,
-    --                     },
-    --                 },
-    --             },
-    --         },
-    --     },
-    --     handlers = (function()
-    --         local lsp = vim.lsp
-    --
-    --         -- handle virtual text documents from Deno (for definitions, etc.)
-    --         local function virtual_text_document_handler(uri, res, client)
-    --             if not res then
-    --                 return
-    --             end
-    --             local lines = vim.split(res.result, '\n')
-    --             local bufnr = vim.uri_to_bufnr(uri)
-    --             if vim.api.nvim_buf_line_count(bufnr) ~= 1 or vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)[1] ~= '' then
-    --                 return
-    --             end
-    --             vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
-    --             vim.api.nvim_set_option_value('readonly', true, { buf = bufnr })
-    --             vim.api.nvim_set_option_value('modifiable', false, { buf = bufnr })
-    --             lsp.buf_attach_client(bufnr, client.id)
-    --         end
-    --
-    --         local function virtual_text_document(uri, client)
-    --             local params = { textDocument = { uri = uri } }
-    --             local result = client:request_sync('deno/virtualTextDocument', params)
-    --             virtual_text_document_handler(uri, result, client)
-    --         end
-    --
-    --         local function denols_handler(err, result, ctx, config)
-    --             if not result or vim.tbl_isempty(result) then
-    --                 return
-    --             end
-    --             local client = vim.lsp.get_client_by_id(ctx.client_id)
-    --             for _, res in pairs(result) do
-    --                 local uri = res.uri or res.targetUri
-    --                 if uri:match '^deno:' then
-    --                     virtual_text_document(uri, client)
-    --                     res.uri, res.targetUri = uri, uri
-    --                 end
-    --             end
-    --             lsp.handlers[ctx.method](err, result, ctx, config)
-    --         end
-    --
-    --         return {
-    --             ['textDocument/definition'] = denols_handler,
-    --             ['textDocument/typeDefinition'] = denols_handler,
-    --             ['textDocument/references'] = denols_handler,
-    --         }
-    --     end)(),
-    --
-    --     on_attach = function(client, bufnr)
-    --         -- disable semantic tokens like the rest of your setup
-    --         if client.supports_method 'textDocument/semanticTokens' then
-    --             client.server_capabilities.semanticTokensProvider = nil
-    --         end
-    --
-    --         vim.api.nvim_buf_create_user_command(bufnr, 'LspDenolsCache', function()
-    --             client:exec_cmd({
-    --                 command = 'deno.cache',
-    --                 arguments = { {}, vim.uri_from_bufnr(bufnr) },
-    --             }, { bufnr = bufnr }, function(err, _, ctx)
-    --                 if err then
-    --                     local uri = ctx.params.arguments[2]
-    --                     vim.notify('cache command failed for ' .. vim.uri_to_fname(uri), vim.log.levels.ERROR)
-    --                 end
-    --             end)
-    --         end, {
-    --             desc = 'Cache a Deno module and its dependencies',
-    --         })
-    --     end,
-    -- },
+    denols = {
+        cmd = { 'deno', 'lsp' },
+        cmd_env = { NO_COLOR = true },
+        filetypes = {
+            'javascript',
+            'javascriptreact',
+            'javascript.jsx',
+            'typescript',
+            'typescriptreact',
+            'typescript.tsx',
+        },
+        root_dir = function(bufnr, on_dir)
+            local deno_markers = { 'deno.json', 'deno.jsonc', 'deno.lock' }
+            local node_markers = { 'package.json', 'vite.config.ts', 'package-lock.json' }
+
+            local has_node = vim.fs.root(bufnr, node_markers)
+            local has_deno = vim.fs.root(bufnr, deno_markers)
+
+            -- Only skip Deno if package.json exists AND no deno.json/deno.jsonc
+            if has_node and not has_deno then
+                return
+            end
+
+            local project_root = vim.fs.root(bufnr, deno_markers)
+            on_dir(project_root)
+        end,
+        settings = {
+            deno = {
+                enable = true,
+                lint = true,
+                unstable = true,
+                suggest = {
+                    imports = {
+                        hosts = {
+                            ['https://deno.land'] = true,
+                            -- ['https://jsr.io'] = true,
+                            -- ['https://esm.sh'] = true,
+                        },
+                    },
+                },
+            },
+        },
+        handlers = (function()
+            local lsp = vim.lsp
+
+            -- handle virtual text documents from Deno (for definitions, etc.)
+            local function virtual_text_document_handler(uri, res, client)
+                if not res then
+                    return
+                end
+                local lines = vim.split(res.result, '\n')
+                local bufnr = vim.uri_to_bufnr(uri)
+                if vim.api.nvim_buf_line_count(bufnr) ~= 1 or vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)[1] ~= '' then
+                    return
+                end
+                vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+                vim.api.nvim_set_option_value('readonly', true, { buf = bufnr })
+                vim.api.nvim_set_option_value('modifiable', false, { buf = bufnr })
+                lsp.buf_attach_client(bufnr, client.id)
+            end
+
+            local function virtual_text_document(uri, client)
+                local params = { textDocument = { uri = uri } }
+                local result = client:request_sync('deno/virtualTextDocument', params)
+                virtual_text_document_handler(uri, result, client)
+            end
+
+            local function denols_handler(err, result, ctx, config)
+                if not result or vim.tbl_isempty(result) then
+                    return
+                end
+                local client = vim.lsp.get_client_by_id(ctx.client_id)
+                for _, res in pairs(result) do
+                    local uri = res.uri or res.targetUri
+                    if uri:match '^deno:' then
+                        virtual_text_document(uri, client)
+                        res.uri, res.targetUri = uri, uri
+                    end
+                end
+                lsp.handlers[ctx.method](err, result, ctx, config)
+            end
+
+            return {
+                ['textDocument/definition'] = denols_handler,
+                ['textDocument/typeDefinition'] = denols_handler,
+                ['textDocument/references'] = denols_handler,
+            }
+        end)(),
+
+        on_attach = function(client, bufnr)
+            -- disable semantic tokens like the rest of your setup
+            if client.supports_method 'textDocument/semanticTokens' then
+                client.server_capabilities.semanticTokensProvider = nil
+            end
+
+            vim.api.nvim_buf_create_user_command(bufnr, 'LspDenolsCache', function()
+                client:exec_cmd({
+                    command = 'deno.cache',
+                    arguments = { {}, vim.uri_from_bufnr(bufnr) },
+                }, { bufnr = bufnr }, function(err, _, ctx)
+                    if err then
+                        local uri = ctx.params.arguments[2]
+                        vim.notify('cache command failed for ' .. vim.uri_to_fname(uri), vim.log.levels.ERROR)
+                    end
+                end)
+            end, {
+                desc = 'Cache a Deno module and its dependencies',
+            })
+        end,
+    },
 }
 
 require('mason-tool-installer').setup {
