@@ -41,7 +41,7 @@ _G.harpoon_statusline = function()
     return (#items == _G.max_harpoon_list and 'M | ' or '') .. table.concat(parts, ' | ')
 end
 
-_G.diag = function()
+_G.diagnostics = function()
     local diags = vim.diagnostic.get(0)
     local counts = { 0, 0, 0, 0 } -- ERROR, WARN, INFO, HINT
 
@@ -66,6 +66,24 @@ _G.diag = function()
     return table.concat(parts, ' ')
 end
 
+local function git_branch()
+    local head = vim.b.gitsigns_head
+    if head and #head > 0 then
+        return '' .. head
+    end
+
+    -- fallback if repo but no gitsigns
+    local ok, branch = pcall(vim.fn.system, 'git branch --show-current 2>/dev/null')
+    if ok then
+        branch = branch:gsub('%s+', '')
+        if #branch > 0 then
+            return ' ' .. branch
+        end
+    end
+
+    return ''
+end
+
 _G.statusline = function()
     -- local path = vim.fn.expand '%:f' -- :t
     local path = vim.fn.expand '%:p'
@@ -73,7 +91,7 @@ _G.statusline = function()
     if short == '' then
         short = '[No Name]'
     end
-    local diag = _G.diag()
+    local diag = _G.diagnostics()
     local harpoon_list = _G.harpoon_statusline()
 
     return table.concat {
@@ -88,6 +106,7 @@ _G.statusline = function()
         -- '%=',
         harpoon_list,
         '%=',
+        git_branch(),
         ' %r %h %q',
     }
 end

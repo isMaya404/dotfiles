@@ -47,19 +47,7 @@ return {
             require 'configs.auto_session'
         end,
     },
-    {
-        'esmuellert/vscode-diff.nvim',
-        dependencies = { 'MunifTanjim/nui.nvim' },
-    },
 
-    -- editorconfig support
-    -- {
-    --     'editorconfig/editorconfig-vim',
-    -- event = 'VeryLazy',
-    -- },
-
-    -- automatic, context-aware indentation detection.
-    -- also respects .editorconfig
     {
         'tpope/vim-sleuth',
         event = 'VeryLazy',
@@ -87,6 +75,11 @@ return {
     },
 
     { 'sindrets/diffview.nvim' },
+
+    {
+        'esmuellert/vscode-diff.nvim',
+        dependencies = { 'MunifTanjim/nui.nvim' },
+    },
 
     {
         'lewis6991/gitsigns.nvim',
