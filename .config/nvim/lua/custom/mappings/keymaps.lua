@@ -20,7 +20,7 @@ map('n', '<leader>s', '<cmd>w<cr>', { desc = 'write' })
 map('n', '<leader>Q', '<cmd>qa<CR>', { desc = 'quit all' })
 
 -- Toggle spell checker. More useful paired with 'z=' to check spelling suggestions
-map('n', '<leader>og', '<cmd>setlocal spell! spelllang=en_us<CR>', { desc = 'orthography' })
+map('n', '<leader>dn', '<cmd>setlocal spell! spelllang=en_us<CR>', { desc = 'dictionary' })
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -200,7 +200,7 @@ map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]
 -- insert mode
 -- vim.api.nvim_set_keymap('i', '<M-t>', '<Esc>:lua _G.transpose.words()<CR>a', { noremap = true, silent = true })
 --------------------------------------- Plugin Mappings ---------------------------------------
-vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+map('n', '<leader>o', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 
 -- Nvim-Tree
 map('n', '<leader>n', '<Cmd>NvimTreeToggle<CR>', { desc = 'NvimTree toggle window' })

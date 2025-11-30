@@ -104,7 +104,7 @@ vim.api.nvim_create_autocmd('BufAdd', {
             return
         end
 
-        local max_buf = 15
+        local max_buf = 25
         local buffers = {}
         for _, b in ipairs(vim.api.nvim_list_bufs()) do
             if vim.bo[b].buflisted and vim.bo[b].buftype == '' then
