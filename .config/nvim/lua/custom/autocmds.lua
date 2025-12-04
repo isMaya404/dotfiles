@@ -127,18 +127,6 @@ vim.api.nvim_create_autocmd('BufAdd', {
     end,
 })
 
--- Code actions on save
--- vim.api.nvim_create_autocmd('BufWritePre', {
---     group = augroup 'eslint-fix-all',
---     pattern = { 'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
---     callback = function()
---         vim.lsp.buf.code_action {
---             context = { only = { 'source.fixAll.eslint' } },
---             apply = true,
---         }
---     end,
--- })
-
 ------------------- Comments -------------------
 
 -- treat certain files that does not use strict JSON as jsonc to allow commenting
