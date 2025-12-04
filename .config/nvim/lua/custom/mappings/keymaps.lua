@@ -212,18 +212,18 @@ map('n', '<leader>n', '<Cmd>NvimTreeToggle<CR>', { desc = 'NvimTree toggle windo
 map('n', '<leader>e', '<cmd>NvimTreeFocus<cr>', { desc = 'NvimTree focus window' })
 
 --  Copilot
-local auto_trigger_enabled = true
-map('n', '<leader>ai', function()
-    auto_trigger_enabled = not auto_trigger_enabled
-
-    if auto_trigger_enabled then
-        print 'Copilot auto-suggestion: On'
-    else
-        print 'Copilot auto-suggestion: Off'
-    end
-
-    require('copilot.suggestion').toggle_auto_trigger()
-end, { desc = 'Toggle Copilot Auto Suggestion' })
+-- local auto_trigger_enabled = true
+-- map('n', '<leader>ai', function()
+--     auto_trigger_enabled = not auto_trigger_enabled
+--
+--     if auto_trigger_enabled then
+--         print 'Copilot auto-suggestion: On'
+--     else
+--         print 'Copilot auto-suggestion: Off'
+--     end
+--
+--     require('copilot.suggestion').toggle_auto_trigger()
+-- end, { desc = 'Toggle Copilot Auto Suggestion' })
 
 -- Bufferline
 -- map('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', { desc = 'Next Buffer' })

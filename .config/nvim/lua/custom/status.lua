@@ -38,7 +38,7 @@ _G.harpoon_statusline = function()
         end
     end
 
-    return (#items == _G.max_harpoon_list and 'M - ' or '') .. table.concat(parts, ' - ')
+    return table.concat(parts, ' | ')
 end
 
 _G.diagnostics = function()

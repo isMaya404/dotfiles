@@ -294,6 +294,8 @@ alias ghc='gh copilot'
 alias ghcs='gh copilot suggest' 
 alias ghce='gh copilot explain'
 
+alias avante='nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 

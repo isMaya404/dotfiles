@@ -226,62 +226,6 @@ return {
         end,
     },
 
-    -- cursor ai emulation
-    {
-        'yetone/avante.nvim',
-        event = 'VeryLazy',
-        version = false, -- should always be false according to docs
-        build = 'make',
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter',
-            'MunifTanjim/nui.nvim',
-            'zbirenbaum/copilot.lua', -- for providers='copilot'
-            {
-                -- support for image pasting
-                'HakonHarnes/img-clip.nvim',
-                event = 'VeryLazy',
-                opts = {
-                    default = {
-                        embed_image_as_base64 = false,
-                        prompt_for_file_name = false,
-                        drag_and_drop = {
-                            insert_mode = true,
-                        },
-                        use_absolute_path = true,
-                    },
-                },
-            },
-        },
-        config = function()
-            return require 'configs.avante'
-        end,
-    },
-
-    -- {
-    --     'zbirenbaum/copilot.lua',
-    --     cmd = 'Copilot',
-    --     event = 'InsertEnter',
-    --     requires = {
-    --         'copilotlsp-nvim/copilot-lsp', -- NES functionality
-    --     },
-    --     config = function()
-    --         require 'configs.copilot'
-    --     end,
-    -- },
-
-    -- peak free code completion ai
-    -- {
-    --   "Exafunction/windsurf.nvim",
-    --   -- lazy = true,
-    --   event = "InsertEnter",
-    --   dependencies = {
-    --     "hrsh7th/nvim-cmp",
-    --   },
-    --   config = function()
-    --     require "configs.windsurf"
-    --   end,
-    -- },
-
     -- snippet engine
     {
         'L3MON4D3/LuaSnip',
@@ -328,15 +272,6 @@ return {
         --     'change quot*es'            cs'"            "change quotes"
     },
 
-    -- {
-    --     'akinsho/bufferline.nvim',
-    --     event = 'VeryLazy',
-    --     version = '*',
-    --     config = function()
-    --         require 'configs.bufferline'
-    --     end,
-    -- },
-
     -- tui for sql queries. Idk, maybe I'll try this someday
     -- {
     --   'kristijanhusak/vim-dadbod-ui',
@@ -377,26 +312,14 @@ return {
         cmd = 'Trouble',
     },
 
-    -- undotree ui
-    -- {
-    --     'mbbill/undotree',
-    --     cmd = 'UndotreeToggle',
-    --     keys = { { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'Undo Tree' } },
-    -- },
-
     -- faster typescript lsp
-    -- {
-    --     'pmizio/typescript-tools.nvim',
-    --     filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-    --     config = function()
-    --         require 'configs.ts_tools'
-    --     end,
-    -- },
-
-    -- {
-    --     'folke/neoconf.nvim',
-    --     cmd = 'Neoconf',
-    -- },
+    {
+        'pmizio/typescript-tools.nvim',
+        filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+        config = function()
+            require 'configs.ts_tools'
+        end,
+    },
 
     -- enhances the native commentstring on react
     {
@@ -429,39 +352,21 @@ return {
         },
     },
 
-    -- indentation guides
-    -- {
-    --   'lukas-reineke/indent-blankline.nvim',
-    --   main = 'ibl',
-    --   event = { 'BufReadPost', 'BufNewFile' },
-    --   opts = {
-    --     -- indent = {
-    --     --   char = '│',
-    --     --   tab_char = '│',
-    --     -- },
-    --     scope = {
-    --       enabled = false, -- don't use ibl scope since mini.indentscope handles it
-    --     },
-    --     exclude = {
-    --       filetypes = {
-    --         'help',
-    --         'alpha',
-    --         'dashboard',
-    --         'neo-tree',
-    --         'Trouble',
-    --         'lazy',
-    --         'mason',
-    --         'notify',
-    --         'toggleterm',
-    --         'snacks_dashboard',
-    --         'snacks_notif',
-    --         'snacks_terminal',
-    --         'snacks_win',
-    --       },
-    --     },
-    --   },
-    -- },
-    --
+    -- provide bg color around color vals
+    {
+        'brenoprata10/nvim-highlight-colors',
+        event = 'VeryLazy',
+        config = function()
+            require 'configs.highlight_colors'
+        end,
+    },
+
+    -- better bufdelete
+    {
+        'echasnovski/mini.bufremove',
+        event = 'VeryLazy',
+        version = '*',
+    },
 
     -- active scope indentation guide
     {
@@ -508,31 +413,6 @@ return {
         end,
     },
 
-    -- provide bg color around color vals
-    {
-        'brenoprata10/nvim-highlight-colors',
-        event = 'VeryLazy',
-        config = function()
-            require 'configs.highlight_colors'
-        end,
-    },
-
-    -- better bufdelete
-    {
-        'echasnovski/mini.bufremove',
-        event = 'VeryLazy',
-        version = '*',
-    },
-
-    -- isolated buffers per tab
-    {
-        'tiagovla/scope.nvim',
-        event = 'VeryLazy',
-        config = function()
-            require('scope').setup {}
-        end,
-    },
-
     -- testing
     -- {
     --     'nvim-neotest/neotest',
@@ -550,6 +430,56 @@ return {
     --                 require 'neotest-jest',
     --             },
     --         }
+    --     end,
+    -- },
+
+    -- ai integration
+    {
+        'yetone/avante.nvim',
+        event = 'VeryLazy',
+        version = false, -- should always be false
+        build = 'make',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter',
+            'MunifTanjim/nui.nvim',
+            'zbirenbaum/copilot.lua', -- for providers='copilot'
+            {
+                -- support for image pasting
+                'HakonHarnes/img-clip.nvim',
+                event = 'VeryLazy',
+                opts = {
+                    default = {
+                        embed_image_as_base64 = false,
+                        prompt_for_file_name = false,
+                        drag_and_drop = {
+                            insert_mode = true,
+                        },
+                        use_absolute_path = true,
+                    },
+                },
+            },
+            {
+                'MeanderingProgrammer/render-markdown.nvim',
+                opts = {
+                    file_types = { 'markdown', 'Avante' },
+                },
+                ft = { 'markdown', 'Avante' },
+            },
+        },
+        config = function()
+            return require 'configs.avante'
+        end,
+    },
+
+    -- {
+    --     'zbirenbaum/copilot.lua',
+    --     cmd = 'Copilot',
+    --     event = 'InsertEnter',
+    --     requires = {
+    --         'copilotlsp-nvim/copilot-lsp', -- NES functionality
+    --     },
+    --     config = function()
+    --         require 'configs.copilot'
     --     end,
     -- },
 }

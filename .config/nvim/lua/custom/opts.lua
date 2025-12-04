@@ -17,13 +17,13 @@ o.autowrite = true -- automatically write buffers when running certain commands 
 o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals'
 o.completeopt = 'menu,menuone,noinsert'
 o.winblend = 0
-o.guicursor = 'n-v-c-i-r-ci:block-blinkon3-blinkoff3-blinkwait1'
+-- o.guicursor = 'n-v-c-i-r-ci:block-blinkon3-blinkoff3-blinkwait1'
 -- o.guicursor =
 --     'n-v-c:block-blinkon3-blinkoff3-blinkwait1,i:ver20-blinkon3-blinkoff3-blinkwait1,r:block-blinkon3-blinkoff3-blinkwait1,ci:block-blinkon3-blinkoff3-blinkwait1'
--- o.guicursor = {
---     'n-v-c:block-blinkon3-blinkoff3-blinkwait1',
---     'i-ci-r-cr-t:block-blinkon3-blinkoff3-blinkwait1-Cursor/lCursor',
--- }
+o.guicursor = {
+    'n-v-c:block-blinkon3-blinkoff3-blinkwait1',
+    'i-ci-r-cr-t:block-blinkon3-blinkoff3-blinkwait1-Cursor/lCursor',
+}
 
 o.foldenable = true
 o.foldmethod = 'expr'

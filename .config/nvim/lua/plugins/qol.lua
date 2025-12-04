@@ -49,8 +49,7 @@ return {
         end,
     },
 
-    -- makes file ops such as renaming, moving, creating, and deleting
-    -- files/dirs in file-trees of your choice lsp-aware .It notifies
+    -- makes file ops lsp-aware. It notifies
     -- the lsp so imports and references update automatically.
     {
         'antosha417/nvim-lsp-file-operations',

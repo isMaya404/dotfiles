@@ -1,5 +1,5 @@
+local map = vim.keymap.set
 local harpoon = require 'harpoon'
-_G.max_harpoon_list = 8
 
 harpoon:setup {
     settings = {
@@ -10,44 +10,41 @@ harpoon:setup {
     },
 }
 
--- rev harpoon list
-vim.keymap.set('n', '<leader>r', function()
+-- reverse harpoon list
+map('n', '<leader>r', function()
     local list = require('harpoon'):list()
     local items = list.items
     for i = 1, math.floor(#items / 2) do
         items[i], items[#items - i + 1] = items[#items - i + 1], items[i]
     end
-    vim.cmd.redrawstatus()
+    vim.cmd.redrawstatus() -- refresh list on status to reflect changes
 end, { desc = 'Harpoon [R]everse List' })
 
-vim.keymap.set('n', '<leader>.', function()
-    local list = harpoon:list()
-    if #list.items < _G.max_harpoon_list then
-        list:add()
-        vim.cmd.redrawstatus()
-    end
-end, { desc = 'Harpoon add (max 8)' })
+map('n', '<leader>.', function()
+    require('harpoon'):list():add()
+    vim.cmd.redrawstatus() -- refresh list on status to reflect changes
+end)
 
-vim.keymap.set('n', '<leader>h', function()
+map('n', '<leader>h', function()
     harpoon.ui:toggle_quick_menu(harpoon:list())
 end)
 
-vim.keymap.set('n', '<leader>j', function()
+map('n', '<leader>j', function()
     harpoon:list():select(1)
 end, { desc = 'Harpoon: Jump to file 1' })
 
-vim.keymap.set('n', '<leader>k', function()
+map('n', '<leader>k', function()
     harpoon:list():select(2)
 end, { desc = 'Harpoon: Jump to file 2' })
 
-vim.keymap.set('n', '<leader>l', function()
+map('n', '<leader>l', function()
     harpoon:list():select(3)
 end, { desc = 'Harpoon: Jump to file 3' })
 
-vim.keymap.set('n', '<leader>p', function()
+map('n', '<leader>p', function()
     harpoon:list():select(4)
 end, { desc = 'Harpoon: Jump to file 4' })
 
-vim.keymap.set('n', '<leader>o', function()
+map('n', '<leader>o', function()
     harpoon:list():select(5)
 end, { desc = 'Harpoon: Jump to file 5' })
