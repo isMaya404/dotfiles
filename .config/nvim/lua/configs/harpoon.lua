@@ -47,3 +47,7 @@ end, { desc = 'Harpoon: Jump to file 3' })
 vim.keymap.set('n', '<leader>p', function()
     harpoon:list():select(4)
 end, { desc = 'Harpoon: Jump to file 4' })
+
+vim.keymap.set('n', '<leader>o', function()
+    harpoon:list():select(5)
+end, { desc = 'Harpoon: Jump to file 5' })

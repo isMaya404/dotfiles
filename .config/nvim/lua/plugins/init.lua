@@ -378,11 +378,11 @@ return {
     },
 
     -- undotree ui
-    {
-        'mbbill/undotree',
-        cmd = 'UndotreeToggle',
-        keys = { { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'Undo Tree' } },
-    },
+    -- {
+    --     'mbbill/undotree',
+    --     cmd = 'UndotreeToggle',
+    --     keys = { { '<leader>u', '<cmd>UndotreeToggle<CR>', desc = 'Undo Tree' } },
+    -- },
 
     -- faster typescript lsp
     -- {

@@ -13,7 +13,7 @@ _G.harpoon_statusline = function()
     local items = harpoon:list().items
     local fnmod = vim.fn.fnamemodify
     local expand = vim.fn.expand
-    local max = #items >= 4 and 4 or #items
+    local max = #items >= 5 and 5 or #items
 
     local parts = {}
     local paths, basenames, counts = {}, {}, {}

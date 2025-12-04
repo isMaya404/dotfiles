@@ -34,6 +34,7 @@ if vim.g.colors_name == 'nord' then
     vim.api.nvim_set_hl(0, '@tag', { fg = '#E5E9F0' })
 elseif vim.g.colors_name == 'plain' or vim.g.colors_name == 'off' then
     vim.api.nvim_set_hl(0, '@keyword', { fg = '#0d3b66', bold = true })
+    vim.api.nvim_set_hl(0, 'String', { fg = '#006400' })
     -- vim.api.nvim_set_hl(0, '@number', { fg = '#8B0000' })
 
     -- vim.api.nvim_set_hl(0, '@jsxText', { fg = '#E5E9F0' })
@@ -42,7 +43,6 @@ elseif vim.g.colors_name == 'plain' or vim.g.colors_name == 'off' then
     -- // -- // --
     -- vim.api.nvim_set_hl(0, '@comment', { fg = '#4a4a4a', italic = true })
     -- vim.api.nvim_set_hl(0, '@string', { fg = '#777777' })
-    vim.api.nvim_set_hl(0, 'String', { fg = '#006400' })
     -- vim.api.nvim_set_hl(0, 'String', { fg = '#E5E9F0' })
     -- vim.api.nvim_set_hl(0, 'Number', { fg = '#8B0000' })
     -- vim.api.nvim_set_hl(0, '@boolean', { fg = '#E5E9F0' })

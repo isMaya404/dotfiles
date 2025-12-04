@@ -200,7 +200,12 @@ map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]
 -- insert mode
 -- vim.api.nvim_set_keymap('i', '<M-t>', '<Esc>:lua _G.transpose.words()<CR>a', { noremap = true, silent = true })
 --------------------------------------- Plugin Mappings ---------------------------------------
-map('n', '<leader>o', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+-- Ts-tools
+map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>')
+map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>') -- removes all unused statements
+map('n', 'gai', '<Cmd>TSToolsAddMissingImports<CR>')
+
+map('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 
 -- Nvim-Tree
 map('n', '<leader>n', '<Cmd>NvimTreeToggle<CR>', { desc = 'NvimTree toggle window' })
