@@ -17,15 +17,6 @@ return {
     --     colorscheme = { 'nord' },
     -- },
     --
-    -- {
-    --     'rose-pine/neovim',
-    --     lazy = false,
-    --     priority = 1000,
-    --     name = 'rose-pine',
-    --     config = function()
-    --         vim.cmd 'colorscheme rose-pine'
-    --     end,
-    -- },
 
     {
         -- 'andreypopp/vim-colors-plain',
@@ -73,14 +64,11 @@ return {
         'tpope/vim-fugitive',
         event = 'VeryLazy',
     },
-
     { 'sindrets/diffview.nvim' },
-
     {
         'esmuellert/vscode-diff.nvim',
         dependencies = { 'MunifTanjim/nui.nvim' },
     },
-
     {
         'lewis6991/gitsigns.nvim',
         event = 'BufReadPost',
@@ -89,17 +77,7 @@ return {
         end,
     },
 
-    -- file tree
-    {
-        'nvim-tree/nvim-tree.lua',
-        -- dependencies = { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-        cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
-        config = function()
-            require 'configs.nvim_tree'
-        end,
-    },
-
-    -- file tree as buffer
+    -- file trees
     {
         'stevearc/oil.nvim',
         ---@module 'oil'
@@ -108,6 +86,14 @@ return {
         -- Optional dependencies
         event = 'VeryLazy',
         lazy = true,
+    },
+    {
+        'nvim-tree/nvim-tree.lua',
+        -- dependencies = { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+        cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
+        config = function()
+            require 'configs.nvim_tree'
+        end,
     },
 
     -- blazingly fast???
@@ -201,8 +187,7 @@ return {
         config = function()
             require 'configs.tree_sitter'
         end,
-        -- opts = {
-        -- },
+        -- opts = {},
     },
 
     -- linter
@@ -329,7 +314,7 @@ return {
         },
     },
 
-    -- provide bg color around color vals
+    -- provide bg color on color vals
     {
         'brenoprata10/nvim-highlight-colors',
         event = 'VeryLazy',
@@ -390,7 +375,7 @@ return {
         end,
     },
 
-    -- testing
+    -- tests
     -- {
     --     'nvim-neotest/neotest',
     --     event = 'VeryLazy',
