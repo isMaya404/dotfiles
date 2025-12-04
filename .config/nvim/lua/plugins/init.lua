@@ -272,29 +272,6 @@ return {
         --     'change quot*es'            cs'"            "change quotes"
     },
 
-    -- tui for sql queries. Idk, maybe I'll try this someday
-    -- {
-    --   'kristijanhusak/vim-dadbod-ui',
-    --   event = 'VeryLazy',
-    --   dependencies = {
-    --     { 'tpope/vim-dadbod', lazy = true },
-    --     { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
-    --     cmd = {
-    --       'DBUI',
-    --       'DBUIToggle',
-    --       'DBUIAddConnection',
-    --       'DBUIFindBuffer',
-    --     },
-    --     init = function()
-    --       -- Your DBUI configuration
-    --       vim.g.db_ui_use_nerd_fonts = 1
-    --     end,
-    --     config = function()
-    --       return require 'custom.vim-dadbod-ui'
-    --     end,
-    --   },
-    -- },
-
     {
         'iamcco/markdown-preview.nvim',
         cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
