@@ -113,7 +113,6 @@ map({ 'n', 'x' }, '<C-k>', '<C-w>j')
 map({ 'n', 'x' }, '<C-l>', '<C-w>k')
 map({ 'n', 'x' }, '<C-p>', '<C-w>l')
 
-map({ 'n', 'x' }, '<leader>wq', '<C-w>q')
 map({ 'n', 'x' }, '<leader>wo', '<C-w>o')
 map({ 'n', 'x' }, '<leader>wv', '<C-w>v')
 map({ 'n', 'x' }, '<leader>wh', '<C-w>s')

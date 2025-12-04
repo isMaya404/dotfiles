@@ -64,7 +64,14 @@ return {
         'tpope/vim-fugitive',
         event = 'VeryLazy',
     },
-    { 'sindrets/diffview.nvim' },
+
+    {
+        'sindrets/diffview.nvim',
+        config = function()
+            require 'configs.diffview'
+        end,
+    },
+
     {
         'esmuellert/vscode-diff.nvim',
         dependencies = { 'MunifTanjim/nui.nvim' },
@@ -89,7 +96,6 @@ return {
     },
     {
         'nvim-tree/nvim-tree.lua',
-        -- dependencies = { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
         cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
         config = function()
             require 'configs.nvim_tree'
@@ -105,6 +111,8 @@ return {
             require 'configs.harpoon'
         end,
     },
+
+    { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
 
     -- no more annoyinng default notif
     {

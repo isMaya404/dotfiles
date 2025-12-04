@@ -94,6 +94,9 @@ local opts = {
         highlight_git = true,
         indent_markers = { enable = true },
         icons = {
+            show = {
+                file = false,
+            },
             glyphs = {
                 default = '',
                 folder = {
