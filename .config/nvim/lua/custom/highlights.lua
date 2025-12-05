@@ -31,6 +31,7 @@ set_hl(0, 'MiniIndentscopeSymbol', { fg = '#2E3440' })
 
 if vim.g.colors_name == 'nord' then
     set_hl(0, '@number', { fg = '#B48EAD' })
+    -- set_hl(0, '@number', { fg = '#8B0000' })
     set_hl(0, 'String', { fg = '#D0D0D0' })
     set_hl(0, '@string', { fg = '#E5E9F0' }) -- treesitter
     set_hl(0, '@tag', { fg = '#E5E9F0' })
@@ -39,7 +40,7 @@ elseif vim.g.colors_name == 'plain' or vim.g.colors_name == 'off' then
     set_hl(0, 'String', { fg = '#006400' })
     -- set_hl(0, '@number', { fg = '#8B0000' })
 
-    vim.cmd [[highlight PmenuSel guibg=#4a4a4a ]]
+    -- vim.cmd [[highlight PmenuSel guibg=#4a4a4a ]]
     -- set_hl(0, '@jsxText', { fg = '#E5E9F0' })
     -- set_hl(0, '@text.literal', { fg = '#E5E9F0' })
     -- set_hl(0, '@comment', { fg = '#4a4a4a', italic = true })

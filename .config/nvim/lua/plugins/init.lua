@@ -2,33 +2,33 @@ return {
     { 'nvim-lua/plenary.nvim', event = 'VeryLazy' },
 
     -- colorscheme
-    -- {
-    --     'gbprod/nord.nvim',
-    --     lazy = false,
-    --     priority = 1000,
-    --     config = function()
-    --         require('nord').setup {
-    --             transparent = false,
-    --         }
-    --         vim.cmd.colorscheme 'nord'
-    --     end,
-    -- },
-    -- install = {
-    --     colorscheme = { 'nord' },
-    -- },
-    --
-
     {
-        -- 'andreypopp/vim-colors-plain',
-        'pbrisbin/vim-colors-off',
+        'gbprod/nord.nvim',
         lazy = false,
         priority = 1000,
-        init = function()
-            vim.cmd [[colorscheme off]]
-            -- vim.cmd [[colorscheme plain]]
-            vim.o.background = 'dark'
+        config = function()
+            require('nord').setup {
+                transparent = false,
+            }
+            vim.cmd.colorscheme 'nord'
         end,
     },
+    install = {
+        colorscheme = { 'nord' },
+    },
+
+    --
+    -- {
+    --     -- 'andreypopp/vim-colors-plain',
+    --     'pbrisbin/vim-colors-off',
+    --     lazy = false,
+    --     priority = 1000,
+    --     init = function()
+    --         vim.cmd [[colorscheme off]]
+    --         -- vim.cmd [[colorscheme plain]]
+    --         vim.o.background = 'dark'
+    --     end,
+    -- },
 
     -- session manaager
     {
@@ -112,7 +112,7 @@ return {
         end,
     },
 
-    { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+    -- { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
 
     -- no more annoyinng default notif
     {
