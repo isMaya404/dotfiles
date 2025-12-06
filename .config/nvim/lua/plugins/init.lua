@@ -29,7 +29,7 @@ return {
     --         vim.o.background = 'dark'
     --     end,
     -- },
-
+    --
     -- session manaager
     {
         'rmagatti/auto-session',

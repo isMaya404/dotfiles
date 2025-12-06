@@ -37,7 +37,7 @@ if vim.g.colors_name == 'nord' then
     set_hl(0, '@tag', { fg = '#E5E9F0' })
 elseif vim.g.colors_name == 'plain' or vim.g.colors_name == 'off' then
     set_hl(0, '@keyword', { fg = '#0d3b66', bold = true })
-    set_hl(0, 'String', { fg = '#006400' })
+    -- set_hl(0, 'String', { fg = '#006400' })
     -- set_hl(0, '@number', { fg = '#8B0000' })
 
     -- vim.cmd [[highlight PmenuSel guibg=#4a4a4a ]]
