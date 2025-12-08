@@ -94,6 +94,7 @@ return {
         event = 'VeryLazy',
         lazy = true,
     },
+
     {
         'nvim-tree/nvim-tree.lua',
         cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
@@ -263,6 +264,8 @@ return {
         --     remove <h1>HTML t*ags</h1>    dst             remove HTML tags
         --     <h1>or tag* types</h1>        csth1<CR>       <h1>or tag types</h1>
         --     'change quot*es'            cs'"            "change quotes"
+
+        -- :h nvim-surround.usage
     },
 
     {
