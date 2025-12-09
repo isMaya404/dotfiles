@@ -149,55 +149,6 @@ function CopyAllBuffersToClipboard()
 end
 map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]opy All [B]uffers To Clipboard' })
 
--- _G.transpose = {}
---
--- function _G.transpose.words()
---     local row, col = unpack(vim.api.nvim_win_get_cursor(0))
---     local line = vim.api.nvim_get_current_line()
---
---     -- split line into words using vim regex (\S+)
---     local words = {}
---     for w in line:gmatch '%S+' do
---         table.insert(words, w)
---     end
---
---     -- find current word index
---     local char_pos = 0
---     local idx = 0
---     for i, w in ipairs(words) do
---         char_pos = char_pos + #w
---         if char_pos >= col then
---             idx = i
---             break
---         end
---         char_pos = char_pos + 1 -- account for space
---     end
---
---     -- cannot transpose if at first word
---     if idx <= 1 then
---         return
---     end
---
---     -- swap with previous word
---     words[idx], words[idx - 1] = words[idx - 1], words[idx]
---
---     -- reconstruct line
---     local new_line = table.concat(words, ' ')
---     vim.api.nvim_set_current_line(new_line)
---
---     -- restore cursor roughly at the swapped word
---     local new_col = 0
---     for i = 1, idx do
---         new_col = new_col + #words[i] + 1
---     end
---     vim.api.nvim_win_set_cursor(0, { row, new_col - #words[idx] })
--- end
-
--- mode normal
--- vim.api.nvim_set_keymap('n', '<M-t>', ':lua _G.transpose.words()<CR>', { noremap = true, silent = true })
-
--- insert mode
--- vim.api.nvim_set_keymap('i', '<M-t>', '<Esc>:lua _G.transpose.words()<CR>a', { noremap = true, silent = true })
 --------------------------------------- Plugin Mappings ---------------------------------------
 -- Ts-tools
 map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>')
@@ -290,7 +241,7 @@ map('n', '<leader>ts', '<cmd>Trouble symbols toggle focus=false<CR>', { desc = '
 -- map('n', '<leader>tf', '<cmd>Trouble lsp toggle focus=true win.position=right<CR>', { desc = 'LSP Definitions / references / ... (Trouble)' })
 -- map('n', '<leader>tt', '<cmd>TodoTrouble<CR>', { desc = '[T]rouble [T]odo' }) -- Using telescope for this already
 
---INFO: These 2 bindings are currently replaced by Trouble.nvim (idk might use again in the future)
+--NOTE: These 2 bindings are currently replaced by Trouble.nvim (idk might use them again in the future)
 
 -- Add current buffer diagnostics to location list with severity WARN or higher.
 -- map('n', '<leader>dl', function()
@@ -333,9 +284,6 @@ map('n', '<leader>ft', '<cmd>TodoTelescope keywords=TODO,FIX,BUG,WARN<CR>', { de
 
 -- Telescope x LSP's
 
-map('n', '<leader>LR', '<cmd>LspRestart<cr>')
-map('n', '<leader>LI', '<cmd>LspInfo<cr>')
-
 map('n', '<M-w>', '<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })<CR>', { desc = 'Go to [N]ext diagnostic' })
 map('n', '<M-W>', '<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })<CR>', { desc = 'Go to [P]rev diagnostic' })
 map('n', '<M-n>', '<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>', { desc = 'Go to [N]ext diagnostic' })
@@ -361,6 +309,9 @@ map('n', 'gs', vim.lsp.buf.signature_help, { desc = '[S]ignature Help' })
 map('n', 'gS', '<cmd>Telescope lsp_document_symbols<CR>', { desc = 'Doc [S]ymbols' })
 map('n', 'grw', '<cmd>Telescope lsp_workspace_symbols<CR>', { desc = '[W]orkspace Symbols' })
 map('n', 'grd', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', { desc = '[D]ynamic Workspace Symbols' })
+
+map('n', '<leader>glr', '<cmd>LspRestart<cr>')
+map('n', '<leader>gli', '<cmd>LspInfo<cr>')
 
 -- Lsp workspace dir
 map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace dir' })
