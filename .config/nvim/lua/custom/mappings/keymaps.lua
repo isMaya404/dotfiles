@@ -310,8 +310,8 @@ map('n', 'gS', '<cmd>Telescope lsp_document_symbols<CR>', { desc = 'Doc [S]ymbol
 map('n', 'grw', '<cmd>Telescope lsp_workspace_symbols<CR>', { desc = '[W]orkspace Symbols' })
 map('n', 'grd', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', { desc = '[D]ynamic Workspace Symbols' })
 
-map('n', '<leader>glr', '<cmd>LspRestart<cr>')
-map('n', '<leader>gli', '<cmd>LspInfo<cr>')
+map('n', 'glr', '<cmd>LspRestart<cr>')
+map('n', 'gli', '<cmd>LspInfo<cr>')
 
 -- Lsp workspace dir
 map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace dir' })

@@ -277,7 +277,6 @@ alias yasuf='yay -Syyu'
 alias yacleanf='yay -Sc --noconfirm' 
 alias parucleanf='paru -Sc --noconfirm' 
 alias t='thunar' 
-alias pn='pnpm'
 
 alias a='tmux a'
 alias tn='tmux new'
