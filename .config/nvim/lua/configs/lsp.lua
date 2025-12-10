@@ -43,18 +43,10 @@ local servers = {
         },
         settings = {
             Lua = {
-                runtime = { version = 'LuaJIT' },
-                workspace = {
-                    checkThirdParty = false,
-                    library = {
-                        vim.fn.expand '$VIMRUNTIME/lua',
-                        vim.fn.stdpath 'data' .. '/lazy/lazy.nvim/lua/lazy',
-                        '${3rd}/luv/library',
-                        '${3rd}/busted/library',
-                    },
-                },
                 completion = { callSnippet = 'Replace' },
                 diagnostics = { disable = { 'missing-fields' } },
+                codeLens = { enable = true },
+                hint = { enable = true, semicolon = 'Disable' },
             },
         },
     },
@@ -166,28 +158,6 @@ local servers = {
         --         schema = 'graphql.schema.json',
         --     },
         -- },
-    },
-
-    emmet_language_server = {
-        filetypes = {
-            'css',
-            'sass',
-            'scss',
-            'html',
-            'ejs',
-            'pug',
-            'javascript',
-            'typescript',
-            'javascriptreact',
-            'typescriptreact',
-            'vue',
-        },
-        init_options = {
-            showAbbreviationSuggestions = true,
-            showExpandedAbbreviation = 'always',
-            showSuggestionsAsSnippets = false,
-        },
-        root_markers = { '.git' },
     },
 
     -- ts_ls = {
@@ -464,9 +434,9 @@ local servers = {
         root_dir = function(bufnr, on_dir)
             local root_markers = { 'deno.json', 'deno.jsonc', 'deno.lock' }
             root_markers = { root_markers, { '.git' } } or vim.list_extend(root_markers, { '.git' })
+            local project_root = vim.fs.root(bufnr, root_markers)
 
             local non_deno_path = vim.fs.root(bufnr, { 'package.json', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' })
-            local project_root = vim.fs.root(bufnr, root_markers)
 
             if non_deno_path and (not project_root or #non_deno_path >= #project_root) then
                 return
@@ -558,6 +528,29 @@ local servers = {
                 desc = 'Cache a Deno module and its dependencies',
             })
         end,
+    },
+
+    emmet_language_server = {
+        cmd = { 'emmet-language-server', '--stdio' },
+        filetypes = {
+            'css',
+            'sass',
+            'scss',
+            'html',
+            'ejs',
+            'pug',
+            'javascript',
+            'typescript',
+            'javascriptreact',
+            'typescriptreact',
+            'vue',
+        },
+        init_options = {
+            showAbbreviationSuggestions = true,
+            showExpandedAbbreviation = 'always',
+            showSuggestionsAsSnippets = false,
+        },
+        root_markers = {'package-lock.json', '.git' },
     },
 }
 
