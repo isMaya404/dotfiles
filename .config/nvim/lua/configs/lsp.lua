@@ -2,6 +2,10 @@
 -- local lspconfig = require 'lspconfig'
 require('fidget').setup {}
 
+local function map(lhs, rhs)
+    vim.keymap.set('n', lhs, rhs, { buffer = bufnr })
+end
+
 vim.diagnostic.config {
     virtual_text = true,
     float = { border = 'rounded', source = 'if_many' },
@@ -28,28 +32,28 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('mason').setup()
 
 local servers = {
-    lua_ls = {
-        cmd = { 'lua-language-server' },
-        filetypes = { 'lua' },
-        root_markers = {
-            '.luarc.json',
-            '.luarc.jsonc',
-            '.luacheckrc',
-            '.stylua.toml',
-            'stylua.toml',
-            'selene.toml',
-            'selene.yml',
-            '.git',
-        },
-        settings = {
-            Lua = {
-                completion = { callSnippet = 'Replace' },
-                diagnostics = { disable = { 'missing-fields' } },
-                codeLens = { enable = true },
-                hint = { enable = true, semicolon = 'Disable' },
-            },
-        },
-    },
+    -- lua_ls = {
+    --     cmd = { 'lua-language-server' },
+    --     filetypes = { 'lua' },
+    --     root_markers = {
+    --         '.luarc.json',
+    --         '.luarc.jsonc',
+    --         '.luacheckrc',
+    --         '.stylua.toml',
+    --         'stylua.toml',
+    --         'selene.toml',
+    --         'selene.yml',
+    --         '.git',
+    --     },
+    --     settings = {
+    --         Lua = {
+    --             completion = { callSnippet = 'Replace' },
+    --             diagnostics = { disable = { 'missing-fields' } },
+    --             codeLens = { enable = true },
+    --             hint = { enable = true, semicolon = 'Disable' },
+    --         },
+    --     },
+    -- },
 
     pyright = {
         cmd = { 'pyright-langserver', '--stdio' },
@@ -390,10 +394,6 @@ local servers = {
             on_dir(project_root)
         end,
         on_attach = function(client, bufnr)
-            local function map(lhs, rhs)
-                vim.keymap.set('n', lhs, rhs, { buffer = bufnr })
-            end
-
             -- fix all
             vim.keymap.set('n', 'glf', function()
                 vim.lsp.buf.code_action {
@@ -507,7 +507,6 @@ local servers = {
                 ['textDocument/references'] = denols_handler,
             }
         end)(),
-
         on_attach = function(client, bufnr)
             -- disable semantic tokens like the rest of your setup
             if client.supports_method 'textDocument/semanticTokens' then
@@ -527,6 +526,22 @@ local servers = {
             end, {
                 desc = 'Cache a Deno module and its dependencies',
             })
+
+            -- add missing imports
+            map('gai', function()
+                vim.lsp.buf.code_action {
+                    apply = true,
+                    context = { only = { 'quickfix' } },
+                }
+            end)
+
+            -- remove unused imports (Deno groups this under fixAll)
+            map('glf', function()
+                vim.lsp.buf.code_action {
+                    apply = true,
+                    context = { only = { 'source.fixAll' } },
+                }
+            end)
         end,
     },
 
@@ -550,7 +565,7 @@ local servers = {
             showExpandedAbbreviation = 'always',
             showSuggestionsAsSnippets = false,
         },
-        root_markers = {'package-lock.json', '.git' },
+        root_markers = { 'package-lock.json', '.git' },
     },
 }
 
