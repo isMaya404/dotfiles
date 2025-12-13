@@ -280,7 +280,7 @@ map('n', '<leader>gt', '<cmd>Telescope git_status<CR>', { desc = 'telescope git 
 
 -- Telescope plugin integrations
 map('n', '<leader>fS', '<cmd>Telescope luasnip<CR>', { desc = '[F]ind [S]nippets' })
-map('n', '<leader>ft', '<cmd>TodoTelescope keywords=TODO,FIX,BUG,WARN<CR>', { desc = '[F]ind [T]odo' })
+map('n', '<leader>ft', '<cmd>TodoTelescope keywords=TODO,FIX,BUG,NOTE<CR>', { desc = '[F]ind [T]odo' })
 
 -- Telescope x LSP's
 
