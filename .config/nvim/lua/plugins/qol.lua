@@ -110,7 +110,7 @@ return {
         end,
     },
 
-    -- view images in neovim
+    -- view images in neovim (term emu has to have support for image rendering)
     {
         '3rd/image.nvim',
         event = 'VeryLazy',

@@ -16,8 +16,16 @@ return {
     install = {
         colorscheme = { 'nord' },
     },
+    -- {
+    --     'folke/tokyonight.nvim',
+    --     lazy = false,
+    --     priority = 1000,
+    --     opts = {},
+    --     config = function()
+    --         vim.cmd [[colorscheme tokyonight-moon]]
+    --     end,
+    -- },
 
-    --
     -- {
     --     -- 'andreypopp/vim-colors-plain',
     --     'pbrisbin/vim-colors-off',
@@ -29,7 +37,7 @@ return {
     --         vim.o.background = 'dark'
     --     end,
     -- },
-    --
+    
     -- session manaager
     {
         'rmagatti/auto-session',
@@ -72,10 +80,11 @@ return {
         end,
     },
 
-    {
-        'esmuellert/vscode-diff.nvim',
-        dependencies = { 'MunifTanjim/nui.nvim' },
-    },
+    -- {
+    --     'esmuellert/vscode-diff.nvim',
+    --     dependencies = { 'MunifTanjim/nui.nvim' },
+    -- },
+
     {
         'lewis6991/gitsigns.nvim',
         event = 'BufReadPost',
@@ -200,16 +209,16 @@ return {
     },
 
     -- linter
-    {
-        'nvimtools/none-ls.nvim',
-        dependencies = {
-            'nvimtools/none-ls-extras.nvim',
-        },
-        event = 'VeryLazy',
-        opts = function()
-            return require 'configs.none_ls'
-        end,
-    },
+    -- {
+    --     'nvimtools/none-ls.nvim',
+    --     dependencies = {
+    --         'nvimtools/none-ls-extras.nvim',
+    --     },
+    --     event = 'VeryLazy',
+    --     opts = function()
+    --         return require 'configs.none_ls'
+    --     end,
+    -- },
 
     -- formatter
     {
@@ -407,54 +416,54 @@ return {
     -- },
 
     -- ai integration
-    {
-        'yetone/avante.nvim',
-        event = 'VeryLazy',
-        version = false, -- should always be false
-        build = 'make',
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter',
-            'MunifTanjim/nui.nvim',
-            'zbirenbaum/copilot.lua', -- for providers='copilot'
-            {
-                -- support for image pasting
-                'HakonHarnes/img-clip.nvim',
-                event = 'VeryLazy',
-                opts = {
-                    default = {
-                        embed_image_as_base64 = false,
-                        prompt_for_file_name = false,
-                        drag_and_drop = {
-                            insert_mode = true,
-                        },
-                        use_absolute_path = true,
-                    },
-                },
-            },
-            {
-                'MeanderingProgrammer/render-markdown.nvim',
-                opts = {
-                    file_types = { 'markdown', 'Avante' },
-                },
-                ft = { 'markdown', 'Avante' },
-            },
-        },
-        config = function()
-            return require 'configs.avante'
-        end,
-    },
+    -- {
+    --     'yetone/avante.nvim',
+    --     event = 'VeryLazy',
+    --     version = false, -- should always be false
+    --     build = 'make',
+    --     dependencies = {
+    --         'nvim-treesitter/nvim-treesitter',
+    --         'MunifTanjim/nui.nvim',
+    --         'zbirenbaum/copilot.lua', -- for providers='copilot'
+    --         {
+    --             -- support for image pasting
+    --             'HakonHarnes/img-clip.nvim',
+    --             event = 'VeryLazy',
+    --             opts = {
+    --                 default = {
+    --                     embed_image_as_base64 = false,
+    --                     prompt_for_file_name = false,
+    --                     drag_and_drop = {
+    --                         insert_mode = true,
+    --                     },
+    --                     use_absolute_path = true,
+    --                 },
+    --             },
+    --         },
+    --         {
+    --             'MeanderingProgrammer/render-markdown.nvim',
+    --             opts = {
+    --                 file_types = { 'markdown', 'Avante' },
+    --             },
+    --             ft = { 'markdown', 'Avante' },
+    --         },
+    --     },
+    --     config = function()
+    --         return require 'configs.avante'
+    --     end,
+    -- },
 
-    {
-        'zbirenbaum/copilot.lua',
-        cmd = 'Copilot',
-        event = 'InsertEnter',
-        requires = {
-            'copilotlsp-nvim/copilot-lsp', -- for NES
-        },
-        config = function()
-            require 'configs.copilot'
-        end,
-    },
+    -- {
+    --     'zbirenbaum/copilot.lua',
+    --     cmd = 'Copilot',
+    --     event = 'InsertEnter',
+    --     requires = {
+    --         'copilotlsp-nvim/copilot-lsp', -- for NES
+    --     },
+    --     config = function()
+    --         require 'configs.copilot'
+    --     end,
+    -- },
 
     {
         'CopilotC-Nvim/CopilotChat.nvim',
