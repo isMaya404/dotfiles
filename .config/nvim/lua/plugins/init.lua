@@ -444,15 +444,29 @@ return {
         end,
     },
 
-    -- {
-    --     'zbirenbaum/copilot.lua',
-    --     cmd = 'Copilot',
-    --     event = 'InsertEnter',
-    --     requires = {
-    --         'copilotlsp-nvim/copilot-lsp', -- NES functionality
-    --     },
-    --     config = function()
-    --         require 'configs.copilot'
-    --     end,
-    -- },
+    {
+        'zbirenbaum/copilot.lua',
+        cmd = 'Copilot',
+        event = 'InsertEnter',
+        requires = {
+            'copilotlsp-nvim/copilot-lsp', -- for NES
+        },
+        config = function()
+            require 'configs.copilot'
+        end,
+    },
+
+    {
+        'CopilotC-Nvim/CopilotChat.nvim',
+        build = 'make tiktoken',
+        opts = {
+            model = 'gpt-5.2',
+            temperature = 0.1, -- Lower = focused, higher = creative
+            window = {
+                layout = 'vertical',
+                width = 0.4,
+            },
+            auto_insert_mode = true,
+        },
+    },
 }

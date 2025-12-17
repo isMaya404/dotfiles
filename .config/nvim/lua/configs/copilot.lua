@@ -6,7 +6,7 @@ require('copilot').setup {
     },
     suggestion = {
         enabled = true,
-        auto_trigger = true, -- inline suggestions
+        auto_trigger = true,
         hide_during_completion = true,
         debounce = 150,
         keymap = {
@@ -41,12 +41,12 @@ require('copilot').setup {
         gitcommit = false,
         gitrebase = false,
         hgcommit = false,
-        svn = false,
+        -- svn = false,
         cvs = false,
         css = false,
         scss = false,
         -- ['.'] = false,
     },
-    copilot_node_command = 'node', -- Node.js version must be > 18.x
+    copilot_node_command = 'node',
     server_opts_overrides = {},
 }

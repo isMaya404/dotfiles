@@ -319,6 +319,7 @@ fi
 # View man pages inside vim
 export MANPAGER="vim -M +MANPAGER -"
 
+export PATH="$HOME/.asdf/shims:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH":"$HOME/.local/scripts/"
@@ -341,6 +342,7 @@ esac
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd z zsh)"
 # eval "$(starship init zsh)"
+
 
 # ------------------------------------------------------------
 # zprof | head -n 30  # Display the profiling report
