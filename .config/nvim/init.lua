@@ -25,12 +25,12 @@ require('lazy').setup {
     spec = {
         {
             import = 'plugins',
-            enabled = not vim.g.vscode,
+            -- enabled = not vim.g.vscode,
         },
-        {
-            import = 'vsc.plugins',
-            enabled = vim.g.vscode,
-        },
+        -- {
+        --     import = 'vsc.plugins',
+        --     enabled = vim.g.vscode,
+        -- },
     },
     performance = {
         rtp = {

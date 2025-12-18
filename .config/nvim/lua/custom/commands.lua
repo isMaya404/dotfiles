@@ -1,15 +1,17 @@
-vim.api.nvim_create_user_command('Gl', function()
+local cmd = vim.api.nvim_create_user_command
+
+cmd('Gl', function()
     vim.cmd 'Gclog'
 end, {})
 
-vim.api.nvim_create_user_command('Gcm', function()
+cmd('Gcm', function()
     vim.cmd 'G commit -m'
 end, {})
 
-vim.api.nvim_create_user_command('Gp', function()
+cmd('Gp', function()
     vim.cmd 'G push'
 end, {})
 
-vim.api.nvim_create_user_command('Gpf', function()
+cmd('Gpf', function()
     vim.cmd 'G push --force-with-lease'
 end, {})
