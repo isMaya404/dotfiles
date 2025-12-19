@@ -21,8 +21,8 @@ map({ 'n', 'x' }, ',', ';', opts)
 map({ 'n', 'x', 'o' }, 'j', 'h', opts)
 map({ 'n', 'x', 'o' }, 'p', 'l', opts)
 
-map('o', 'k', 'j', opts)
-map('o', 'l', 'k', opts)
+map({ 'o' }, 'k', 'j', opts)
+map({ 'o' }, 'l', 'k', opts)
 map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map({ 'n', 'x' }, 'l', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 

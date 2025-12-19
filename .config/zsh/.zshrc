@@ -284,6 +284,7 @@ alias tls='tmux ls'
 alias tks='tmux kill-server'
 
 alias j='nvim' 
+alias k='NVIM_APPNAME=nvim-bak nvim' 
 alias nv='NVIM_APPNAME=nvim-minimal nvim' 
 alias sn='sudo -E nvim' 
 alias code='code --use-gl=desktop'

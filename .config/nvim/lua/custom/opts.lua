@@ -1,7 +1,7 @@
 local o = vim.opt
 
 -- key delays (too low will break bindings)
-o.timeoutlen = 400 -- 1000 is default (for mappings)
+o.timeoutlen = 450 -- 1000 is default (for bindings)
 o.ttimeoutlen = 0 -- 50 is default (for key codes)
 
 o.termguicolors = true

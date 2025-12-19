@@ -45,7 +45,7 @@ return {
             'j-hui/fidget.nvim',
         },
         config = function()
-            require 'configs.lsp'
+            require 'configs.lsp._lsp'
         end,
     },
 
