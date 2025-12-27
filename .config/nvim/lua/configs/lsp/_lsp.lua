@@ -7,7 +7,7 @@ local function map(lhs, rhs)
 end
 
 vim.diagnostic.config {
-    virtual_text = true,
+    virtual_text = false,
     float = { border = 'rounded', source = 'if_many' },
     severity_sort = true,
     underline = false,
