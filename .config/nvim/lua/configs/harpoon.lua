@@ -44,7 +44,3 @@ end, { desc = 'Harpoon: Jump to file 3' })
 map('n', '<leader>p', function()
     harpoon:list():select(4)
 end, { desc = 'Harpoon: Jump to file 4' })
-
-map('n', '<leader>o', function()
-    harpoon:list():select(5)
-end, { desc = 'Harpoon: Jump to file 5' })

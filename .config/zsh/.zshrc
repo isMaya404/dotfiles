@@ -326,6 +326,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH":"$HOME/.local/scripts/"
 export PATH=$PATH:/usr/local/mysql/bin
 export PATH=$PATH:/usr/local/share/mysql/bin
+export PATH="$HOME/dev/projects/flutter/bin:$PATH"
 export MANPATH="/usr/local/man:$MANPATH"
 
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
@@ -347,3 +348,4 @@ eval "$(zoxide init --cmd z zsh)"
 
 # ------------------------------------------------------------
 # zprof | head -n 30  # Display the profiling report
+export PATH="$PATH:$HOME/.pub-cache/bin"

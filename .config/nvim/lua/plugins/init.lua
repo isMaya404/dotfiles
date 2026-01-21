@@ -37,7 +37,7 @@ return {
     --         vim.o.background = 'dark'
     --     end,
     -- },
-    
+
     -- session manaager
     {
         'rmagatti/auto-session',
@@ -262,8 +262,8 @@ return {
                 keymaps = {
                     normal = 'os',
                     normal_cur = 'oss',
-                    normal_line = 'OS',
-                    normal_cur_line = 'OSS',
+                    -- normal_line = 'OS',
+                    -- normal_cur_line = 'OSS',
                 },
             }
         end,
