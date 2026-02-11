@@ -154,6 +154,7 @@ map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]
 map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>')
 map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>') -- removes all unused statements
 map('n', 'gai', '<Cmd>TSToolsAddMissingImports<CR>')
+map('n', 'glf', '<Cmd>TSToolsFixAll<CR>')
 
 map('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 

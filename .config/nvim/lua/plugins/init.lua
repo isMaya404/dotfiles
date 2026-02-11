@@ -295,13 +295,13 @@ return {
     },
 
     -- faster typescript lsp
-    -- {
-    --     'pmizio/typescript-tools.nvim',
-    --     filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-    --     config = function()
-    --         require 'configs.ts_tools'
-    --     end,
-    -- },
+    {
+        'pmizio/typescript-tools.nvim',
+        filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+        config = function()
+            require 'configs.ts_tools'
+        end,
+    },
 
     -- enhances the native commentstring on react
     {

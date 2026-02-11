@@ -7,7 +7,7 @@ local function map(lhs, rhs)
 end
 
 vim.diagnostic.config {
-    virtual_text = false,
+    virtual_text = true,
     float = { border = 'rounded', source = 'if_many' },
     severity_sort = true,
     underline = false,
@@ -47,7 +47,7 @@ local servers = {
     -- tsgo = require 'configs.lsp.tsgo',
     -- ts_ls = 'configs.lsp.ts',
     denols = require 'configs.lsp.deno',
-    vtsls = require 'configs.lsp.vtsls',
+    -- vtsls = require 'configs.lsp.vtsls',
     emmet_language_server = require 'configs.lsp.emmet',
     tailwindcss = require 'configs.lsp.tailwindcss',
     pyright = require 'configs.lsp.python',

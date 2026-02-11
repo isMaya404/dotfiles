@@ -105,7 +105,7 @@ return {
             desc = 'Cache a Deno module and its dependencies',
         })
 
-        vim.keymap.set('n', 'gai', function()
+        vim.keymap.set('n', 'gqf', function()
             vim.lsp.buf.code_action {
                 apply = true,
                 context = { only = { 'quickfix' } },
@@ -116,6 +116,13 @@ return {
             vim.lsp.buf.code_action {
                 apply = true,
                 context = { only = { 'source.fixAll' } },
+            }
+        end)
+
+        vim.keymap.set('n', 'gai', function()
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'quickfix.addImport' } },
             }
         end)
     end,

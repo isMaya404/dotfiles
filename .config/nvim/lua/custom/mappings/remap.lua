@@ -30,7 +30,9 @@ map({ 'n', 'x', 'o' }, 'h', 'p', opts)
 map({ 'n', 'x', 'o' }, 'H', 'P', opts)
 
 map({ 'n', 'v', 'x', 'o' }, 'J', 'H', opts)
-map('n', 'K', vim.lsp.buf.hover, opts)
+map('n', 'K', function()
+    vim.lsp.buf.hover { border = 'rounded' }
+end)
 map({ 'n', 'x' }, 'L', 'M', opts)
 map({ 'n', 'x', 'o' }, 'P', 'L', opts)
 
