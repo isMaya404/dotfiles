@@ -268,11 +268,11 @@ return {
             }
         end,
         --     surr*ound_words             osiw)           (surround_words)
-        --     *make strings               os$"            "make strings"
+        --     'change quot*es'            cs'"            "change quotes"
         --     [delete ar*ound me!]        ds[             delete around me!
+        --     *make strings               os$"            "make strings"
         --     remove <h1>HTML t*ags</h1>    dst             remove HTML tags
         --     <h1>or tag* types</h1>        csth1<CR>       <h1>or tag types</h1>
-        --     'change quot*es'            cs'"            "change quotes"
 
         -- :h nvim-surround.usage
     },

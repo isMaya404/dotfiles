@@ -21,6 +21,7 @@ function M.on_attach(bufnr)
 
     -- Remove default mapping for 'o'
     vim.keymap.del('n', 'o', { buffer = bufnr })
+    vim.keymap.del('n', '<C-k>', { buffer = bufnr })
 
     -- Set custom mappings
     map('n', 's', api.node.open.edit, opts 'Select')
@@ -29,9 +30,10 @@ function M.on_attach(bufnr)
     map('n', 'L', api.node.navigate.sibling.first, opts 'First Sibling')
     map('n', 'K', api.node.navigate.sibling.last, opts 'Last Sibling')
 
-    -- not really used, just placeholders
+    -- Replacement bindings for the removed ones.
     map('n', 'J', api.node.open.toggle_group_empty, opts 'Toggle Group Empty')
     map('n', '<C-s>', api.node.run.system, opts 'Run System')
+    map('n', '<C-s>', api.node.show_info_popup, opts 'Show Info')
 end
 
 local opts = {
@@ -66,7 +68,7 @@ local opts = {
     },
     view = {
         side = 'left',
-        width = 42,
+        width = 40,
         preserve_window_proportions = true,
     },
     actions = {

@@ -14,8 +14,9 @@ map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
 
 map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
 map({ 'n', 'v' }, '<leader>bd', [["_d]], { desc = 'blackhole delete' })
+map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
-map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'substitute all matching word under cursor in buf' })
+map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '' })
 map('n', '<leader>s', '<cmd>w<cr>', { desc = 'write' })
 map('n', '<leader>Q', '<cmd>qa<CR>', { desc = 'quit all' })
 
@@ -71,7 +72,6 @@ map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 map_buffer_cmd('<Tab>', 'bnext', 'Next Buffer')
 map_buffer_cmd('<S-Tab>', 'bprev', 'Prev Buffer')
 map('n', '<leader>,', '<C-^>', { desc = 'Switch to last buffer' })
-
 map('n', '<leader>X', function()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         local bt = vim.bo[buf].buftype
@@ -80,7 +80,6 @@ map('n', '<leader>X', function()
         end
     end
 end, { desc = 'Delete all normal buffers', silent = true })
-
 map('n', '<leader>x', function()
     local current_buf = vim.api.nvim_get_current_buf()
     local listed_buffers = vim.tbl_filter(function(buf)
@@ -93,7 +92,7 @@ map('n', '<leader>x', function()
     require('mini.bufremove').delete(current_buf, false)
     -- Built in alternative instead of mini.bufremove:
     -- vim.cmd('bd ' .. current_buf)
-end, { desc = 'close current buffer' })
+end, { desc = 'Close current buffer' })
 
 -- Windows
 
@@ -150,7 +149,8 @@ end
 map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]opy All [B]uffers To Clipboard' })
 
 --------------------------------------- Plugin Mappings ---------------------------------------
--- Ts-tools
+
+-- ts-tools
 map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>')
 map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>') -- removes all unused statements
 map('n', 'gai', '<Cmd>TSToolsAddMissingImports<CR>')
@@ -187,7 +187,6 @@ map('n', '<leader>wk', function()
 end, { desc = 'whichkey query lookup' })
 
 -- Neotest
-
 map('n', '<leader>ttr', function()
     require('neotest').run.run() -- run nearest test
 end, opts)
@@ -292,7 +291,7 @@ map('n', '<M-N>', '<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic
 map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'Go to [N]ext diagnostic' })
 map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'Go to [P]rev diagnostic' })
 
-map('n', '<leader>df', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current Line [F]loat' })
+map('n', '<M-d>', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current Line [F]loat' })
 map('n', '<leader>dt', function()
     vim.diagnostic.config { virtual_text = not vim.diagnostic.config().virtual_text }
 end, { desc = '[D]iagnostics Text [T]oggle' })
