@@ -147,7 +147,7 @@ local opts = {
         },
         input = {
             prefix = '>',
-            height = 4,
+            height = 10,
         },
         edit = {
             border = 'rounded',

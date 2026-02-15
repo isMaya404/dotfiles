@@ -422,7 +422,6 @@ return {
     --     version = false, -- should always be false
     --     build = 'make',
     --     dependencies = {
-    --         'nvim-treesitter/nvim-treesitter',
     --         'MunifTanjim/nui.nvim',
     --         'zbirenbaum/copilot.lua', -- for providers='copilot'
     --         {
@@ -453,17 +452,17 @@ return {
     --     end,
     -- },
 
-    -- {
-    --     'zbirenbaum/copilot.lua',
-    --     cmd = 'Copilot',
-    --     event = 'InsertEnter',
-    --     requires = {
-    --         'copilotlsp-nvim/copilot-lsp', -- for NES
-    --     },
-    --     config = function()
-    --         require 'configs.copilot'
-    --     end,
-    -- },
+    {
+        'zbirenbaum/copilot.lua',
+        cmd = 'Copilot',
+        event = 'InsertEnter',
+        requires = {
+            'copilotlsp-nvim/copilot-lsp', -- for NES
+        },
+        config = function()
+            require 'configs.copilot'
+        end,
+    },
 
     {
         'CopilotC-Nvim/CopilotChat.nvim',
