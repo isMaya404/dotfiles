@@ -1,6 +1,5 @@
 local ok, harpoon = pcall(require, 'harpoon')
 
--- Harpoon Statusline
 _G.harpoon_statusline = function()
     if not ok then return '' end
 
@@ -46,6 +45,10 @@ _G.harpoon_statusline = function()
 
         local base = basenames[i]
         local disp = (counts[base] > 1) and (fnmod(full, ':h:t') .. '/' .. base) or base
+
+        if #disp > 20 then
+            disp = disp:sub(1, 20) .. '…'
+        end
 
         if full == expand '%:p' then
             parts[#parts + 1] = '%#HarpoonActive#' .. disp .. '%#StatusLine#'
@@ -98,21 +101,26 @@ _G.statusline = function()
     local short = vim.fn.fnamemodify(path, ':p:~:h:t') .. '/' .. vim.fn.expand '%:t'
     if short == '' then short = '[No Name]' end
 
-    local diag = _G.diagnostics()
-    local harpoon_list = _G.harpoon_statusline()
+    -- Truncate to 50 chars
+    if #short > 50 then
+        short = short:sub(1, 50) .. '…'
+    end
+
+    -- local diag = _G.diagnostics()
+    -- local harpoon_list = _G.harpoon_statusline()
 
     return table.concat {
         '%#StatusLinePath# ',
         short,
         ' ',
         '%#StatusLine#',
-        ' %m ',
-        diag,
+        ' %m ', -- show a '+' if buffer is modified
+        _G.diagnostics(),
         ' ',
-        harpoon_list,
-        '%=',
+        _G.harpoon_statusline(),
+        '%=', -- pushes the rest to the right
         git_branch(),
-        ' %r %h %q',
+        ' %r %h %q', -- readonly, help, and quickfix buffer status
     }
 end
 

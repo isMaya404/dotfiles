@@ -439,18 +439,19 @@ return {
     --                 },
     --             },
     --         },
-    --         {
-    --             'MeanderingProgrammer/render-markdown.nvim',
-    --             opts = {
-    --                 file_types = { 'markdown', 'Avante' },
-    --             },
-    --             ft = { 'markdown', 'Avante' },
-    --         },
+
+    -- {
+    --     'MeanderingProgrammer/render-markdown.nvim',
+    --     opts = {
+    --         file_types = { 'markdown', 'Avante' },
     --     },
-    --     config = function()
-    --         return require 'configs.avante'
-    --     end,
+    --     ft = { 'markdown', 'Avante' },
     -- },
+    --      },
+    --      config = function()
+    -- return require 'configs.avante'
+    --      end,
+    --  },
 
     {
         'zbirenbaum/copilot.lua',
