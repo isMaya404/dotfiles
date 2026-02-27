@@ -46,12 +46,12 @@ local servers = {
     lua_ls = require 'configs.lsp.lua',
     -- tsgo = require 'configs.lsp.tsgo',
     -- ts_ls = 'configs.lsp.ts',
-    denols = require 'configs.lsp.deno',
+    -- denols = require 'configs.lsp.deno',
     -- vtsls = require 'configs.lsp.vtsls',
     emmet_language_server = require 'configs.lsp.emmet',
     tailwindcss = require 'configs.lsp.tailwindcss',
     pyright = require 'configs.lsp.python',
-    jsonls = require 'configs.lsp.json',
+    -- jsonls = require 'configs.lsp.json',
 
     -- sqls = {
     --     cmd = { 'sqls' },
