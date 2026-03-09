@@ -2,11 +2,9 @@ return {
     cmd = { 'tsgo', '--lsp', '--stdio' },
     filetypes = {
         'javascript',
-        'javascriptreact',
-        'javascript.jsx',
         'typescript',
+        'javascriptreact',
         'typescriptreact',
-        'typescript.tsx',
     },
     root_dir = function(bufnr, on_dir)
         local root_markers = { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' }

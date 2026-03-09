@@ -4,10 +4,10 @@ return {
     filetypes = {
         'javascript',
         'javascriptreact',
-        'javascript.jsx',
+        'javascript',
         'typescript',
         'typescriptreact',
-        'typescript.tsx',
+        'typescript',
     },
     root_dir = function(bufnr, on_dir)
         local root_markers = { 'deno.json', 'deno.jsonc', 'deno.lock' }

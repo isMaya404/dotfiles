@@ -95,7 +95,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     end,
 })
 
--- max n bufs, auto-delete oldest buf if more than n
+-- max N bufs, auto-delete oldest buf if more than N
 vim.api.nvim_create_autocmd('BufAdd', {
     group = augroup 'auto_del_buf',
     callback = function(args)
@@ -224,11 +224,11 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- copilot buffer
-vim.api.nvim_create_autocmd('BufEnter', {
-    pattern = 'copilot-*',
-    callback = function()
-        vim.opt_local.relativenumber = false
-        vim.opt_local.number = false
-        vim.opt_local.conceallevel = 0
-    end,
-})
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--     pattern = 'copilot-*',
+--     callback = function()
+--         vim.opt_local.relativenumber = false
+--         vim.opt_local.number = false
+--         vim.opt_local.conceallevel = 0
+--     end,
+-- })
