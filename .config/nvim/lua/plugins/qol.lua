@@ -37,8 +37,8 @@ return {
 
     {
         'neovim/nvim-lspconfig',
-        -- event = 'User FilePost',
-        event = 'VeryLazy',
+        event = 'User FilePost',
+        -- event = 'VeryLazy',
         dependencies = {
             'williamboman/mason.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',

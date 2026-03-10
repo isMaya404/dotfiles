@@ -37,9 +37,9 @@ vim.api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
             vim.schedule(function()
                 vim.api.nvim_exec_autocmds('FileType', {})
 
-                if vim.g.editorconfig then
-                    require('editorconfig').config(args.buf)
-                end
+                -- if vim.g.editorconfig then
+                --     require('editorconfig').config(args.buf)
+                -- end
             end)
         end
     end,
@@ -159,17 +159,17 @@ vim.api.nvim_create_autocmd('FileType', {
 ----------------- / -------------------
 
 -- improves tailwind perf? https://github.com/hrsh7th/nvim-cmp/issues/1828
-vim.api.nvim_create_autocmd('LspAttach', {
-    group = augroup 'tailwind_lsp_config',
-    pattern = { 'html', 'css', 'scss', 'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
-    callback = function()
-        for _, client in pairs(vim.lsp.get_clients()) do
-            if client.name == 'tailwindcss' then
-                client.server_capabilities.completionProvider.triggerCharacters = { '"', "'", '`', '.', '(', '[', '!', '/', ':' }
-            end
-        end
-    end,
-})
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--     group = augroup 'tailwind_lsp_config',
+--     pattern = { 'html', 'css', 'scss', 'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
+--     callback = function()
+--         for _, client in pairs(vim.lsp.get_clients()) do
+--             if client.name == 'tailwindcss' then
+--                 client.server_capabilities.completionProvider.triggerCharacters = { '"', "'", '`', '.', '(', '[', '!', '/', ':' }
+--             end
+--         end
+--     end,
+-- })
 
 -- treat certain template ft's as HTML for syntax highlighting support
 -- vim.api.nvim_create_autocmd('BufEnter', {

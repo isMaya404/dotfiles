@@ -96,8 +96,6 @@ return {
     -- file trees
     {
         'stevearc/oil.nvim',
-        ---@module 'oil'
-        ---@type oil.SetupOpts
         opts = {},
         -- Optional dependencies
         event = 'VeryLazy',
@@ -286,6 +284,9 @@ return {
         end,
         ft = { 'markdown' },
     },
+
+
+    ----------------------------------------------------------
 
     -- better loclist && qflist
     {
