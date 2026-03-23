@@ -80,6 +80,7 @@ map('n', '<leader>X', function()
         end
     end
 end, { desc = 'Delete all normal buffers', silent = true })
+
 map('n', '<leader>x', function()
     local current_buf = vim.api.nvim_get_current_buf()
     local listed_buffers = vim.tbl_filter(function(buf)
@@ -90,7 +91,7 @@ map('n', '<leader>x', function()
     local next_cmd = current_buf == last_buf and 'bprevious' or 'bnext'
     vim.cmd(next_cmd)
     require('mini.bufremove').delete(current_buf, false)
-    -- Built in alternative instead of mini.bufremove:
+    -- Built in alt of mini.bufremove:
     -- vim.cmd('bd ' .. current_buf)
 end, { desc = 'Close current buffer' })
 
@@ -124,7 +125,7 @@ map({ 'n', 'x' }, '<leader><Left>', ':silent! vertical resize -10<CR>')
 
 map({ 'n', 'x' }, '<C-w>r', '<C-l>', { desc = 'redraw screen' })
 
--- Scripts
+-- Bash Scripts
 map({ 'n' }, '<M-m>', ':!tmux-windowizer $(git rev-parse --abbrev-ref HEAD) pnpm dev<CR><CR>')
 map({ 'n' }, '<M-1>', ':!tmux-windowizer nn ')
 map({ 'n' }, '<M-0>', ':!tmux-windowizer dev:fe pnpm dev:frontend<CR><CR>')
@@ -150,11 +151,11 @@ map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]
 
 --------------------------------------- Plugin Mappings ---------------------------------------
 
--- ts-tools
-map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>')
-map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>') -- removes all unused statements
-map('n', 'gai', '<Cmd>TSToolsAddMissingImports<CR>')
-map('n', 'glf', '<Cmd>TSToolsFixAll<CR>')
+-- Ts-Tools
+map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>', { desc = 'TS Remove unused imports' })
+map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>', { desc = 'TS Remove all unused statements' })
+map('n', 'gai', '<Cmd>TSToolsAddMissingImports<CR>', { desc = 'TS Add missing imports' })
+map('n', 'glf', '<Cmd>TSToolsFixAll<CR>', { desc = 'TS Fix all' })
 
 map('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 
@@ -257,7 +258,7 @@ map('n', '<leader>ts', '<cmd>Trouble symbols toggle focus=false<CR>', { desc = '
 map('n', '<leader>fl', '<cmd>Telescope find_files<cr>', { desc = 'Find [F]i[L]es' })
 map('n', '<leader>fd', '<cmd>Telescope diagnostics<cr>', { desc = '[F]ind [D]iagnostics' })
 map('n', '<leader>fa', '<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>', { desc = '[F]ind [A]ll Files' })
-map('n', '<leader>fp', '<cmd>Telescope buffers<CR>', { desc = '[F]ind Buffers' }) -- NOTE: no mnemonics, fp is just faster than fb is why
+map('n', '<leader>fp', '<cmd>Telescope buffers<CR>', { desc = '[F]ind Buffers' }) -- no mnemonics, fp is just faster than fb is why
 map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind [W]ords' })
 map('n', '<leader>fs', '<cmd>Telescope grep_string<cr>', { desc = '[F]ind Current [S]tring' }) -- find string under cursor
 map('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = '[F]ind Curr Buf Fu[ZZ]y' })
@@ -269,7 +270,7 @@ map('n', '<leader>fn', '<cmd>Telescope notify<cr>', { desc = '[F]ind [N]otif His
 map('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', { desc = '[F]ind [K]eymaps' })
 map('n', '<leader>fb', '<cmd>Telescope builtin<cr>', { desc = '[F]ind [B]uiltins' })
 map('n', '<leader>fh', '<cmd>Telescope help_tags<CR>', { desc = '[F]ind [H]elp Page' })
-map('n', '<leader>fc', '<cmd>Telescope commands<CR>', { desc = '[F]ind Telescope Commands' })
+map('n', '<leader>fc', '<cmd>Telescope commands<CR>', { desc = '[F]ind Telescope [C]ommands' })
 
 -- Quick edit for nvim config
 map('n', '<leader>fe', '<cmd>lua require("telescope.builtin").find_files { cwd = vim.fn.stdpath("config") }<cr>', { desc = '[F]ind & [E]dit Nvim Conf' })
