@@ -160,7 +160,10 @@ map('n', 'glf', '<Cmd>TSToolsFixAll<CR>', { desc = 'TS Fix all' })
 map('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 
 -- Nvim-Tree
-map('n', '<leader>n', '<Cmd>NvimTreeToggle<CR>', { desc = 'NvimTree toggle window' })
+
+map('n', '<leader>n', function()
+    require('nvim-tree.api').tree.toggle { focus = false }
+end, { desc = 'NvimTree toggle window' })
 map('n', '<leader>e', '<cmd>NvimTreeFocus<cr>', { desc = 'NvimTree focus window' })
 
 --  Copilot

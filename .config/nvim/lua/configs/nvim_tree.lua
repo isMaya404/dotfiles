@@ -17,8 +17,7 @@ function M.on_attach(bufnr)
     end
 
     -- Apply default mappings
-    -- api.config.mappings.default_on_attach(bufnr)
-    api.config.map.on_attach.default(bufnr)
+    api.map.on_attach.default(bufnr)
 
     -- Remove default mapping for 'o'
     vim.keymap.del('n', 'o', { buffer = bufnr })
