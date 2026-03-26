@@ -8,3 +8,4 @@ if [ "$CURRENT" -ne 0 ]; then
 else
     brightnessctl set 90%
 fi
+

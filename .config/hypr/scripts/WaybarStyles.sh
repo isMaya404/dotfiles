@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # Script for waybar styles
 
 IFS=$'\n\t'

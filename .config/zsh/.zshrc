@@ -273,7 +273,6 @@ alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
 
-alias yasuf='yay -Syyu'
 alias yacleanf='yay -Sc --noconfirm' 
 alias parucleanf='paru -Sc --noconfirm' 
 alias t='thunar' 

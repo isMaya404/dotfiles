@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # Scripts for refreshing ags, waybar, rofi, swaync, wallust
 
 SCRIPTSDIR=$HOME/.config/hypr/scripts
@@ -31,7 +30,7 @@ sleep 0.1
 #ags -q && ags &
 
 # quit quickshell & relaunch quickshell
-#pkill qs && qs &
+pkill qs && qs -c overview &
 
 # some process to kill
 for pid in $(pidof waybar rofi swaync ags swaybg); do

@@ -15,12 +15,12 @@ alternate-normal-foreground: #F6E0EF;
 alternate-urgent-background: #1B1B1B;
 alternate-urgent-foreground: #F6E0EF;
 
-selected-active-background: #83A0BC;
-selected-active-foreground: #F6E0EF;
-selected-normal-background: #83A0BC;
-selected-normal-foreground: #F6E0EF;
-selected-urgent-background: #835877;
-selected-urgent-foreground: #F6E0EF;
+selected-active-background: #835877;
+selected-active-foreground: #1B1B1B;
+selected-normal-background: #835877;
+selected-normal-foreground: #1B1B1B;
+selected-urgent-background: #4A5C77;
+selected-urgent-foreground: #1B1B1B;
 
 background-color: #1B1B1B;
 background: rgba(0,0,0,0.7);

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # Smooth border cycling effect using Wallust palette or full rainbow
 
 # Possible values: "wallust_random", "rainbow", "gradient_flow"
