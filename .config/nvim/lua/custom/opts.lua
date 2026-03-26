@@ -1,8 +1,8 @@
 local o = vim.opt
 
 -- key delays (lower === faster response, but too low will break bindings!)
-o.timeoutlen = 600 -- 1000 default
-o.ttimeoutlen = 10 -- 50 default
+o.timeoutlen = 500 -- 1000 default
+o.ttimeoutlen = 0 -- 50 default
 
 o.termguicolors = true
 o.swapfile = false

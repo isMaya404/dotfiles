@@ -75,16 +75,15 @@ if not vim.g.vscode then
     require 'custom.opts'
     require 'custom.status'
     require 'custom.tabs'
-    require 'custom.transpose'
     require 'custom.commands'
-    vim.schedule(function()
-        require(m .. 'keymaps')
-        require(m .. 'remap')
-    end)
+    -- vim.schedule(function()
+    require(m .. 'keymaps')
+    require(m .. 'remap')
+    -- end)
 else
-    vim.schedule(function()
-        require(m .. 'remap')
-    end)
+    -- vim.schedule(function()
+    require(m .. 'remap')
+    -- end)
 end
 
 -- [[ Setting options ]]

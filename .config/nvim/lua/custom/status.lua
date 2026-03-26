@@ -1,137 +1,133 @@
-local ok, harpoon = pcall(require, 'harpoon')
+local diagnostic_cache = ''
 
-_G.harpoon_statusline = function()
-    if not ok then return '' end
+-- DIAGNOSTICS
+local function handle_diagnostic_list()
+    local diagnostics = vim.diagnostic.get(0)
+    local counts = { 0, 0, 0, 0 }
 
-    local cur = vim.fn.expand '%:t'
-    if cur == '__BufTerm__' then return '' end
-
-    local raw_items = harpoon:list().items or {}
-    local items = {}
-
-    -- Filter out invalid / whitespace items
-    for _, item in ipairs(raw_items) do
-        if item and type(item.value) == "string" and item.value:match("%S") then
-            table.insert(items, item)
-        end
-    end
-
-    if #items == 0 then return '' end
-
-    local fnmod = vim.fn.fnamemodify
-    local expand = vim.fn.expand
-    local max = math.min(4, #items)
-
-    local parts = {}
-    local paths, basenames, counts = {}, {}, {}
-
-    -- Precompute paths, basenames, counts
-    for i = 1, max do
-        local ok, full = pcall(fnmod, items[i].value, ':p')
-        if not ok or full == '' then goto continue end
-
-        local base = fnmod(full, ':t')
-        paths[i] = full
-        basenames[i] = base
-        counts[base] = (counts[base] or 0) + 1
-
-        ::continue::
-    end
-
-    -- Build display names
-    for i = 1, max do
-        local full = paths[i]
-        if not full then goto continue end
-
-        local base = basenames[i]
-        local disp = (counts[base] > 1) and (fnmod(full, ':h:t') .. '/' .. base) or base
-
-        if #disp > 20 then
-            disp = disp:sub(1, 20) .. '…'
-        end
-
-        if full == expand '%:p' then
-            parts[#parts + 1] = '%#HarpoonActive#' .. disp .. '%#StatusLine#'
-        else
-            parts[#parts + 1] = disp
-        end
-
-        ::continue::
-    end
-
-    return table.concat(parts, ' | ')
-end
-
--- Diagnostics
-_G.diagnostics = function()
-    local diags = vim.diagnostic.get(0)
-    local counts = {0, 0, 0, 0} -- ERROR, WARN, INFO, HINT
-
-    for _, d in ipairs(diags) do
+    for _, d in ipairs(diagnostics) do
         counts[d.severity] = counts[d.severity] + 1
     end
 
     local parts = {}
-    if counts[1] > 0 then parts[#parts+1] = '%#DiagnosticError# '..counts[1]..'%#StatusLine#' end
-    if counts[2] > 0 then parts[#parts+1] = '%#DiagnosticWarn#󰀪 '..counts[2]..'%#StatusLine#' end
-    if counts[3] > 0 then parts[#parts+1] = '%#DiagnosticInfo#󰋽 '..counts[3]..'%#StatusLine#' end
-    if counts[4] > 0 then parts[#parts+1] = '%#DiagnosticHint#󰌶 '..counts[4]..'%#StatusLine#' end
+    if counts[1] > 0 then
+        parts[#parts + 1] = '%#DiagnosticError# ' .. counts[1] .. '%#StatusLine#'
+    end
+    if counts[2] > 0 then
+        parts[#parts + 1] = '%#DiagnosticWarn#󰀪 ' .. counts[2] .. '%#StatusLine#'
+    end
+    if counts[3] > 0 then
+        parts[#parts + 1] = '%#DiagnosticInfo#󰋽 ' .. counts[3] .. '%#StatusLine#'
+    end
+    if counts[4] > 0 then
+        parts[#parts + 1] = '%#DiagnosticHint#󰌶 ' .. counts[4] .. '%#StatusLine#'
+    end
 
-    return table.concat(parts, ' ')
+    diagnostic_cache = table.concat(parts, ' ')
 end
 
--- Git branch
+-- HARPOON
+local harpoon_ok, harpoon = pcall(require, 'harpoon')
+
+local harpoon_list_cache = ''
+
+local function basename(path)
+    return path:match '([^/\\]+)$' or path
+end
+
+local uv = vim.uv or vim.loop
+
+local function normalize(path)
+    if not path or path == '' then
+        return ''
+    end
+    return uv.fs_realpath(path) or vim.fs.normalize(path)
+end
+
+_G.handle_harpoon_list = function()
+    if not harpoon_ok or not harpoon then
+        harpoon_list_cache = ''
+        return
+    end
+
+    local list = harpoon:list()
+    local items = (list and list.items) or {}
+    local current = normalize(vim.api.nvim_buf_get_name(0))
+    local max = math.min(5, #items)
+
+    local parts = {}
+    for i = 1, max do
+        local value = items[i] and items[i].value
+        if type(value) == 'string' and value ~= '' then
+            local full = normalize(value)
+            local base = basename(full)
+            local disp = (#base > 20) and (base:sub(1, 20) .. '…') or base
+
+            -- prepend number
+            disp = i .. ':' .. disp
+
+            if full == current then
+                disp = '%#HarpoonActive#' .. disp .. '%#StatusLine#'
+            end
+
+            parts[#parts + 1] = disp
+        end
+    end
+
+    harpoon_list_cache = table.concat(parts, ' | ')
+end
+
+-- GIT
 local function git_branch()
-    local head = vim.b.gitsigns_head
-    if head and #head > 0 then return head end
-
-    -- fallback if repo but no gitsigns
-    local ok, branch = pcall(vim.fn.system, 'git branch --show-current 2>/dev/null')
-    if ok then
-        branch = branch:gsub('%s+', '')
-        if #branch > 0 then return branch end
-    end
-
-    return ''
+    return vim.b.gitsigns_head or ''
 end
 
--- Main statusline
+-- STATUSLINE
 _G.statusline = function()
-    local path = vim.fn.expand '%:p'
-    local short = vim.fn.fnamemodify(path, ':p:~:h:t') .. '/' .. vim.fn.expand '%:t'
-    if short == '' then short = '[No Name]' end
-
-    -- Truncate to 50 chars
-    if #short > 50 then
-        short = short:sub(1, 50) .. '…'
-    end
-
-    -- local diag = _G.diagnostics()
-    -- local harpoon_list = _G.harpoon_statusline()
-
     return table.concat {
-        '%#StatusLinePath# ',
-        short,
-        ' ',
+        '%#StatusLinePath# %<%t ',
         '%#StatusLine#',
-        ' %m ', -- show a '+' if buffer is modified
-        _G.diagnostics(),
+        ' %m ',
+        diagnostic_cache,
         ' ',
-        _G.harpoon_statusline(),
-        '%=', -- pushes the rest to the right
+        harpoon_list_cache,
+        '%=',
         git_branch(),
-        ' %r %h %q', -- readonly, help, and quickfix buffer status
+        ' %y %r %h %q',
     }
 end
 
--- Redraw on diagnostic change
-vim.api.nvim_create_autocmd({ 'DiagnosticChanged' }, {
-    callback = function() vim.cmd.redrawstatus() end,
+-- Autocmds
+vim.api.nvim_create_autocmd('BufEnter', {
+    callback = function()
+        _G.handle_harpoon_list()
+    end,
 })
 
--- Highlight groups
+vim.api.nvim_create_autocmd({ 'DiagnosticChanged', 'BufEnter' }, {
+    callback = function()
+        handle_diagnostic_list()
+    end,
+})
+
+-- Triggered with harpoon bindings or when leaving the harpoon menu buffer
+vim.api.nvim_create_augroup('HarpoonStatus', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufWinLeave', 'User' }, {
+    pattern = { '__harpoon-menu__*', 'HarpoonUpdated' },
+    group = 'HarpoonStatus',
+    callback = function()
+        _G.handle_harpoon_list()
+        vim.cmd.redrawstatus()
+    end,
+})
+
+-- Highlights
 vim.api.nvim_set_hl(0, 'HarpoonActive', { fg = '#0d3b66', bold = true })
 vim.api.nvim_set_hl(0, 'StatusLinePath', { bg = '#2E3440', fg = '#e0e0e0' })
 
--- Activate statusline
+-- Activate Statusline
 vim.o.statusline = '%!v:lua.statusline()'
+
+-- Init
+handle_diagnostic_list()
+handle_harpoon_list()

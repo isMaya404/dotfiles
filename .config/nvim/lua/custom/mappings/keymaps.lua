@@ -2,14 +2,6 @@ local map = vim.keymap.set
 -- local unmap = vim.keymap.del
 local opts = { silent = true, noremap = true }
 
-local function map_buffer_cmd(lhs, rhs, desc)
-    vim.keymap.set('n', lhs, function()
-        if vim.bo.filetype ~= 'NvimTree' then
-            vim.cmd(rhs)
-        end
-    end, { desc = desc, noremap = true, silent = true })
-end
-
 map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
 
 map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
@@ -69,8 +61,17 @@ end, { desc = 'toggle floating term' })
 map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 
 -- Buffers
+local function map_buffer_cmd(lhs, rhs, desc)
+    vim.keymap.set('n', lhs, function()
+        if vim.bo.filetype ~= 'NvimTree' then
+            vim.cmd(rhs)
+        end
+    end, { desc = desc, noremap = true, silent = true })
+end
+
 map_buffer_cmd('<Tab>', 'bnext', 'Next Buffer')
 map_buffer_cmd('<S-Tab>', 'bprev', 'Prev Buffer')
+
 map('n', '<leader>,', '<C-^>', { desc = 'Switch to last buffer' })
 map('n', '<leader>X', function()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -227,13 +228,13 @@ map('n', '<leader>ttjp', function()
 end, opts)
 
 -- TodoComments
-map('n', ']t', function()
-    require('todo-comments').jump_next()
-end, { desc = 'Next todo comment' })
-
-map('n', '[t', function()
-    require('todo-comments').jump_prev()
-end, { desc = 'Previous todo comment' })
+-- map('n', ']t', function()
+--     require('todo-comments').jump_next()
+-- end, { desc = 'Next todo comment' })
+--
+-- map('n', '[t', function()
+--     require('todo-comments').jump_prev()
+-- end, { desc = 'Previous todo comment' })
 
 -- Trouble
 map('n', '<leader>tl', '<cmd>Trouble loclist toggle focus=true<CR>', { desc = '[T]rouble [L]ocation List' })
@@ -245,7 +246,7 @@ map('n', '<leader>ts', '<cmd>Trouble symbols toggle focus=false<CR>', { desc = '
 -- map('n', '<leader>tf', '<cmd>Trouble lsp toggle focus=true win.position=right<CR>', { desc = 'LSP Definitions / references / ... (Trouble)' })
 -- map('n', '<leader>tt', '<cmd>TodoTrouble<CR>', { desc = '[T]rouble [T]odo' }) -- Using telescope for this already
 
---NOTE: These 2 bindings are currently replaced by Trouble.nvim (idk might use them again in the future)
+-- These 2 bindings are currently replaced by Trouble.nvim (idk might use them again in the future)
 
 -- Add current buffer diagnostics to location list with severity WARN or higher.
 -- map('n', '<leader>dl', function()
