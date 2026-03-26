@@ -1,6 +1,6 @@
 local diagnostic_cache = ''
 
--- DIAGNOSTICS
+-- Diagnostics
 local function handle_diagnostic_list()
     local diagnostics = vim.diagnostic.get(0)
     local counts = { 0, 0, 0, 0 }
@@ -26,7 +26,7 @@ local function handle_diagnostic_list()
     diagnostic_cache = table.concat(parts, ' ')
 end
 
--- HARPOON
+-- Harpoon
 local harpoon_ok, harpoon = pcall(require, 'harpoon')
 
 local harpoon_list_cache = ''
@@ -82,7 +82,7 @@ local function git_branch()
     return vim.b.gitsigns_head or ''
 end
 
--- STATUSLINE
+-- Statusline
 _G.statusline = function()
     return table.concat {
         '%#StatusLinePath# %<%t ',

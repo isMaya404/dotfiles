@@ -73,7 +73,7 @@ if not vim.g.vscode then
     require 'custom.highlights'
     require 'custom.autocmds'
     require 'custom.opts'
-    require 'custom.status'
+    require 'custom.statusline'
     require 'custom.tabs'
     require 'custom.commands'
     -- vim.schedule(function()
