@@ -127,7 +127,3 @@ vim.api.nvim_set_hl(0, 'StatusLinePath', { bg = '#2E3440', fg = '#e0e0e0' })
 
 -- Activate Statusline
 vim.o.statusline = '%!v:lua.statusline()'
-
--- Init
-handle_diagnostic_list()
-handle_harpoon_list()
