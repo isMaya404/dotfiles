@@ -24,29 +24,35 @@ return {
 
         on_dir(project_root)
     end,
-    on_attach = function(client, bufnr)
-        -- fix all
+    on_attach = function(bufnr)
+        local function apply_action(kind)
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = {
+                    only = { kind },
+                    diagnostics = vim.diagnostic.get(bufnr),
+                },
+            }
+        end
+
         vim.keymap.set('n', 'glf', function()
-            vim.lsp.buf.code_action {
-                apply = true,
-                context = { only = { 'source.fixAll' } },
-            }
-        end)
+            apply_action 'source.fixAll'
+        end, { desc = 'LSP: Fix all' })
 
-        -- add missing imports
         vim.keymap.set('n', 'gai', function()
-            vim.lsp.buf.code_action {
-                apply = true,
-                context = { only = { 'source.addMissingImports.ts' } },
-            }
-        end)
+            apply_action 'source.addMissingImports'
+        end, { desc = 'LSP: Add missing imports' })
 
-        -- remove unused imports
+        vim.keymap.set('n', 'grU', function()
+            apply_action 'source.removeUnused'
+        end, { desc = 'LSP: Remove unused' })
+
         vim.keymap.set('n', 'gru', function()
-            vim.lsp.buf.code_action {
-                apply = true,
-                context = { only = { 'source.removeUnusedImports' } },
-            }
-        end)
+            apply_action 'source.removeUnusedImports'
+        end, { desc = 'LSP: Remove unused imports' })
+
+        vim.keymap.set('n', 'gqf', function()
+            apply_action 'quickfix'
+        end, { desc = 'LSP: Quick fix' })
     end,
 }

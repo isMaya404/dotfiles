@@ -1,6 +1,7 @@
 return {
     cmd = { 'deno', 'lsp' },
     cmd_env = { NO_COLOR = true },
+
     filetypes = {
         'javascript',
         'javascriptreact',
@@ -9,6 +10,7 @@ return {
         'typescriptreact',
         'typescript',
     },
+
     root_dir = function(bufnr, on_dir)
         local root_markers = { 'deno.json', 'deno.jsonc', 'deno.lock' }
         root_markers = { root_markers, { '.git' } } or vim.list_extend(root_markers, { '.git' })
@@ -23,6 +25,7 @@ return {
         -- fallback to the current working directory if no project root is found
         on_dir(project_root or vim.fn.getcwd())
     end,
+
     settings = {
         deno = {
             enable = true,
@@ -39,6 +42,7 @@ return {
             },
         },
     },
+
     handlers = (function()
         local lsp = vim.lsp
 
@@ -85,6 +89,7 @@ return {
             ['textDocument/references'] = denols_handler,
         }
     end)(),
+
     on_attach = function(client, bufnr)
         -- disable semantic tokens like the rest of your setup
         if client.supports_method 'textDocument/semanticTokens' then
@@ -105,25 +110,12 @@ return {
             desc = 'Cache a Deno module and its dependencies',
         })
 
-        vim.keymap.set('n', 'gqf', function()
+        -- Handles sorting imports and removing unused ones
+        vim.keymap.set('n', 'goi', function()
             vim.lsp.buf.code_action {
                 apply = true,
-                context = { only = { 'quickfix' } },
+                context = { only = { 'source.organizeImports' }, diagnostics = {} },
             }
-        end)
-
-        vim.keymap.set('n', 'glf', function()
-            vim.lsp.buf.code_action {
-                apply = true,
-                context = { only = { 'source.fixAll' } },
-            }
-        end)
-
-        vim.keymap.set('n', 'gai', function()
-            vim.lsp.buf.code_action {
-                apply = true,
-                context = { only = { 'quickfix.addImport' } },
-            }
-        end)
+        end, { desc = 'Deno: Organize Imports' })
     end,
 }

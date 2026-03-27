@@ -1,10 +1,8 @@
 return {
     cmd = { 'tailwindcss-language-server', '--stdio' },
     filetypes = {
-        'ejs',
         'html',
         'markdown',
-        'php',
         -- css
         'css',
         'sass',

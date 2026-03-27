@@ -1,7 +1,5 @@
 local tailwind_tools = require 'tailwind-tools'
 
----@type TailwindTools.Option
-
 local opts = {
     server = {
         override = true,

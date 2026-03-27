@@ -2,7 +2,8 @@ local map = vim.keymap.set
 -- local unmap = vim.keymap.del
 local opts = { silent = true, noremap = true }
 
-map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
+map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'code action' })
+-- map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
 
 map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
 map({ 'n', 'v' }, '<leader>bd', [["_d]], { desc = 'blackhole delete' })
@@ -152,10 +153,13 @@ map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]
 
 --------------------------------------- Plugin Mappings ---------------------------------------
 
+-- Copilot Chat
+map('n', '<leader>cc', '<Cmd>CopilotChatToggle<CR>')
+
 -- Ts-Tools
-map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>', { desc = 'TS Remove unused imports' })
-map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>', { desc = 'TS Remove all unused statements' })
-map('n', 'gai', '<Cmd>TSToolsAddMissingImports<CR>', { desc = 'TS Add missing imports' })
+map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>', { desc = 'TS [R]emove [U]nused Imports' })
+map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>', { desc = 'TS Remove All [U]nused Statements' })
+map('n', 'gmi', '<Cmd>TSToolsAddMissingImports<CR>', { desc = 'TS Add [M]issing [I]mports' })
 map('n', 'glf', '<Cmd>TSToolsFixAll<CR>', { desc = 'TS Fix all' })
 
 map('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
@@ -307,7 +311,7 @@ map('n', 'grr', '<cmd>Telescope lsp_references<CR>', { desc = '[L]sp [R]eference
 map('n', 'grt', '<cmd>Telescope lsp_type_definitions<CR>', { desc = '[G]oto [T]ype Def' })
 map('n', 'gri', '<cmd>Telescope lsp_implementations<CR>', { desc = '[G]oto [I]mplementation' })
 map('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP [G]oto [D]eclaration' })
-map('n', 'gra', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
+map('n', 'ga', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
 
 map('n', 'gs', vim.lsp.buf.signature_help, { desc = '[S]ignature Help' })
 map('n', 'gS', '<cmd>Telescope lsp_document_symbols<CR>', { desc = 'Doc [S]ymbols' })

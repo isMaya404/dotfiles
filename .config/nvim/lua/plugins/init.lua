@@ -6,6 +6,10 @@ return {
         'gbprod/nord.nvim',
         lazy = false,
         priority = 1000,
+        overrides = {
+            NormalFloat = { bg = 'none' },
+            FloatBorder = { bg = 'none' },
+        },
         config = function()
             require('nord').setup {
                 transparent = false,
@@ -13,9 +17,10 @@ return {
             vim.cmd.colorscheme 'nord'
         end,
     },
-    install = {
-        colorscheme = { 'nord' },
-    },
+
+    -- install = {
+    --     colorscheme = { 'nord' },
+    -- },
     -- {
     --     'folke/tokyonight.nvim',
     --     lazy = false,
@@ -416,42 +421,42 @@ return {
     -- },
 
     -- ai integration
-    -- {
-    --     'yetone/avante.nvim',
-    --     event = 'VeryLazy',
-    --     version = false, -- should always be false
-    --     build = 'make',
-    --     dependencies = {
-    --         'MunifTanjim/nui.nvim',
-    --         'zbirenbaum/copilot.lua', -- for providers='copilot'
-    --         {
-    --             -- support for image pasting
-    --             'HakonHarnes/img-clip.nvim',
-    --             event = 'VeryLazy',
-    --             opts = {
-    --                 default = {
-    --                     embed_image_as_base64 = false,
-    --                     prompt_for_file_name = false,
-    --                     drag_and_drop = {
-    --                         insert_mode = true,
-    --                     },
-    --                     use_absolute_path = true,
-    --                 },
-    --             },
-    --         },
+    {
+        'yetone/avante.nvim',
+        event = 'VeryLazy',
+        version = false, -- should always be false
+        build = 'make',
+        dependencies = {
+            'MunifTanjim/nui.nvim',
+            'zbirenbaum/copilot.lua', -- for providers='copilot'
+            {
+                -- support for image pasting
+                'HakonHarnes/img-clip.nvim',
+                event = 'VeryLazy',
+                opts = {
+                    default = {
+                        embed_image_as_base64 = false,
+                        prompt_for_file_name = false,
+                        drag_and_drop = {
+                            insert_mode = true,
+                        },
+                        use_absolute_path = true,
+                    },
+                },
+            },
 
-    -- {
-    --     'MeanderingProgrammer/render-markdown.nvim',
-    --     opts = {
-    --         file_types = { 'markdown', 'Avante' },
-    --     },
-    --     ft = { 'markdown', 'Avante' },
-    -- },
-    --      },
-    --      config = function()
-    -- return require 'configs.avante'
-    --      end,
-    --  },
+            {
+                'MeanderingProgrammer/render-markdown.nvim',
+                opts = {
+                    file_types = { 'markdown', 'Avante' },
+                },
+                ft = { 'markdown', 'Avante' },
+            },
+        },
+        config = function()
+            return require 'configs.avante'
+        end,
+    },
 
     {
         'zbirenbaum/copilot.lua',

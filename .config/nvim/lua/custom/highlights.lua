@@ -21,6 +21,7 @@ local set_hl = vim.api.nvim_set_hl
 for _, group in ipairs(transparent_bg_group) do
     set_hl(0, group, { bg = 'NONE' })
 end
+vim.api.nvim_set_hl(0, 'NuiNormal', { bg = 'none' })
 
 set_hl(0, 'LineNr', { fg = '#555555' })
 set_hl(0, 'CursorLineNr', { fg = '#e0e0e0', bold = true })
