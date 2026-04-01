@@ -1,8 +1,7 @@
 local avante = require 'avante'
 
 local opts = {
-    ---@alias avante.Mode "agentic" | "legacy"
-    mode = 'legacy',
+    mode = 'legacy', -- agentic | legacy
 
     provider = 'copilot',
     auto_suggestions_provider = 'copilot',
@@ -21,23 +20,10 @@ local opts = {
             extra_request_body = {
                 -- temperature is not supported by Response API for reasoning models
                 max_tokens = 20480,
-
                 reasoning_effort = 'high',
             },
         },
 
-        -- groq = {
-        --   __inherited_from = 'copilot',
-        --   api_key_name = 'GROQ_API_KEY',
-        --   endpoint = 'https://api.groq.com/openai/v1/',
-        --   model = 'llama-3.3-70b-versatile',
-        --   disable_tools = true,
-        --   extra_request_body = {
-        --     temperature = 0.7,
-        --     max_tokens = 32768,
-        --   },
-        -- },
-        --
         -- openai = {
         --   endpoint = 'https://api.openai.com/v1',
         --   model = 'gpt-3.5-turbo',
@@ -60,7 +46,7 @@ local opts = {
     --     prompt = 'Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective. Do not provide any explanation, just give the response directly. Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]',
     --     timeout = 60000,
     -- },
-    --
+
     behaviour = {
         auto_suggestions = false,
         auto_set_highlight_group = true,

@@ -2,7 +2,7 @@ vim.cmd 'highlight! TabLineFill            guibg=NONE guifg=#c0c0c0'
 vim.cmd 'highlight! TabLineTabInactive     guibg=NONE guifg=#c0c0c0'
 vim.cmd 'highlight! TabLineTabActive       guibg=NONE guifg=#d19a66'
 
-local tree_offset = 37
+local tree_offset = 45
 local initial_offset = 6
 
 vim.o.showtabline = 1

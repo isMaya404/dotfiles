@@ -2,10 +2,6 @@
 local lspconfig = require 'lspconfig'
 require('fidget').setup {}
 
-local function map(lhs, rhs)
-    vim.keymap.set('n', lhs, rhs, { buffer = bufnr })
-end
-
 vim.diagnostic.config {
     virtual_text = false,
     float = { border = 'rounded', source = 'if_many' },
@@ -46,51 +42,18 @@ local servers = {
     lua_ls = require 'configs.lsp.lua',
     -- tsgo = require 'configs.lsp.tsgo',
     -- ts_ls = 'configs.lsp.ts',
-    denols = require 'configs.lsp.deno',
     vtsls = require 'configs.lsp.vtsls',
+    denols = require 'configs.lsp.deno',
     emmet_language_server = require 'configs.lsp.emmet',
     tailwindcss = require 'configs.lsp.tailwindcss',
     pyright = require 'configs.lsp.python',
     jsonls = require 'configs.lsp.json',
+    graphql = require 'configs.lsp.graphql',
+    -- sqlls = require 'configs.lsp.sql',
+    sqlls = require 'configs.lsp.sql',
 
-    -- sqls = {
-    --     cmd = { 'sqls' },
-    --     filetypes = { 'sql', 'mysql' },
-    --     root_markers = { 'config.yml' },
-    --     settings = {},
-    -- },
-
-    -- cssls = {
-    --     cmd = { 'vscode-css-language-server', '--stdio' },
-    --     filetypes = { 'css', 'scss', 'less' },
-    --     init_options = { provideFormatter = false },
-    --     root_markers = { 'package.json', '.git' },
-    --     settings = {
-    --         css = { validate = true },
-    --         scss = { validate = true },
-    --     },
-    -- },
-    --
-    -- html = {
-    --     cmd = { 'vscode-html-language-server', '--stdio' },
-    --     filetypes = { 'html', 'ejs', 'pug' },
-    --     root_markers = { 'package.json', '.git' },
-    --     init_options = { embeddedLanguages = { css = true, javascript = true } },
-    -- },
-
-    graphql = {
-        cmd = { 'graphql-lsp', 'server', '-m', 'stream' },
-        filetypes = { 'gql', 'graphql' }, -- maybe add js, ts, jsx, and tsx later on a better hardware
-        root_dir = function(bufnr, on_dir)
-            local fname = vim.api.nvim_buf_get_name(bufnr)
-            on_dir(vim.lsp.cofig.util.root_pattern('.graphqlrc*', '.graphql.config.*', 'graphql.config.*')(fname))
-        end,
-        -- settings = {
-        --     graphql = {
-        --         schema = 'graphql.schema.json',
-        --     },
-        -- },
-    },
+    -- cssls = require 'configs.lsp.css',
+    -- html = require 'configs.lsp.html',
 }
 
 require('mason-tool-installer').setup {
@@ -131,10 +94,6 @@ for name, config in pairs(servers) do
         on_init = on_init,
         on_attach = on_attach,
         capabilities = capabilities,
-        -- handlers = {
-        --     ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' }),
-        --     ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' }),
-        -- },
     }, config or {})
 
     vim.lsp.config(name, cfg)

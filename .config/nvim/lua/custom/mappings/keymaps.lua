@@ -153,6 +153,11 @@ map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]
 
 --------------------------------------- Plugin Mappings ---------------------------------------
 
+-- map('n', '<leader>zm', function()
+--     require('zen-mode').toggle()
+-- end, { desc = 'Toggle Zen Mode' })
+map('n', '<leader>zm', '<Cmd>ZenMode<CR>', { desc = 'Toggle Zeon Mode' })
+
 -- Copilot Chat
 map('n', '<leader>cc', '<Cmd>CopilotChatToggle<CR>')
 

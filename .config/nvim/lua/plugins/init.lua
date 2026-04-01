@@ -290,8 +290,6 @@ return {
         ft = { 'markdown' },
     },
 
-    ----------------------------------------------------------
-
     -- better loclist && qflist
     {
         'folke/trouble.nvim',
@@ -445,13 +443,13 @@ return {
                 },
             },
 
-            {
-                'MeanderingProgrammer/render-markdown.nvim',
-                opts = {
-                    file_types = { 'markdown', 'Avante' },
-                },
-                ft = { 'markdown', 'Avante' },
-            },
+            -- {
+            --     'MeanderingProgrammer/render-markdown.nvim',
+            --     opts = {
+            --         file_types = { 'markdown', 'Avante' },
+            --     },
+            --     ft = { 'markdown', 'Avante' },
+            -- },
         },
         config = function()
             return require 'configs.avante'
