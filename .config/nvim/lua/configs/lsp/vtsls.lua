@@ -24,35 +24,42 @@ return {
 
         on_dir(project_root)
     end,
-    on_attach = function(bufnr)
-        local function apply_action(kind)
-            vim.lsp.buf.code_action {
-                apply = true,
-                context = {
-                    only = { kind },
-                    diagnostics = vim.diagnostic.get(bufnr),
-                },
-            }
-        end
+    on_attach = function(_, bufnr)
+        local opts = { buffer = bufnr }
 
         vim.keymap.set('n', 'glf', function()
-            apply_action 'source.fixAll'
-        end, { desc = 'LSP: Fix all' })
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'source.fixAll' } },
+            }
+        end, opts)
 
-        vim.keymap.set('n', 'gai', function()
-            apply_action 'source.addMissingImports'
-        end, { desc = 'LSP: Add missing imports' })
-
-        vim.keymap.set('n', 'grU', function()
-            apply_action 'source.removeUnused'
-        end, { desc = 'LSP: Remove unused' })
+        vim.keymap.set('n', 'gmi', function()
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'source.addMissingImports' } },
+            }
+        end, opts)
 
         vim.keymap.set('n', 'gru', function()
-            apply_action 'source.removeUnusedImports'
-        end, { desc = 'LSP: Remove unused imports' })
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'source.removeUnusedImports' } },
+            }
+        end, opts)
 
         vim.keymap.set('n', 'gqf', function()
-            apply_action 'quickfix'
-        end, { desc = 'LSP: Quick fix' })
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'quickfix' } },
+            }
+        end, opts)
+
+        vim.keymap.set('n', 'grU', function()
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'source.removeUnused' } },
+            }
+        end, opts)
     end,
 }
