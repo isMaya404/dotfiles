@@ -18,14 +18,15 @@ return {
         end,
     },
 
-    {
-        'akinsho/bufferline.nvim',
-        version = '*',
-        -- dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function()
-            require 'configs.bufferline'
-        end,
-    },
+    -- {
+    --     'akinsho/bufferline.nvim',
+    --     event = 'BufReadPost',
+    --     version = '*',
+    --     -- dependencies = 'nvim-tree/nvim-web-devicons',
+    --     config = function()
+    --         require 'configs.bufferline'
+    --     end,
+    -- },
 
     -- install = {
     --     colorscheme = { 'nord' },
@@ -127,8 +128,52 @@ return {
     -- blazingly fast???
     {
         'ThePrimeagen/harpoon',
-        event = 'VeryLazy',
+        -- event = 'VeryLazy',
         branch = 'harpoon2',
+        keys = {
+            {
+                '<leader>h',
+                function()
+                    require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+                end,
+                desc = 'Harpoon Menu',
+            },
+            {
+                '<leader>.',
+                function()
+                    require('harpoon'):list():add()
+                end,
+                desc = 'Harpoon Add',
+            },
+            {
+                '<leader>j',
+                function()
+                    require('harpoon'):list():select(1)
+                end,
+                desc = 'Harpoon Jump 1',
+            },
+            {
+                '<leader>k',
+                function()
+                    require('harpoon'):list():select(2)
+                end,
+                desc = 'Harpoon Jump 2',
+            },
+            {
+                '<leader>l',
+                function()
+                    require('harpoon'):list():select(3)
+                end,
+                desc = 'Harpoon Jump 3',
+            },
+            {
+                '<leader>p',
+                function()
+                    require('harpoon'):list():select(4)
+                end,
+                desc = 'Harpoon Jump 4',
+            },
+        },
         config = function()
             require 'configs.harpoon'
         end,

@@ -266,8 +266,6 @@ map('n', '<leader>ts', '<cmd>Trouble symbols toggle focus=false<CR>', { desc = '
 
 -- Telescope x LSP's
 
-local telescope = require 'telescope'
-
 --  Telescope navigations
 map('n', '<leader>fl', '<cmd>Telescope find_files<cr>', { desc = 'Find [F]i[L]es' })
 map('n', '<leader>fa', '<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>', { desc = '[F]ind [A]ll Files' })
@@ -276,9 +274,18 @@ map('n', '<leader>fp', '<cmd>Telescope buffers<CR>', { desc = '[F]ind Buffers in
 map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind [W]ords' })
 map('n', '<leader>fs', '<cmd>Telescope grep_string<cr>', { desc = '[F]ind Current [S]tring' }) -- find string under cursor
 map('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = '[F]ind Curr Buf Fu[ZZ]y' })
+-- map('n', '<leader>fo', function()
+--     require('telescope.builtin').oldfiles { cwd_only = true }
+-- end, { desc = '[F]ind [O]ecent Files' })
 map('n', '<leader>fo', function()
-    telescope.builtin.oldfiles { cwd_only = true }
-end, { desc = '[F]ind [O]ecent Files' })
+    require('telescope.builtin').oldfiles {
+        cwd_only = true,
+        path_display = { 'filename_first' },
+        filter = function(item)
+            return item ~= vim.api.nvim_buf_get_name(0) -- exlude current buf
+        end,
+    }
+end, { desc = '[F]ind [O]ld Files' })
 
 -- Telescope docs/help/infos
 map('n', '<leader>fn', '<cmd>Telescope notify<cr>', { desc = '[F]ind [N]otif History' })
