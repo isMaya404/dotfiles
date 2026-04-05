@@ -2,26 +2,25 @@ local map = vim.keymap.set
 -- local unmap = vim.keymap.del
 local opts = { silent = true, noremap = true }
 
-map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'code action' })
 -- map('n', '<leader>mt', '<cmd>silent !ctags -R .<CR>', { desc = 'make tags' })
 
-map('x', '<leader>bp', [["_dP]], { desc = 'blackhole paste' })
-map({ 'n', 'v' }, '<leader>bd', [["_d]], { desc = 'blackhole delete' })
-map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
+map('x', '<leader>p', [["_dP]], { desc = 'blackhole paste' })
+map({ 'n', 'v' }, '<leader>d', [["_d]], { desc = 'blackhole delete' })
+-- map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
 map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '' })
 map('n', '<leader>s', '<cmd>w<cr>', { desc = 'write' })
 map('n', '<leader>Q', '<cmd>qa<CR>', { desc = 'quit all' })
 
 -- Toggle spell checker. More useful paired with 'z=' to check spelling suggestions
-map('n', '<leader>dn', '<cmd>setlocal spell! spelllang=en_us<CR>', { desc = 'dictionary' })
+-- map('n', '<leader>dn', '<cmd>setlocal spell! spelllang=en_us<CR>', { desc = 'dictionary' })
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 map({ 'n', 'x', 'o' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { desc = 'Down', expr = true, silent = true })
 map({ 'n', 'x', 'o' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { desc = 'Up', expr = true, silent = true })
 
-map('n', '<leader><leader>x', '<cmd>source %<CR>')
+map('n', '<leader><leader>s', '<cmd>source %<CR>')
 
 map('i', '<M-i>', '<ESC>^i', { remap = true, desc = 'move beginning of line' })
 map('i', '<M-o>', '<End>', { remap = true, desc = 'move end of line' })
@@ -110,10 +109,14 @@ map({ 'n', 'x' }, '<C-w>l', '<Nop>')
 map({ 'n', 'x' }, '<C-w><C-l>', '<Nop>')
 
 -- map new window navigations
-map({ 'n', 'x' }, '<C-j>', '<C-w>h')
-map({ 'n', 'x' }, '<C-k>', '<C-w>j')
-map({ 'n', 'x' }, '<C-l>', '<C-w>k')
-map({ 'n', 'x' }, '<C-p>', '<C-w>l')
+map({ 'n', 'x' }, '<C-w>j', '<C-w>h')
+map({ 'n', 'x' }, '<C-w><C-j>', '<C-w>h')
+map({ 'n', 'x' }, '<C-w>k', '<C-w>j')
+map({ 'n', 'x' }, '<C-w><C-k>', '<C-w>j')
+map({ 'n', 'x' }, '<C-w>l', '<C-w>k')
+map({ 'n', 'x' }, '<C-w><C-l>', '<C-w>k')
+map({ 'n', 'x' }, '<C-w>p', '<C-w>l')
+map({ 'n', 'x' }, '<C-w><C-p>', '<C-w>l')
 
 map({ 'n', 'x' }, '<leader>wo', '<C-w>o')
 map({ 'n', 'x' }, '<leader>wv', '<C-w>v')
@@ -128,7 +131,7 @@ map({ 'n', 'x' }, '<leader><Left>', ':silent! vertical resize -10<CR>')
 map({ 'n', 'x' }, '<C-w>r', '<C-l>', { desc = 'redraw screen' })
 
 -- Bash Scripts
-map({ 'n' }, '<M-m>', ':!tmux-windowizer $(git rev-parse --abbrev-ref HEAD) pnpm dev<CR><CR>')
+-- map({ 'n' }, '<M-idk', ':!tmux-windowizer $(git rev-parse --abbrev-ref HEAD) pnpm dev<CR><CR>')
 map({ 'n' }, '<M-1>', ':!tmux-windowizer nn ')
 map({ 'n' }, '<M-0>', ':!tmux-windowizer dev:fe pnpm dev:frontend<CR><CR>')
 map({ 'n' }, '<M-9>', ':!tmux-windowizer dev:be pnpm dev:backend<CR><CR>')
@@ -152,11 +155,6 @@ end
 map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]opy All [B]uffers To Clipboard' })
 
 --------------------------------------- Plugin Mappings ---------------------------------------
-
--- map('n', '<leader>zm', function()
---     require('zen-mode').toggle()
--- end, { desc = 'Toggle Zen Mode' })
-map('n', '<leader>zm', '<Cmd>ZenMode<CR>', { desc = 'Toggle Zeon Mode' })
 
 -- Copilot Chat
 map('n', '<leader>cc', '<Cmd>CopilotChatToggle<CR>')
@@ -266,16 +264,21 @@ map('n', '<leader>ts', '<cmd>Trouble symbols toggle focus=false<CR>', { desc = '
 --   vim.diagnostic.setqflist { severity = { min = vim.diagnostic.severity.WARN } }
 -- end, { desc = '[D]iagnostics [Q]uickfix' })
 
+-- Telescope x LSP's
+
+local telescope = require 'telescope'
+
 --  Telescope navigations
 map('n', '<leader>fl', '<cmd>Telescope find_files<cr>', { desc = 'Find [F]i[L]es' })
-map('n', '<leader>fd', '<cmd>Telescope diagnostics<cr>', { desc = '[F]ind [D]iagnostics' })
 map('n', '<leader>fa', '<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>', { desc = '[F]ind [A]ll Files' })
-map('n', '<leader>fp', '<cmd>Telescope buffers<CR>', { desc = '[F]ind Buffers' }) -- no mnemonics, fp is just faster than fb is why
+map('n', '<leader>fd', '<cmd>Telescope diagnostics<cr>', { desc = '[F]ind [D]iagnostics' })
+map('n', '<leader>fp', '<cmd>Telescope buffers<CR>', { desc = '[F]ind Buffers in [Project]' })
 map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind [W]ords' })
 map('n', '<leader>fs', '<cmd>Telescope grep_string<cr>', { desc = '[F]ind Current [S]tring' }) -- find string under cursor
 map('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = '[F]ind Curr Buf Fu[ZZ]y' })
-map('n', '<leader>fo', '<cmd>Telescope oldfiles<CR>', { desc = '[F]ind [O]ldfiles' })
-map('n', '<leader>fm', '<cmd>Telescope marks<CR>', { desc = '[F]ind [M]arks' })
+map('n', '<leader>fo', function()
+    telescope.builtin.oldfiles { cwd_only = true }
+end, { desc = '[F]ind [O]ecent Files' })
 
 -- Telescope docs/help/infos
 map('n', '<leader>fn', '<cmd>Telescope notify<cr>', { desc = '[F]ind [N]otif History' })
@@ -295,19 +298,49 @@ map('n', '<leader>gt', '<cmd>Telescope git_status<CR>', { desc = 'telescope git 
 map('n', '<leader>fS', '<cmd>Telescope luasnip<CR>', { desc = '[F]ind [S]nippets' })
 map('n', '<leader>ft', '<cmd>TodoTelescope keywords=TODO,FIX,BUG,NOTE<CR>', { desc = '[F]ind [T]odo' })
 
--- Telescope x LSP's
+local diag = vim.diagnostic
+local sev = diag.severity
 
-map('n', '<M-w>', '<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })<CR>', { desc = 'Go to [N]ext diagnostic' })
-map('n', '<M-W>', '<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })<CR>', { desc = 'Go to [P]rev diagnostic' })
-map('n', '<M-n>', '<cmd>lua vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })<CR>', { desc = 'Go to [N]ext diagnostic' })
-map('n', '<M-N>', '<cmd>lua vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>', { desc = 'Go to [P]rev diagnostic' })
-map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', { desc = 'Go to [N]ext diagnostic' })
-map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', { desc = 'Go to [P]rev diagnostic' })
+-- Warnings
+map('n', '<M-w>', function()
+    diag.jump { count = 1, severity = sev.WARN, float = true }
+end, { desc = 'Next warning diagnostic' })
+
+map('n', '<M-W>', function()
+    diag.jump { count = -1, severity = sev.WARN, float = true }
+end, { desc = 'Previous warning diagnostic' })
+
+-- Errors
+map('n', '<M-n>', function()
+    diag.jump { count = 1, severity = sev.ERROR, float = true }
+end, { desc = 'Next error diagnostic' })
+
+map('n', '<M-N>', function()
+    diag.jump { count = -1, severity = sev.ERROR, float = true }
+end, { desc = 'Previous error diagnostic' })
+
+-- Hints
+map('n', '<M-h>', function()
+    diag.jump { count = 1, severity = sev.HINT, float = true }
+end, { desc = 'Next hint diagnostic' })
+
+map('n', '<M-H>', function()
+    diag.jump { count = -1, severity = sev.HINT, float = true }
+end, { desc = 'Previous hint diagnostic' })
+
+-- General Navigation
+map('n', ']d', function()
+    diag.jump { count = 1, float = true }
+end, { desc = 'Go to [N]ext diagnostic' })
+
+map('n', '[d', function()
+    diag.jump { count = -1, float = true }
+end, { desc = 'Go to [P]rev diagnostic' })
 
 map('n', '<M-d>', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current Line [F]loat' })
-map('n', '<leader>dt', function()
+map('n', '<M-t>', function()
     vim.diagnostic.config { virtual_text = not vim.diagnostic.config().virtual_text }
-end, { desc = '[D]iagnostics Text [T]oggle' })
+end, { desc = '[T]oggle [D]iagnostics Text' })
 
 map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', { desc = '[G]oto [D]efinition' })
 map('n', 'grn', vim.lsp.buf.rename, { desc = 'LSP [R]e[n]ame' })
@@ -316,7 +349,7 @@ map('n', 'grr', '<cmd>Telescope lsp_references<CR>', { desc = '[L]sp [R]eference
 map('n', 'grt', '<cmd>Telescope lsp_type_definitions<CR>', { desc = '[G]oto [T]ype Def' })
 map('n', 'gri', '<cmd>Telescope lsp_implementations<CR>', { desc = '[G]oto [I]mplementation' })
 map('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP [G]oto [D]eclaration' })
-map('n', 'ga', vim.lsp.buf.code_action, { desc = '[C]ode [A]ction' })
+map('n', 'ga', vim.lsp.buf.code_action, { desc = 'Code Action' })
 
 map('n', 'gs', vim.lsp.buf.signature_help, { desc = '[S]ignature Help' })
 map('n', 'gS', '<cmd>Telescope lsp_document_symbols<CR>', { desc = 'Doc [S]ymbols' })

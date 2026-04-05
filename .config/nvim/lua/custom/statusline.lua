@@ -53,7 +53,7 @@ _G.handle_harpoon_list = function()
     local list = harpoon:list()
     local items = (list and list.items) or {}
     local current = normalize(vim.api.nvim_buf_get_name(0))
-    local max = math.min(5, #items)
+    local max = math.min(4, #items)
 
     local parts = {}
     for i = 1, max do

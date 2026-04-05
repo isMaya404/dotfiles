@@ -74,7 +74,7 @@ if not vim.g.vscode then
     require 'custom.autocmds'
     require 'custom.opts'
     require 'custom.statusline'
-    require 'custom.tabs'
+    -- require 'custom.tabs'
     require 'custom.commands'
     -- vim.schedule(function()
     require(m .. 'keymaps')

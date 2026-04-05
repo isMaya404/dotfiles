@@ -96,36 +96,36 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 })
 
 -- max N bufs, auto-delete oldest buf if more than N
-vim.api.nvim_create_autocmd('BufAdd', {
-    group = augroup 'auto_del_buf',
-    callback = function(args)
-        local bufnr = args.buf
-        if not vim.bo[bufnr].buflisted or vim.bo[bufnr].buftype ~= '' then
-            return
-        end
-
-        local max_buf = 5
-        local buffers = {}
-        for _, b in ipairs(vim.api.nvim_list_bufs()) do
-            if vim.bo[b].buflisted and vim.bo[b].buftype == '' then
-                table.insert(buffers, b)
-            end
-        end
-
-        if #buffers <= max_buf then
-            return
-        end
-
-        table.sort(buffers)
-
-        for _, b in ipairs(buffers) do
-            if b ~= vim.api.nvim_get_current_buf() then
-                vim.api.nvim_buf_delete(b, { force = true })
-                break
-            end
-        end
-    end,
-})
+-- vim.api.nvim_create_autocmd('BufAdd', {
+--     group = augroup 'auto_del_buf',
+--     callback = function(args)
+--         local bufnr = args.buf
+--         if not vim.bo[bufnr].buflisted or vim.bo[bufnr].buftype ~= '' then
+--             return
+--         end
+--
+--         local max_buf = 50
+--         local buffers = {}
+--         for _, b in ipairs(vim.api.nvim_list_bufs()) do
+--             if vim.bo[b].buflisted and vim.bo[b].buftype == '' then
+--                 table.insert(buffers, b)
+--             end
+--         end
+--
+--         if #buffers <= max_buf then
+--             return
+--         end
+--
+--         table.sort(buffers)
+--
+--         for _, b in ipairs(buffers) do
+--             if b ~= vim.api.nvim_get_current_buf() then
+--                 vim.api.nvim_buf_delete(b, { force = true })
+--                 break
+--             end
+--         end
+--     end,
+-- })
 
 ------------------- Comments -------------------
 
