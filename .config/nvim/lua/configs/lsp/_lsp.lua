@@ -40,20 +40,19 @@ require('mason').setup()
 
 local servers = {
     lua_ls = require 'configs.lsp.lua',
-    -- tsgo = require 'configs.lsp.tsgo',
+    tsgo = require 'configs.lsp.tsgo',
+    -- vtsls = require 'configs.lsp.vtsls',
     -- ts_ls = 'configs.lsp.ts',
-    vtsls = require 'configs.lsp.vtsls',
     denols = require 'configs.lsp.deno',
     emmet_language_server = require 'configs.lsp.emmet',
     tailwindcss = require 'configs.lsp.tailwindcss',
+    -- cssls = require 'configs.lsp.css',
+    -- html = require 'configs.lsp.html',
     pyright = require 'configs.lsp.python',
     jsonls = require 'configs.lsp.json',
     graphql = require 'configs.lsp.graphql',
     -- sqlls = require 'configs.lsp.sql',
     sqlls = require 'configs.lsp.sql',
-
-    -- cssls = require 'configs.lsp.css',
-    -- html = require 'configs.lsp.html',
 }
 
 require('mason-tool-installer').setup {

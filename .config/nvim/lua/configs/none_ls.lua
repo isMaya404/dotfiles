@@ -14,11 +14,11 @@ local eslint_config_files = {
 
 local opts = {
     sources = {
-        -- require('none-ls.diagnostics.eslint_d').with {
-        --     condition = function(utils)
-        --         return utils.root_has_file { eslint_config_files }
-        --     end,
-        -- },
+        require('none-ls.diagnostics.eslint_d').with {
+            condition = function(utils)
+                return utils.root_has_file { eslint_config_files }
+            end,
+        },
 
         require('none-ls.code_actions.eslint_d').with {
             condition = function(utils)
@@ -26,7 +26,7 @@ local opts = {
             end,
         },
 
-        null_ls.builtins.code_actions.gitsigns,
+        -- null_ls.builtins.code_actions.gitsigns,
         -- null_ls.builtins.code_actions.gitrebase,
         -- null_ls.builtins.code_actions.ts_node_action,
         -- null_ls.builtins.diagnostics.jsonlint,

@@ -21,4 +21,42 @@ return {
 
         on_dir(project_root)
     end,
+    on_attach = function(_, bufnr)
+        local opts = { buffer = bufnr }
+
+        vim.keymap.set('n', 'glf', function()
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'source.fixAll' } },
+            }
+        end, opts)
+
+        vim.keymap.set('n', 'gmi', function()
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'source.addMissingImports' } },
+            }
+        end, opts)
+
+        vim.keymap.set('n', 'gru', function()
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'source.removeUnusedImports' } },
+            }
+        end, opts)
+
+        vim.keymap.set('n', 'gqf', function()
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'quickfix' } },
+            }
+        end, opts)
+
+        vim.keymap.set('n', 'grU', function()
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'source.removeUnused' } },
+            }
+        end, opts)
+    end,
 }

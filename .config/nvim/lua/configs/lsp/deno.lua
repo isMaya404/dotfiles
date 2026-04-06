@@ -110,8 +110,8 @@ return {
             desc = 'Cache a Deno module and its dependencies',
         })
 
-        -- Handles sorting imports and removing unused ones
-        vim.keymap.set('n', 'goi', function()
+        -- sort imports and remove unused ones
+        vim.keymap.set('n', 'gru', function()
             vim.lsp.buf.code_action {
                 apply = true,
                 context = { only = { 'source.organizeImports' }, diagnostics = {} },

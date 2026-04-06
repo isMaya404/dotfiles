@@ -50,9 +50,10 @@ map('v', '<', '<gv', { remap = true })
 map('v', '>', '>gv', { remap = true })
 
 -- Terminal
--- map({ 'n', 't' }, '<M-i>', function()
---     require('custom.terminal').toggle { pos = 'buf', id = 'bufTerm' }
--- end, { desc = 'toggle buffer term' })
+
+vim.keymap.set({ 'n', 't' }, '<M-y>', function()
+    require('custom.terminal').toggle { pos = 'sp', id = 'splitTerm' }
+end, { desc = 'toggle floating term' })
 
 map({ 'n', 't' }, '<M-i>', function()
     require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
