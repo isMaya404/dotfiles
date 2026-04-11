@@ -18,15 +18,24 @@ return {
         end,
     },
 
-    -- {
-    --     'akinsho/bufferline.nvim',
-    --     event = 'BufReadPost',
-    --     version = '*',
-    --     -- dependencies = 'nvim-tree/nvim-web-devicons',
-    --     config = function()
-    --         require 'configs.bufferline'
-    --     end,
-    -- },
+    {
+        'folke/snacks.nvim',
+        event = 'VeryLazy',
+        opts = {
+            rename = {
+                enabled = true,
+            },
+        },
+    },
+
+    {
+        'akinsho/bufferline.nvim',
+        event = 'BufReadPost',
+        version = '*',
+        config = function()
+            require 'configs.bufferline'
+        end,
+    },
 
     -- install = {
     --     colorscheme = { 'nord' },
@@ -108,7 +117,7 @@ return {
         end,
     },
 
-    -- file trees
+    -- file tree
     {
         'stevearc/oil.nvim',
         opts = {},
@@ -128,7 +137,6 @@ return {
     -- blazingly fast???
     {
         'ThePrimeagen/harpoon',
-        -- event = 'VeryLazy',
         branch = 'harpoon2',
         keys = {
             {
@@ -142,34 +150,39 @@ return {
                 '<leader>.',
                 function()
                     require('harpoon'):list():add()
+                    vim.cmd 'doautocmd User HarpoonUpdated'
                 end,
                 desc = 'Harpoon Add',
             },
             {
-                '<leader>j',
+                '<C-j>',
                 function()
                     require('harpoon'):list():select(1)
+                    vim.cmd 'doautocmd User HarpoonUpdated'
                 end,
                 desc = 'Harpoon Jump 1',
             },
             {
-                '<leader>k',
+                '<C-k>',
                 function()
                     require('harpoon'):list():select(2)
+                    vim.cmd 'doautocmd User HarpoonUpdated'
                 end,
                 desc = 'Harpoon Jump 2',
             },
             {
-                '<leader>l',
+                '<C-l>',
                 function()
                     require('harpoon'):list():select(3)
+                    vim.cmd 'doautocmd User HarpoonUpdated'
                 end,
                 desc = 'Harpoon Jump 3',
             },
             {
-                '<leader>p',
+                '<C-p>',
                 function()
                     require('harpoon'):list():select(4)
+                    vim.cmd 'doautocmd User HarpoonUpdated'
                 end,
                 desc = 'Harpoon Jump 4',
             },
@@ -277,26 +290,26 @@ return {
     --     end,
     -- },
 
-    -- {
-    --     'mfussenegger/nvim-lint',
-    --     event = { 'BufReadPre', 'BufNewFile' },
-    --     config = function()
-    --         local lint = require 'lint'
-    --         lint.linters_by_ft = {
-    --             javascript = { 'eslint_d' },
-    --             typescript = { 'eslint_d' },
-    --             javascriptreact = { 'eslint_d' },
-    --             typescriptreact = { 'eslint_d' },
-    --         }
-    --
-    --         -- autocmd to trigger linting
-    --         vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'InsertLeave' }, {
-    --             callback = function()
-    --                 lint.try_lint()
-    --             end,
-    --         })
-    --     end,
-    -- },
+    {
+        'mfussenegger/nvim-lint',
+        event = { 'BufReadPre', 'BufNewFile' },
+        config = function()
+            local lint = require 'lint'
+            lint.linters_by_ft = {
+                javascript = { 'eslint_d' },
+                typescript = { 'eslint_d' },
+                javascriptreact = { 'eslint_d' },
+                typescriptreact = { 'eslint_d' },
+            }
+
+            -- autocmd to trigger linting
+            vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'InsertLeave' }, {
+                callback = function()
+                    lint.try_lint()
+                end,
+            })
+        end,
+    },
 
     -- formatter
     {
@@ -355,15 +368,15 @@ return {
         -- :h nvim-surround.usage
     },
 
-    {
-        'iamcco/markdown-preview.nvim',
-        cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-        build = 'cd app && npm install',
-        init = function()
-            vim.g.mkdp_filetypes = { 'markdown' }
-        end,
-        ft = { 'markdown' },
-    },
+    -- {
+    --     'iamcco/markdown-preview.nvim',
+    --     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    --     build = 'cd app && npm install',
+    --     init = function()
+    --         vim.g.mkdp_filetypes = { 'markdown' }
+    --     end,
+    --     ft = { 'markdown' },
+    -- },
 
     -- better loclist && qflist
     {
@@ -376,6 +389,10 @@ return {
     -- {
     --     'pmizio/typescript-tools.nvim',
     --     filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+    --     cond = function()
+    --         -- disable plugin if we're in a deno project
+    --         return not vim.fs.root(0, { 'deno.json', 'deno.jsonc', 'deno.lock' })
+    --     end,
     --     config = function()
     --         require 'configs.ts_tools'
     --     end,

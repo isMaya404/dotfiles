@@ -8,8 +8,7 @@ map('x', '<leader>p', [["_dP]], { desc = 'blackhole paste' })
 map({ 'n', 'v' }, '<leader>d', [["_d]], { desc = 'blackhole delete' })
 -- map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
-map('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '' })
-map('n', '<leader>s', '<cmd>w<cr>', { desc = 'write' })
+map('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '' })
 map('n', '<leader>Q', '<cmd>qa<CR>', { desc = 'quit all' })
 
 -- Toggle spell checker. More useful paired with 'z=' to check spelling suggestions
@@ -51,10 +50,6 @@ map('v', '>', '>gv', { remap = true })
 
 -- Terminal
 
-vim.keymap.set({ 'n', 't' }, '<M-y>', function()
-    require('custom.terminal').toggle { pos = 'sp', id = 'splitTerm' }
-end, { desc = 'toggle floating term' })
-
 map({ 'n', 't' }, '<M-i>', function()
     require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
 end, { desc = 'toggle floating term' })
@@ -62,16 +57,33 @@ end, { desc = 'toggle floating term' })
 map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 
 -- Buffers
-local function map_buffer_cmd(lhs, rhs, desc)
-    vim.keymap.set('n', lhs, function()
-        if vim.bo.filetype ~= 'NvimTree' then
-            vim.cmd(rhs)
-        end
-    end, { desc = desc, noremap = true, silent = true })
-end
 
-map_buffer_cmd('<Tab>', 'bnext', 'Next Buffer')
-map_buffer_cmd('<S-Tab>', 'bprev', 'Prev Buffer')
+-- local function map_buffer_cmd(lhs, rhs, desc)
+--     vim.keymap.set('n', lhs, function()
+--         if vim.bo.filetype ~= 'NvimTree' then
+--             vim.cmd(rhs)
+--         end
+--     end, { desc = desc, noremap = true, silent = true })
+-- end
+-- map_buffer_cmd('<Tab>', 'bnext', 'Next Buffer')
+-- map_buffer_cmd('<S-Tab>', 'bprev', 'Prev Buffer')
+
+map('n', '<Tab>', ':bnext<CR>', opts)
+map('n', '<S-Tab>', ':bprevious<CR>', opts)
+
+function CopyAllBuffersToClipboard()
+    local all_text = {}
+    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(bufnr) then
+            local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+            table.insert(all_text, table.concat(lines, '\n'))
+        end
+    end
+    local result = table.concat(all_text, '\n\n')
+    vim.fn.setreg('+', result) -- Copies to system clipboard
+    print 'All buffers copied to clipboard.'
+end
+map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]opy All [B]uffers To Clipboard' })
 
 map('n', '<leader>,', '<C-^>', { desc = 'Switch to last buffer' })
 map('n', '<leader>X', function()
@@ -137,25 +149,19 @@ map({ 'n' }, '<M-1>', ':!tmux-windowizer nn ')
 map({ 'n' }, '<M-0>', ':!tmux-windowizer dev:fe pnpm dev:frontend<CR><CR>')
 map({ 'n' }, '<M-9>', ':!tmux-windowizer dev:be pnpm dev:backend<CR><CR>')
 
--- Buffers
-map('n', '<Tab>', ':bnext<CR>', opts)
-map('n', '<S-Tab>', ':bprevious<CR>', opts)
-
-function CopyAllBuffersToClipboard()
-    local all_text = {}
-    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-        if vim.api.nvim_buf_is_loaded(bufnr) then
-            local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-            table.insert(all_text, table.concat(lines, '\n'))
-        end
-    end
-    local result = table.concat(all_text, '\n\n')
-    vim.fn.setreg('+', result) -- Copies to system clipboard
-    print 'All buffers copied to clipboard.'
-end
-map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]opy All [B]uffers To Clipboard' })
-
 --------------------------------------- Plugin Mappings ---------------------------------------
+
+vim.keymap.set('n', '<leader>r', function()
+    Snacks.rename.rename_file()
+end, { desc = 'Rename Current File' })
+
+-- Bufferline
+map('n', '<leader>j', '<Cmd>BufferLineGoToBuffer 1<CR>')
+map('n', '<leader>k', '<Cmd>BufferLineGoToBuffer 2<CR>')
+map('n', '<leader>l', '<Cmd>BufferLineGoToBuffer 3<CR>')
+map('n', '<leader>p', '<Cmd>BufferLineGoToBuffer 4<CR>')
+-- map('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>')
+-- map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>')
 
 -- Copilot Chat
 map('n', '<leader>cc', '<Cmd>CopilotChatToggle<CR>')
@@ -187,10 +193,6 @@ map('n', '<leader>cp', function()
 
     require('copilot.suggestion').toggle_auto_trigger()
 end, { desc = 'Toggle Copilot Auto Suggestion' })
-
--- Bufferline
--- map('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', { desc = 'Next Buffer' })
--- map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>', { desc = 'Prev Buffer' })
 
 -- Whichkey
 map('n', '<leader>wK', '<cmd>WhichKey <CR>', { desc = 'whichkey all keymaps' })
@@ -278,7 +280,7 @@ map('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = 
 -- map('n', '<leader>fo', function()
 --     require('telescope.builtin').oldfiles { cwd_only = true }
 -- end, { desc = '[F]ind [O]ecent Files' })
-map('n', '<leader>fo', function()
+map('n', '<leader>o', function()
     require('telescope.builtin').oldfiles {
         cwd_only = true,
         path_display = { 'filename_first' },

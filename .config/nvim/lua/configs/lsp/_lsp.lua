@@ -1,5 +1,4 @@
--- require('neoconf').setup {}
-local lspconfig = require 'lspconfig'
+-- local lspconfig = require 'lspconfig'
 require('fidget').setup {}
 
 vim.diagnostic.config {
@@ -12,15 +11,15 @@ vim.diagnostic.config {
 }
 
 -- https://github.com/antosha417/nvim-lsp-file-operations
-lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, {
-    capabilities = vim.tbl_deep_extend(
-        'force',
-        vim.lsp.protocol.make_client_capabilities(),
-        -- returns configured operations if setup() was already called
-        -- or default operations if not
-        require('lsp-file-operations').default_capabilities()
-    ),
-})
+-- lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_config, {
+--     capabilities = vim.tbl_deep_extend(
+--         'force',
+--         vim.lsp.protocol.make_client_capabilities(),
+--         -- returns configured operations if setup() was already called
+--         -- or default operations if not
+--         require('lsp-file-operations').default_capabilities()
+--     ),
+-- })
 
 -- disable semantic tokens provider
 local function on_init(client, _)
@@ -33,15 +32,15 @@ local function on_attach(client, _)
     client.server_capabilities.documentHighlightProvider = false
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- local capabilities = require('blink.cmp').get_lsp_capabilities()
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 require('mason').setup()
 
 local servers = {
     lua_ls = require 'configs.lsp.lua',
-    tsgo = require 'configs.lsp.tsgo',
-    -- vtsls = require 'configs.lsp.vtsls',
+    -- tsgo = require 'configs.lsp.tsgo',
+    vtsls = require 'configs.lsp.vtsls',
     -- ts_ls = 'configs.lsp.ts',
     denols = require 'configs.lsp.deno',
     emmet_language_server = require 'configs.lsp.emmet',

@@ -1,5 +1,13 @@
 return {
     cmd = { 'vtsls', '--stdio' },
+    settings = {
+        typescript = {
+            updateImportsOnFileMove = { enabled = 'always' },
+        },
+        javascript = {
+            updateImportsOnFileMove = { enabled = 'always' },
+        },
+    },
     init_options = {
         hostInfo = 'neovim',
     },

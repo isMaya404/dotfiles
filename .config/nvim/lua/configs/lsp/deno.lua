@@ -39,6 +39,7 @@ end
 
 return {
     cmd = { 'deno', 'lsp' },
+
     cmd_env = { NO_COLOR = true },
 
     filetypes = {
@@ -55,10 +56,12 @@ return {
         local root_markers = { 'deno.lock', 'deno.json', 'deno.jsonc' }
         -- Give the root markers equal priority by wrapping them in a table
         root_markers = vim.fn.has 'nvim-0.11.3' == 1 and { root_markers, { '.git' } } or vim.list_extend(root_markers, { '.git' })
+
+        local project_root = vim.fs.root(bufnr, root_markers)
+
         -- only include deno projects
         local deno_root = vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' })
         local deno_lock_root = vim.fs.root(bufnr, { 'deno.lock' })
-        local project_root = vim.fs.root(bufnr, root_markers)
         if (deno_lock_root and (not project_root or #deno_lock_root > #project_root)) or (deno_root and (not project_root or #deno_root >= #project_root)) then
             -- deno config is closer than or equal to package manager lock,
             -- or deno lock is closer than package manager lock. Attach at the project root,

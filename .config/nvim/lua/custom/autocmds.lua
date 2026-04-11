@@ -2,20 +2,31 @@ local function augroup(name)
     return vim.api.nvim_create_augroup('idk_' .. name, { clear = true })
 end
 
--- vim.api.nvim_create_autocmd('BufWritePost', {
---     group = augroup 'source_file',
---     pattern = vim.fn.stdpath 'config' .. '/lua/**/*.lua',
---     callback = function(args)
---         -- Strip the config path and `.lua` extension
---         local module = args.file:match(vim.fn.stdpath 'config' .. '/lua/(.*)%.lua$')
---         if module then
---             module = module:gsub('/', '.') -- convert path to Lua module name
---             package.loaded[module] = nil
---             require(module)
---             vim.notify('Reloaded ' .. module, vim.log.levels.INFO)
---         end
---     end,
--- })
+-- LSP file renaming integration for nvim-tree
+local Snacks = require 'snacks'
+local prev = { new_name = '', old_name = '' } -- prevents duplicate events
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'NvimTreeSetup',
+    callback = function()
+        local events = require('nvim-tree.api').events
+        events.subscribe(events.Event.NodeRenamed, function(data)
+            if prev.new_name ~= data.new_name or prev.old_name ~= data.old_name then
+                data = data
+                Snacks.rename.on_rename_file(data.old_name, data.new_name)
+            end
+        end)
+    end,
+})
+
+-- LSP file renaming integration for oil.nvim
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'OilActionsPost',
+    callback = function(event)
+        if event.data.actions[1].type == 'move' then
+            Snacks.rename.on_rename_file(event.data.actions[1].src_url, event.data.actions[1].dest_url)
+        end
+    end,
+})
 
 -- Triggers a custom 'User FilePost' event once after UI and file are fully loaded.
 -- Useful with nvimlsp-config event trigger and other plugins that behave similarly

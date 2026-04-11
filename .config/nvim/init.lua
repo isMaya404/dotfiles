@@ -25,7 +25,7 @@ require('lazy').setup {
     spec = {
         {
             import = 'plugins',
-            -- enabled = not vim.g.vscode,
+            enabled = not vim.g.vscode,
         },
         -- {
         --     import = 'vsc.plugins',
@@ -74,12 +74,12 @@ if not vim.g.vscode then
     require 'custom.autocmds'
     require 'custom.opts'
     require 'custom.statusline'
-    require 'custom.tabline'
+    -- require 'custom.tabline'
     require 'custom.user_commands'
-    -- vim.schedule(function()
-    require(m .. 'keymaps')
-    require(m .. 'remap')
-    -- end)
+    vim.schedule(function()
+        require(m .. 'keymaps')
+        require(m .. 'remap')
+    end)
 else
     -- vim.schedule(function()
     require(m .. 'remap')
