@@ -286,7 +286,7 @@ return {
         end,
     },
 
-    -- configures LuaLS for editing neovim
+    -- configures lua_ls for editing neovim
     {
         'folke/lazydev.nvim',
         ft = 'lua',

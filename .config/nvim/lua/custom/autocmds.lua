@@ -208,7 +208,7 @@ vim.api.nvim_create_autocmd('FileType', {
         map('n', 'K', function()
             vim.lsp.buf.hover { border = 'rounded' }
         end)
-        map({ 'n', 'x' }, 'L', 'J', opts)
+        map({ 'n', 'x' }, 'L', 'M', opts)
         map({ 'n', 'x', 'o' }, 'P', 'L', opts)
 
         map({ 'n', 'x', 'o' }, 'b', 'nzzzv', opts)
@@ -221,6 +221,6 @@ vim.api.nvim_create_autocmd('FileType', {
         map({ 'n', 'x', 'o' }, 'm', 'o', opts)
         map({ 'n', 'x', 'o' }, 'M', 'O', opts)
         map({ 'n', 'x', 'o' }, 'y', 'm', opts)
-        map({ 'n', 'x', 'o' }, 'Y', 'M', opts)
+        map({ 'n', 'x', 'o' }, 'Y', 'J', opts)
     end,
 })
