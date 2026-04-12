@@ -1,6 +1,6 @@
 local o = vim.opt
 
--- key delays (too low will break bindings)
+-- key delays (lower === faster response, but too low will break bindings!)
 o.timeoutlen = 500 -- 1000 default
 o.ttimeoutlen = 0 -- 50 default
 

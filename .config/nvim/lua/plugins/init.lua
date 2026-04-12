@@ -28,15 +28,6 @@ return {
         },
     },
 
-    {
-        'akinsho/bufferline.nvim',
-        event = 'BufReadPost',
-        version = '*',
-        config = function()
-            require 'configs.bufferline'
-        end,
-    },
-
     -- install = {
     --     colorscheme = { 'nord' },
     -- },
@@ -62,6 +53,22 @@ return {
     --     end,
     -- },
 
+    -- {
+    --     'stevearc/resession.nvim',
+    --     -- event = 'VimEnter',
+    --     lazy = false,
+    --     dependencies = {
+    --         {
+    --             'tiagovla/scope.nvim',
+    --             lazy = false,
+    --             config = true,
+    --         },
+    --     },
+    --     config = function()
+    --         require 'configs.resession'
+    --     end,
+    -- },
+
     -- session manaager
     {
         'rmagatti/auto-session',
@@ -71,34 +78,53 @@ return {
         end,
     },
 
+    -- {
+    --     'akinsho/bufferline.nvim',
+    --     event = 'BufReadPost',
+    --     version = '*',
+    --     config = function()
+    --         require 'configs.bufferline'
+    --     end,
+    -- },
+
     {
         'tpope/vim-sleuth',
-        event = 'VeryLazy',
+        event = { 'BufReadPre', 'BufNewFile' },
     },
 
     -- auto pair paren, brackets, quotes, etc.
     {
         'windwp/nvim-autopairs',
-        event = 'VeryLazy',
+        event = { 'InsertEnter' },
         opts = {
             fast_wrap = {},
             disable_filetype = { 'TelescopePrompt', 'vim' },
         },
-        config = function(_, opts)
-            require('nvim-autopairs').setup(opts)
-            -- require('nvim-autopairs').enable_cmdline()
-        end,
+        -- config = function(_, opts)
+        --     require('nvim-autopairs').setup(opts)
+        --     -- require('nvim-autopairs').enable_cmdline()
+        -- end,
     },
 
     -- git integrations
 
     {
         'tpope/vim-fugitive',
-        event = 'VeryLazy',
+        cmd = { 'G', 'Git' },
     },
 
     {
         'sindrets/diffview.nvim',
+        cmd = {
+            'DiffviewOpen',
+            'DiffviewClose',
+            'DiffviewFileHistory',
+            'DiffviewFocusFiles',
+            'DiffviewLog',
+            'DiffviewRefresh',
+            'DiffviewToggleFiles',
+        },
+
         config = function()
             require 'configs.diffview'
         end,
@@ -111,7 +137,7 @@ return {
 
     {
         'lewis6991/gitsigns.nvim',
-        event = 'BufReadPost',
+        event = 'BufReadPre',
         config = function()
             require 'configs.gitsigns'
         end,
@@ -121,9 +147,7 @@ return {
     {
         'stevearc/oil.nvim',
         opts = {},
-        -- Optional dependencies
-        event = 'VeryLazy',
-        lazy = true,
+        cmd = 'Oil',
     },
 
     {
@@ -226,11 +250,51 @@ return {
                     return vim.fn.executable 'make' == 1
                 end,
             },
+
             { 'nvim-telescope/telescope-ui-select.nvim' },
+
+            {
+                'nvim-telescope/telescope-frecency.nvim',
+                version = '*',
+            },
+
+            {
+                'smartpde/telescope-recent-files',
+            },
+
+            {
+                'benfowler/telescope-luasnip.nvim',
+            },
         },
         config = function()
             require 'configs.telescope'
         end,
+    },
+
+    -- snippet engine
+    {
+        'L3MON4D3/LuaSnip',
+        dependencies = { 'rafamadriz/friendly-snippets' }, -- snippet collections from vscode
+        verion = 'v2.*',
+        build = 'make install_jsregexp',
+        event = 'VeryLazy',
+        config = function()
+            require('luasnip.loaders.from_vscode').lazy_load()
+            require('luasnip.loaders.from_lua').load {
+                paths = { vim.fn.stdpath 'config' .. '/lua/snippets' },
+            }
+        end,
+    },
+
+    -- configures LuaLS for editing neovim
+    {
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        opts = {
+            library = {
+                { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+            },
+        },
     },
 
     -- keymap management
@@ -320,28 +384,6 @@ return {
         end,
     },
 
-    -- snippet engine
-    {
-        'L3MON4D3/LuaSnip',
-        dependencies = { 'rafamadriz/friendly-snippets' }, -- snippet collections from vscode
-        verion = 'v2.*',
-        build = 'make install_jsregexp',
-        event = 'VeryLazy',
-        config = function()
-            require('luasnip.loaders.from_vscode').lazy_load()
-            require('luasnip.loaders.from_lua').load {
-                paths = { vim.fn.stdpath 'config' .. '/lua/snippets' },
-            }
-        end,
-    },
-
-    -- snippets lookup with telescope
-    {
-        'benfowler/telescope-luasnip.nvim',
-        module = 'telescope._extensions.luasnip',
-        event = 'VeryLazy',
-    },
-
     -- surround, delete around, etc.
     {
         'kylechui/nvim-surround',
@@ -398,35 +440,11 @@ return {
     --     end,
     -- },
 
-    -- enhances the native commentstring on react
+    -- enhances nvim's native comment strings
     {
         'folke/ts-comments.nvim',
-        enabled = true,
-        filetypes = { 'typescriptreact', 'javascriptreact' },
-        opts = {
-            lang = {
-                javascript = {
-                    '// %s', -- default commentstring when no treesitter node matches
-                    '/* %s */',
-                    call_expression = '// %s', -- specific commentstring for call_expression
-                    jsx_attribute = '// %s',
-                    jsx_element = '{/* %s */}',
-                    jsx_fragment = '{/* %s */}',
-                    spread_element = '// %s',
-                    statement_block = '// %s',
-                },
-                tsx = {
-                    '// %s', -- default commentstring when no treesitter node matches
-                    '/* %s */',
-                    call_expression = '// %s', -- specific commentstring for call_expression
-                    jsx_attribute = '// %s',
-                    jsx_element = '{/* %s */}',
-                    jsx_fragment = '{/* %s */}',
-                    spread_element = '// %s',
-                    statement_block = '// %s',
-                },
-            },
-        },
+        opts = {},
+        event = 'VeryLazy',
     },
 
     -- provide bg color on color vals
@@ -439,11 +457,11 @@ return {
     },
 
     -- better bufdelete
-    {
-        'echasnovski/mini.bufremove',
-        event = 'VeryLazy',
-        version = '*',
-    },
+    -- {
+    --     'echasnovski/mini.bufremove',
+    --     event = 'VeryLazy',
+    --     version = '*',
+    -- },
 
     -- active scope indentation guide
     {
@@ -550,7 +568,6 @@ return {
 
     {
         'zbirenbaum/copilot.lua',
-        cmd = 'Copilot',
         event = 'InsertEnter',
         requires = {
             'copilotlsp-nvim/copilot-lsp', -- for NES
@@ -562,6 +579,7 @@ return {
 
     {
         'CopilotC-Nvim/CopilotChat.nvim',
+        event = 'VeryLazy',
         build = 'make tiktoken',
         opts = {
             model = 'gpt-5.2',

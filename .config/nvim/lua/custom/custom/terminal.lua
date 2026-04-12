@@ -83,4 +83,14 @@ function M.toggle(opts)
     M._open_window(data.buf, pos, id)
 end
 
+-- Hide all terminal buffers from buffer list
+vim.api.nvim_create_autocmd('TermOpen', {
+    group = vim.api.nvim_create_augroup('term', { clear = true }),
+    pattern = '*',
+    callback = function(ctx)
+        vim.api.nvim_set_option_value('buflisted', false, { buf = ctx.buf })
+        vim.api.nvim_set_option_value('bufhidden', 'hide', { buf = ctx.buf })
+    end,
+})
+
 return M

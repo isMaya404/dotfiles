@@ -10,10 +10,10 @@ vim.g.VM_maps = {
 
     -- Basic usage (and prob 90% of what I need)
     ['Find Under'] = '<C-n>',
-    ['Find Subword Under'] = '<C-n>',
+    ['Find Subword Under'] = '<C-M-n>',
 
-    ['Add Cursor Down'] = '<C-M-k>',
     ['Add Cursor Up'] = '<C-M-l>',
+    ['Add Cursor Down'] = '<C-M-k>',
 
     ['Select All'] = VM_LEADER .. 'sa',
 

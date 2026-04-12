@@ -19,6 +19,7 @@ telescope.setup {
         },
     },
     defaults = {
+        path_display = { 'filename_first' },
         file_ignore_patterns = { 'repomix' },
         mappings = {
             -- i = { ['<C-enter>'] = 'to_fuzzy_refine' },
@@ -28,9 +29,12 @@ telescope.setup {
     },
 }
 
-pcall(require('telescope').load_extension 'luasnip')
+pcall(telescope.load_extension, 'luasnip')
 pcall(telescope.load_extension, 'fzf')
 pcall(telescope.load_extension, 'ui-select')
+pcall(telescope.load_extension, 'recent_files')
+pcall(telescope.load_extension, 'frecency')
+pcall(telescope.load_extension, 'telescope-luasnip')
 
 -- {
 --   'nvim-telescope/telescope.nvim',

@@ -28,8 +28,9 @@ vim.api.nvim_create_autocmd('User', {
     end,
 })
 
+-- Triggers a custom 'User FilePost' event once after UI and file are fully loaded.
 -- Useful with nvimlsp-config event trigger and other plugins that behave similarly
--- https://github.com/NvChad/NvChad/blob/v2.5/lua/nvchad/autocmds.lua
+-- from: https://github.com/NvChad/NvChad/blob/v2.5/lua/nvchad/autocmds.lua
 vim.api.nvim_create_autocmd({ 'UIEnter', 'BufReadPost', 'BufNewFile' }, {
     group = vim.api.nvim_create_augroup('FilePostEvent', { clear = true }),
     callback = function(args)
@@ -65,15 +66,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 ------------------- Buffers -------------------
 
--- Hide terminal buffers from buffer list
-vim.api.nvim_create_autocmd('TermOpen', {
-    group = augroup 'term',
-    pattern = '*',
-    callback = function(ctx)
-        vim.api.nvim_set_option_value('buflisted', false, { buf = ctx.buf })
-        vim.api.nvim_set_option_value('bufhidden', 'hide', { buf = ctx.buf })
-    end,
-})
+-- hide terminal buffers from buffer list
+-- vim.api.nvim_create_autocmd('TermOpen', {
+--     group = augroup 'terms',
+--     pattern = '*',
+--     callback = function(ctx)
+--         vim.api.nvim_set_option_value('buflisted', false, { buf = ctx.buf })
+--         vim.api.nvim_set_option_value('bufhidden', 'hide', { buf = ctx.buf })
+--     end,
+-- })
 
 -- restore last cursor position (except commits & only once)
 vim.api.nvim_create_autocmd('BufReadPost', {
@@ -81,10 +82,10 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     callback = function(ctx)
         local buf = ctx.buf
         local ft = vim.bo[buf].filetype
-        if ft == 'gitcommit' or vim.b[buf].cursor_last_loc then
+        if ft == 'gitcommit' or vim.b[buf].lazyvim_last_loc then
             return
         end
-        vim.b[buf].cursor_last_loc = true
+        vim.b[buf].lazyvim_last_loc = true
         local mark = vim.api.nvim_buf_get_mark(buf, '"')
         local lines = vim.api.nvim_buf_line_count(buf)
         if mark[1] > 0 and mark[1] <= lines then
@@ -105,45 +106,37 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
     end,
 })
 
--- max N bufs, auto-delete oldest buf if more than N.
--- this is to prevent auto-session from restoring too many bufs
-local MAX = 20
-local buffers = {}
-local present = {}
-
-local function track_bufs(bufnr)
-    if not vim.bo[bufnr].buflisted or vim.bo[bufnr].buftype ~= '' then
-        return
-    end
-
-    if present[bufnr] then
-        -- move to end
-        for i, b in ipairs(buffers) do
-            if b == bufnr then
-                table.remove(buffers, i)
-                break
-            end
-        end
-    end
-
-    present[bufnr] = true
-    table.insert(buffers, bufnr)
-
-    if #buffers > MAX then
-        local oldest = table.remove(buffers, 1)
-        present[oldest] = nil
-
-        if oldest ~= vim.api.nvim_get_current_buf() then
-            pcall(vim.api.nvim_buf_delete, oldest, { force = true })
-        end
-    end
-end
-
-vim.api.nvim_create_autocmd('BufEnter', {
-    callback = function(args)
-        track_bufs(args.buf)
-    end,
-})
+-- max N bufs, auto-delete oldest buf if more than N
+-- vim.api.nvim_create_autocmd('BufAdd', {
+--     group = augroup 'auto_del_buf',
+--     callback = function(args)
+--         local bufnr = args.buf
+--         if not vim.bo[bufnr].buflisted or vim.bo[bufnr].buftype ~= '' then
+--             return
+--         end
+--
+--         local max_buf = 50
+--         local buffers = {}
+--         for _, b in ipairs(vim.api.nvim_list_bufs()) do
+--             if vim.bo[b].buflisted and vim.bo[b].buftype == '' then
+--                 table.insert(buffers, b)
+--             end
+--         end
+--
+--         if #buffers <= max_buf then
+--             return
+--         end
+--
+--         table.sort(buffers)
+--
+--         for _, b in ipairs(buffers) do
+--             if b ~= vim.api.nvim_get_current_buf() then
+--                 vim.api.nvim_buf_delete(b, { force = true })
+--                 break
+--             end
+--         end
+--     end,
+-- })
 
 ------------------- Comments -------------------
 
@@ -176,6 +169,19 @@ vim.api.nvim_create_autocmd('FileType', {
 
 ----------------- / -------------------
 
+-- improves tailwind perf? https://github.com/hrsh7th/nvim-cmp/issues/1828
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--     group = augroup 'tailwind_lsp_config',
+--     pattern = { 'html', 'css', 'scss', 'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
+--     callback = function()
+--         for _, client in pairs(vim.lsp.get_clients()) do
+--             if client.name == 'tailwindcss' then
+--                 client.server_capabilities.completionProvider.triggerCharacters = { '"', "'", '`', '.', '(', '[', '!', '/', ':' }
+--             end
+--         end
+--     end,
+-- })
+
 -- treat certain template ft's as HTML for syntax highlighting support
 -- vim.api.nvim_create_autocmd('BufEnter', {
 --     group = augroup 'template_html',
@@ -191,36 +197,49 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = 'man',
     callback = function()
         local opts = { buffer = true, silent = true, noremap = true }
-        local map = vim.keymap.set
 
-        map({ 'n', 'x', 'o' }, 'j', 'h', opts)
-        map({ 'n', 'x', 'o' }, 'p', 'l', opts)
+        -- h <-> p, H <-> P
+        vim.keymap.set({ 'n', 'v', 'o' }, 'h', 'p', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'H', 'P', opts)
 
-        map({ 'o' }, 'k', 'j', opts)
-        map({ 'o' }, 'l', 'k', opts)
-        map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-        map({ 'n', 'x' }, 'l', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+        -- move left/right
+        vim.keymap.set({ 'n', 'v', 'o' }, 'j', 'h', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'p', 'l', opts)
 
-        map({ 'n', 'x', 'o' }, 'h', 'p', opts)
-        map({ 'n', 'x', 'o' }, 'H', 'P', opts)
+        -- move up/down
+        vim.keymap.set('o', 'k', 'j', opts)
+        vim.keymap.set('o', 'l', 'k', opts)
+        vim.keymap.set({ 'n', 'x' }, 'k', "v:count == 0 ? 'gj' : 'j'", vim.tbl_extend('force', opts, { expr = true }))
+        vim.keymap.set({ 'n', 'x' }, 'l', "v:count == 0 ? 'gk' : 'k'", vim.tbl_extend('force', opts, { expr = true }))
 
-        map({ 'n', 'v', 'x', 'o' }, 'J', 'H', opts)
-        map('n', 'K', function()
-            vim.lsp.buf.hover { border = 'rounded' }
-        end)
-        map({ 'n', 'x' }, 'L', 'J', opts)
-        map({ 'n', 'x', 'o' }, 'P', 'L', opts)
+        -- capital bindings
+        vim.keymap.set({ 'n', 'v', 'x', 'o' }, 'J', 'H', opts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        vim.keymap.set({ 'n', 'v' }, 'L', 'M', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'P', 'L', opts)
 
-        map({ 'n', 'x', 'o' }, 'b', 'nzzzv', opts)
-        map({ 'n', 'x', 'o' }, 'B', 'Nzzzv', opts)
-        map({ 'n', 'x', 'o' }, 'n', 'b', opts)
-        map({ 'n', 'x', 'o' }, 'N', 'B', opts)
+        -- switch b <-> n
+        vim.keymap.set({ 'n', 'v', 'o' }, 'b', 'n', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'B', 'N', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'n', 'b', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'N', 'B', opts)
 
-        map({ 'n', 'x', 'o' }, 'o', 'y', opts)
-        map({ 'n', 'x', 'o' }, 'O', 'y$', opts)
-        map({ 'n', 'x', 'o' }, 'm', 'o', opts)
-        map({ 'n', 'x', 'o' }, 'M', 'O', opts)
-        map({ 'n', 'x', 'o' }, 'y', 'm', opts)
-        map({ 'n', 'x', 'o' }, 'Y', 'M', opts)
+        -- m, o, y swaps
+        vim.keymap.set({ 'n', 'v', 'o' }, 'o', 'y', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'O', 'Y', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'm', 'o', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'M', 'O', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'y', 'm', opts)
+        vim.keymap.set({ 'n', 'v', 'o' }, 'Y', 'J', opts)
     end,
 })
+
+-- copilot buffer
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--     pattern = 'copilot-*',
+--     callback = function()
+--         vim.opt_local.relativenumber = false
+--         vim.opt_local.number = false
+--         vim.opt_local.conceallevel = 0
+--     end,
+-- })
