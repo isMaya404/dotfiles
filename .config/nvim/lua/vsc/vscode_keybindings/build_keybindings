@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "Error: jq is not installed." >&2
+  exit 1
+fi
+
+files=(
+  keymaps/navigation.json
+  keymaps/explorer.json
+  keymaps/tabs.json
+  keymaps/search.json
+)
+
+for f in "${files[@]}"; do
+  if [[ ! -f "$f" ]]; then
+    echo "Error: file not found: $f" >&2
+    exit 1
+  fi
+  jq empty "$f" >/dev/null
+done
+
+jq -s 'add' "${files[@]}" > keybindings.json

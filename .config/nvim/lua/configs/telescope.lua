@@ -1,6 +1,7 @@
 local telescope = require 'telescope'
 local actions = require 'telescope.actions'
 -- local builtin = require('telescope.builtin')
+local lga_actions = require 'telescope-live-grep-args.actions'
 local open_with_trouble = require('trouble.sources.telescope').open
 
 -- Use this to add more results without clearing the trouble list
@@ -17,14 +18,35 @@ telescope.setup {
             override_file_sorter = true,
             case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
         },
+        live_grep_args = {
+            auto_quoting = true,
+            mappings = {
+                i = {
+                    ['<C-k>'] = lga_actions.quote_prompt(),
+                    ['<C-g>'] = lga_actions.quote_prompt { postfix = ' -g ' },
+                    -- freeze the current list and start a fuzzy search in the frozen list
+                    -- ['<C-space>'] = lga_actions.to_fuzzy_refine, -- idk doesn't work, builtin fuzzy_refine works for this plugin tho so it doesn't matter.
+                },
+            },
+        },
+        recent_files = {
+            only_cwd = true,
+        },
     },
     defaults = {
         path_display = { 'filename_first' },
         file_ignore_patterns = { 'repomix' },
         mappings = {
-            -- i = { ['<C-enter>'] = 'to_fuzzy_refine' },
-            i = { ['<c-t>'] = open_with_trouble, ['<C-CR>'] = actions.to_fuzzy_refine },
-            n = { ['<c-t>'] = open_with_trouble },
+            i = {
+                ['<C-t>'] = open_with_trouble,
+                ['<C-space>'] = actions.to_fuzzy_refine,
+            },
+            n = {
+                ['<C-t>'] = open_with_trouble,
+                ['j'] = false,
+                ['k'] = actions.move_selection_next,
+                ['l'] = actions.move_selection_previous,
+            },
         },
     },
 }
@@ -35,6 +57,7 @@ pcall(telescope.load_extension, 'ui-select')
 pcall(telescope.load_extension, 'recent_files')
 pcall(telescope.load_extension, 'frecency')
 pcall(telescope.load_extension, 'telescope-luasnip')
+pcall(telescope.load_extension, 'telescope_grep_args')
 
 -- {
 --   'nvim-telescope/telescope.nvim',

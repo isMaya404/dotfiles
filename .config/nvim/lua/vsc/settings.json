@@ -1,0 +1,100 @@
+{
+  "telemetry.telemetryLevel": "off",
+  "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#FFFFFF",
+    "terminalCursor.foreground": "#FFFFFF",
+    "editor.findMatchBackground": "#A277FF55",
+    "editor.findMatchHighlightBackground": "#61FFCA33",
+    "editor.findMatchBorder": "#A277FF"
+  },
+  "workbench.colorTheme": "Aura Dark",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1,
+  },
+  "git.openRepositoryInParentFolders": "always",
+
+  "editor.renderLineHighlight": "none",
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "Iosevka SS08",
+  "editor.lineNumbers": "relative",
+  "editor.insertSpaces": true,    
+  "editor.tabSize": 2,            
+  "editor.wordWrap": "on",        
+  "editor.wrappingIndent": "indent" ,
+  "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?", // include "-" in word selection.
+  "editor.tabCompletion": "on",
+  "editor.cursorSmoothCaretAnimation": "off", 
+
+  // "zenMode.fullScreen": true,
+  "zenMode.centerLayout": false,
+  "zenMode.hideLineNumbers": false,
+  "zenMode.hideStatusBar": false,
+  "zenMode.hideActivityBar": true,
+  "editor.minimap.enabled": false,
+  "workbench.startupEditor": "none",
+  "workbench.editor.pinnedTabSizing": "compact",
+  "workbench.editor.tabSizing": "shrink",
+  // Search
+  "search.smartCase": true,
+  "search.useIgnoreFiles": false,
+  "search.exclude": {
+    "**/vendor/*": true,
+    "**/public/*": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/package-lock.json": true,
+    "**/yarn.lock": true,
+  },
+  
+  "files.autoSave": "afterDelay",
+  "files.enableTrash": false,
+  "files.exclude": {
+    ".cache-loader/": true,
+    ".editorconfig": true,
+    ".gitattributes": true,
+    ".gitignore": true,
+    ".gitkeep": true,
+    ".nuxt": true,
+    ".output": true,
+    ".output/node_modules/": false,
+    ".travis.yml": true,
+    ".vercel": true,
+    ".vscode/": true,
+    "**/README.md": true,
+    "acf-json": true,
+    "backend/vendor": true,
+    "CODE_OF_CONDUCT.md": true,
+    "config": false,
+    "coverage": true,
+    "LICENSE.md": true,
+    "node_modules/": true,
+    "package-lock.json": true,
+    "phpcs.xml": true,
+    "prettier.config.js": true,
+    "yarn.lock": true,
+  },
+
+  // LSP
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+
+  "explorer.confirmDragAndDrop": false,
+
+  // Deno
+  "deno.enable": true,
+  "deno.enablePaths": ["./backend/supabase/functions"],
+
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "typescript": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "window.menuBarVisibility": "compact",
+  "workbench.activityBar.location": "hidden",
+}

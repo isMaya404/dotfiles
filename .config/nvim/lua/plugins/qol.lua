@@ -44,14 +44,24 @@ return {
         end,
     },
 
-    -- -- makes file ops lsp-aware. It notifies
-    -- -- the lsp so imports and references update automatically.
+    -- makes file ops lsp-aware. It notifies
+    -- the lsp so imports and references update automatically.
+    {
+        'antosha417/nvim-lsp-file-operations',
+        event = 'VeryLazy',
+        config = function()
+            require('lsp-file-operations').setup()
+        end,
+    },
+
     -- {
-    --     'antosha417/nvim-lsp-file-operations',
+    --     'folke/snacks.nvim',
     --     event = 'VeryLazy',
-    --     config = function()
-    --         require('lsp-file-operations').setup()
-    --     end,
+    --     opts = {
+    --         rename = {
+    --             enabled = true,
+    --         },
+    --     },
     -- },
 
     -- smarter folding

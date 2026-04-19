@@ -27,10 +27,10 @@ require('lazy').setup {
             import = 'plugins',
             enabled = not vim.g.vscode,
         },
-        -- {
-        --     import = 'vsc.plugins',
-        --     enabled = vim.g.vscode,
-        -- },
+        {
+            import = 'vsc.plugins',
+            enabled = vim.g.vscode,
+        },
     },
     performance = {
         rtp = {
@@ -80,9 +80,11 @@ if not vim.g.vscode then
         require(m .. 'remap')
     end)
 else
-    -- vim.schedule(function()
-    require(m .. 'remap')
-    -- end)
+    vim.schedule(function()
+        require 'vsc.keybindings'
+        require 'vsc.opts'
+        require 'vsc.autocmds'
+    end)
 end
 
 -- [[ Setting options ]]

@@ -25,9 +25,11 @@ end
 set_hl(0, 'LineNr', { fg = '#555555' })
 set_hl(0, 'CursorLineNr', { fg = '#e0e0e0', bold = true })
 set_hl(0, 'WinSeparator', { fg = '#303030' })
+set_hl(0, 'FloatBorder', { fg = '#3b4252' })
 set_hl(0, 'ModeMsg', { fg = '#d19a66' })
-
 set_hl(0, 'MiniIndentscopeSymbol', { fg = '#2E3440' })
+
+-- BlinkCmpMenuBorder xxx guifg=
 
 if vim.g.colors_name == 'nord' then
     -- set_hl(0, '@number', { fg = '#B48EAD' })

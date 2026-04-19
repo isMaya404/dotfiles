@@ -18,16 +18,6 @@ return {
         end,
     },
 
-    {
-        'folke/snacks.nvim',
-        event = 'VeryLazy',
-        opts = {
-            rename = {
-                enabled = true,
-            },
-        },
-    },
-
     -- install = {
     --     colorscheme = { 'nord' },
     -- },
@@ -250,6 +240,9 @@ return {
                     return vim.fn.executable 'make' == 1
                 end,
             },
+            {
+                'nvim-telescope/telescope-live-grep-args.nvim',
+            },
 
             { 'nvim-telescope/telescope-ui-select.nvim' },
 
@@ -286,7 +279,7 @@ return {
         end,
     },
 
-    -- configures lua_ls for editing neovim
+    -- configures LuaLS for editing neovim
     {
         'folke/lazydev.nvim',
         ft = 'lua',
@@ -566,16 +559,16 @@ return {
         end,
     },
 
-    {
-        'zbirenbaum/copilot.lua',
-        event = 'InsertEnter',
-        requires = {
-            'copilotlsp-nvim/copilot-lsp', -- for NES
-        },
-        config = function()
-            require 'configs.copilot'
-        end,
-    },
+    -- {
+    --     'zbirenbaum/copilot.lua',
+    --     event = 'InsertEnter',
+    --     -- dependencies = {
+    --         -- 'copilotlsp-nvim/copilot-lsp', -- for NES
+    --     -- },
+    --     config = function()
+    --         require 'configs.copilot'
+    --     end,
+    -- },
 
     {
         'CopilotC-Nvim/CopilotChat.nvim',

@@ -1,0 +1,285 @@
+// Put this in ~/.config/Code/User/keybindings.json directly for this to work.
+[
+  // Window Navigation
+  {
+    "key": "ctrl-w ctrl-j",
+    "command": "workbench.action.navigateLeft",
+  },
+  {
+    "key": "ctrl-w ctrl-p",
+    "command": "workbench.action.navigateRight",
+  },
+  {
+    "key": "ctrl-w ctrl-l",
+    "command": "workbench.action.navigateUp",
+  },
+  {
+    "key": "ctrl-w ctrl-k",
+    "command": "workbench.action.navigateDown",
+  },
+  // File tree
+  {
+    "key": "space n",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.toggleSidebarVisibility",
+        "workbench.files.action.showActiveFileInExplorer",
+      ]
+    },
+    "when": "neovim.mode == 'normal' && (editorTextFocus || !inputFocus) && !sideBarFocus"
+  },
+  {
+    "key": "space n",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.toggleSidebarVisibility",
+        "workbench.action.focusActiveEditorGroup"
+      ]
+    },
+    "when": "sideBarFocus && !inputFocus"
+  },
+  {
+    "key": "space n",
+    "when": "neovim.mode == 'normal' && editorTextFocus && foldersViewVisible",
+    "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "space e",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.toggleSidebarVisibility",
+        "workbench.files.action.focusFilesExplorer"
+      ]
+    },
+    "when": "neovim.mode == 'normal' && (editorTextFocus || !inputFocus) && !sideBarFocus"
+  },
+  // File tree bindings
+  {
+    "key": "k",
+    "command": "list.focusDown",
+    "when": "explorerViewletVisible && !inputFocus"
+  },
+  {
+    "key": "l",
+    "command": "list.focusUp",
+    "when": "explorerViewletVisible && !inputFocus"
+  },
+  {
+    "key": "r",
+    "command": "renameFile",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "c",
+    "command": "filesExplorer.copy",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "p",
+    "command": "filesExplorer.paste",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "x",
+    "command": "filesExplorer.cut",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "d",
+    "command": "deleteFile",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "a",
+    "command": "explorer.newFile",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "shift-a",
+    "command": "explorer.newFolder",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "s",
+    "command": "runCommands",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus",
+    "args": {
+      "commands": [
+        "explorer.openToSide",
+        "workbench.action.focusActiveEditorGroup",
+        "workbench.action.closeSidebar"
+      ]
+    }
+  },
+  {
+    "key": "s",
+    "command": "list.toggleExpand",
+    "when": "explorerViewletVisible && !inputFocus"
+  },
+  {
+    "key": "h",
+    "command": "runCommands",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus",
+    "args": {
+      "commands": [
+        "workbench.action.splitEditorDown",
+        "explorer.openAndPassFocus",
+        "workbench.action.closeOtherEditors"
+      ]
+    }
+  },
+  {
+    "key": "enter",
+    "command": "explorer.openAndPassFocus",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceIsFolder && !inputFocus"
+  },
+  {
+    "key": "enter",
+    "command": "list.toggleExpand",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && explorerResourceIsFolder && !inputFocus"
+  },
+  // Commenting 
+  {
+    "key": "space /",
+    "command": "editor.action.commentLine",
+    "when": "neovim.mode == 'normal' && (editorTextFocus || !inputFocus)"
+  },
+  {
+    "key": "space /",
+    "command": "editor.action.commentLine",
+    "when": "neovim.mode == 'visual' && (editorTextFocus || !inputFocus)"
+  },
+  // Tabs 
+  {
+    "key": "tab",
+    "command": "workbench.action.nextEditorInGroup",
+    "when": "(neovim.mode == 'normal' || neovim.mode == 'visual') && (editorTextFocus || !inputFocus)"
+  },
+  {
+    "key": "shift-tab",
+    "command": "workbench.action.previousEditorInGroup",
+    "when": "(neovim.mode == 'normal' || neovim.mode == 'visual') && (editorTextFocus || !inputFocus)"
+  },
+  {
+    "key": "space x",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "neovim.mode == 'normal' && editorTextFocus"
+  },
+  {
+    "key": "space x",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "(neovim.mode == 'normal') && (editorTextFocus || !inputFocus)"
+  },
+  // Move lines up/down
+  {
+    "key": "shift+alt+k",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "neovim.mode == 'normal' && editorTextFocus"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "neovim.mode == 'normal' && editorTextFocus"
+  },
+  {
+    "key": "shift+alt+k",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "neovim.mode == 'visual' && editorTextFocus"
+  },
+  {
+    "key": "shift+alt+l",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "neovim.mode == 'visual' && editorTextFocus"
+  },
+  // File picker
+  {
+    "key": "space f p",
+    "command": "workbench.action.showAllEditors", 
+    "when": "neovim.mode == 'normal' && (editorTextFocus || !inputFocus)",
+    "label": "show open tabs"
+  },
+  {
+    "key": "space f l",
+    // can also trigger commands if you prefix with >
+    "command": "workbench.action.quickOpen", 
+    "when": "neovim.mode == 'normal' && (editorTextFocus || !inputFocus)",
+    "label": "show cwd files"
+  },
+  {
+    "key": "space f w", 
+    "command": "workbench.action.findInFiles",
+    "when": "neovim.mode == 'normal' && (editorTextFocus || !inputFocus)",
+    "label": "cwd grep search"
+  },
+  {
+    "key": "space f o", 
+    "command": "workbench.action.quickOpenPreviousEditor",
+    "when": "(neovim.mode == 'normal') && (editorTextFocus || !inputFocus)",
+    "label": "Open most recent files"
+  },
+  {
+    "key": "space g g", // vscode's source control
+    "command": "runCommands",
+    "when": "neovim.mode == 'normal' && (editorTextFocus || !inputFocus)",
+    "args": {
+      "commands": [
+        "workbench.view.scm",
+        "workbench.scm.focus"
+      ]
+    },
+  },
+  // Term
+  {
+    "key": "alt+i",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  },
+  // Misc
+  {
+    "key": "ctrl-n",
+    "command": "editor.action.addSelectionToNextFindMatch",
+    "when": "(neovim.mode == 'normal' || neovim.mode == 'visual') && (editorTextFocus || !inputFocus)"
+  },
+  {
+    "key": "ctrl-shift-c",
+    "command": "vscode-neovim.send",
+    "args": "<cmd>%y+<CR>",
+    "when": "(neovim.mode == 'normal') && (editorTextFocus || !inputFocus)",
+    "label": "Copy whole file"
+  },
+  {
+    "key": "space p",
+    "command": "vscode-neovim.send",
+    "args": "\"_dP",
+    "when": "neovim.mode == 'visual' && editorTextFocus",
+    "label": "Blackhole Paste"
+  },
+  {
+    "key": "space d",
+    "command": "vscode-neovim.send",
+    "args": "\"_d",
+    "when": "editorTextFocus && (neovim.mode == 'normal' || neovim.mode == 'visual')",
+    "label": "Blackhole Delete"
+  },
+  {
+    "key": "space s",
+    "command": "vscode-neovim.send",
+    "args": ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>",
+    "when": "neovim.mode == 'normal' && editorTextFocus",
+    "label": "Search and replace word under cursor in current file"
+  },
+  {
+    "key": "space space s",
+    "command": "vscode-neovim.send",
+    "args": "<CMD>source $MYVIMRC<CR>",
+    "when": "neovim.mode == 'normal' && editorTextFocus",
+    "label": "Source nvim config"
+  }
+  // {
+  //     "key": "ctrl+shift+0",
+  //     "command": "workbench.action.newWindow"
+  //   },
+]

@@ -8,7 +8,7 @@ map('x', '<leader>p', [["_dP]], { desc = 'blackhole paste' })
 map({ 'n', 'v' }, '<leader>d', [["_d]], { desc = 'blackhole delete' })
 -- map({ 'n', 'v' }, '<leader>bx', [["_d]], { desc = 'blackhole x-delete' })
 
-map('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '' })
+map('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace word in cursor' })
 map('n', '<leader>q', '<cmd>qa<CR>')
 
 -- Toggle spell checker. More useful paired with 'z=' to check spelling suggestions
@@ -32,7 +32,7 @@ map('n', '=ap', "ma=ap'a")
 
 map('n', '<C-c>', '<cmd>%y+<CR>', { desc = 'copy whole file' })
 
--- Comment
+-- Comments
 map('n', '<leader>/', 'gcc', { desc = 'Toggle Comment', remap = true })
 map('x', '<leader>/', 'gc', { desc = 'Toggle Comment', remap = true })
 
@@ -49,15 +49,12 @@ map('v', '<', '<gv', { remap = true })
 map('v', '>', '>gv', { remap = true })
 
 -- Terminal
-
-map({ 'n', 't' }, '<M-i>', function()
-    require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
-end, { desc = 'toggle floating term' })
-
-map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
+-- map({ 'n', 't' }, '<M-m>', function()
+--     require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
+-- end, { desc = 'toggle floating term' })
+-- map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 
 -- Buffers
-
 -- local function map_buffer_cmd(lhs, rhs, desc)
 --     vim.keymap.set('n', lhs, function()
 --         if vim.bo.filetype ~= 'NvimTree' then
@@ -67,25 +64,9 @@ map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 -- end
 -- map_buffer_cmd('<Tab>', 'bnext', 'Next Buffer')
 -- map_buffer_cmd('<S-Tab>', 'bprev', 'Prev Buffer')
-
 map('n', '<Tab>', ':bnext<CR>', opts)
 map('n', '<S-Tab>', ':bprevious<CR>', opts)
-
-function CopyAllBuffersToClipboard()
-    local all_text = {}
-    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-        if vim.api.nvim_buf_is_loaded(bufnr) then
-            local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-            table.insert(all_text, table.concat(lines, '\n'))
-        end
-    end
-    local result = table.concat(all_text, '\n\n')
-    vim.fn.setreg('+', result) -- Copies to system clipboard
-    print 'All buffers copied to clipboard.'
-end
-map('n', '<leader>CB', '<cmd>lua CopyAllBuffersToClipboard()<CR>', { desc = '[C]opy All [B]uffers To Clipboard' })
-
-map('n', '<leader>,', '<C-^>', { desc = 'Switch to last buffer' })
+map('n', '<leader>j', '<C-^>', { desc = 'Switch to last buffer' })
 map('n', '<leader>X', function()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         local bt = vim.bo[buf].buftype
@@ -95,19 +76,19 @@ map('n', '<leader>X', function()
     end
 end, { desc = 'Delete all normal buffers', silent = true })
 
-map('n', '<leader>x', function()
-    local current_buf = vim.api.nvim_get_current_buf()
-    local listed_buffers = vim.tbl_filter(function(buf)
-        return vim.fn.buflisted(buf) == 1
-    end, vim.api.nvim_list_bufs())
-
-    local last_buf = listed_buffers[#listed_buffers]
-    local next_cmd = current_buf == last_buf and 'bprevious' or 'bnext'
-    vim.cmd(next_cmd)
-    require('mini.bufremove').delete(current_buf, false)
-    -- Built in alt of mini.bufremove:
-    -- vim.cmd('bd ' .. current_buf)
-end, { desc = 'Close current buffer' })
+-- map('n', '<leader>x', function()
+--     local current_buf = vim.api.nvim_get_current_buf()
+--     local listed_buffers = vim.tbl_filter(function(buf)
+--         return vim.fn.buflisted(buf) == 1
+--     end, vim.api.nvim_list_bufs())
+--
+--     local last_buf = listed_buffers[#listed_buffers]
+--     local next_cmd = current_buf == last_buf and 'bprevious' or 'bnext'
+--     vim.cmd(next_cmd)
+--     require('mini.bufremove').delete(current_buf, false)
+--     -- Built in alt of mini.bufremove:
+--     -- vim.cmd('bd ' .. current_buf)
+-- end, { desc = 'Close current buffer' })
 
 -- Windows
 
@@ -151,20 +132,80 @@ map({ 'n' }, '<M-9>', ':!tmux-windowizer dev:be pnpm dev:backend<CR><CR>')
 
 --------------------------------------- Plugin Mappings ---------------------------------------
 
-vim.keymap.set('n', '<leader>r', function()
-    Snacks.rename.rename_file()
+-- Nvim-Tree
+map('n', '<leader>n', function()
+    local nnp = require 'no-neck-pain'
+    local nnp_state = require 'no-neck-pain.state'
+    local nt_api = require 'nvim-tree.api'
+
+    -- If NNP is open, close it first
+    if nnp_state.enabled then
+        nnp.toggle_side 'right'
+        nnp.toggle()
+    end
+
+    nt_api.tree.toggle { focus = false }
+end, { desc = 'NvimTree toggle window' })
+
+map('n', '<leader>e', function()
+    local nnp = require 'no-neck-pain'
+    local nnp_state = require 'no-neck-pain.state'
+    local nt_api = require 'nvim-tree.api'
+
+    -- If NNP is open, close it first
+    if nnp_state.enabled then
+        nnp.toggle_side 'right'
+        nnp.toggle()
+    end
+
+    -- defer to give the UI time to close
+    vim.defer_fn(function()
+        nt_api.tree.focus()
+    end, 5)
+end, { desc = 'NvimTree focus window' })
+
+map('n', '<leader>,', function()
+    local nnp = require 'no-neck-pain'
+    local nnp_state = require 'no-neck-pain.state'
+    local nt_view = require 'nvim-tree.view'
+    local nt_api = require 'nvim-tree.api'
+
+    -- If NvimTree is open, close it first
+    if nt_view.is_visible() then
+        nt_api.tree.close()
+    end
+
+    if nnp_state.enabled then
+        nnp.toggle_side 'right'
+        nnp.toggle()
+        return
+    end
+
+    nnp.toggle()
+
+    -- defer to give the UI time to initialize
+    vim.defer_fn(function()
+        nnp.resize(110)
+        nnp.toggle_side 'right'
+    end, 5)
+end, { desc = 'NoNeckPain' })
+
+map('n', '<leader>r', function()
+    require('snacks').rename.rename_file()
 end, { desc = 'Rename Current File' })
 
 -- Bufferline
-map('n', '<leader>j', '<Cmd>BufferLineGoToBuffer 1<CR>')
-map('n', '<leader>k', '<Cmd>BufferLineGoToBuffer 2<CR>')
-map('n', '<leader>l', '<Cmd>BufferLineGoToBuffer 3<CR>')
-map('n', '<leader>p', '<Cmd>BufferLineGoToBuffer 4<CR>')
+-- map('n', '<leader>j', '<Cmd>BufferLineGoToBuffer 1<CR>')
+-- map('n', '<leader>k', '<Cmd>BufferLineGoToBuffer 2<CR>')
+-- map('n', '<leader>l', '<Cmd>BufferLineGoToBuffer 3<CR>')
+-- map('n', '<leader>p', '<Cmd>BufferLineGoToBuffer 4<CR>')
 -- map('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>')
 -- map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>')
 
 -- Copilot Chat
-map('n', '<leader>cc', '<Cmd>CopilotChatToggle<CR>')
+map('n', '<leader>aif', '<Cmd>CopilotChatFix<CR>')
+map('n', '<leader>aie', '<Cmd>CopilotChatExplain<CR>')
+map('n', '<leader>ait', '<Cmd>CopilotChatToggle<CR>')
 
 -- Ts-Tools
 map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>', { desc = 'TS [R]emove [U]nused Imports' })
@@ -172,13 +213,7 @@ map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>', { desc = 'TS Remove All [U]nused
 map('n', 'gmi', '<Cmd>TSToolsAddMissingImports<CR>', { desc = 'TS Add [M]issing [I]mports' })
 map('n', 'glf', '<Cmd>TSToolsFixAll<CR>', { desc = 'TS Fix all' })
 
-map('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
-
--- Nvim-Tree
-map('n', '<leader>n', function()
-    require('nvim-tree.api').tree.toggle { focus = false }
-end, { desc = 'NvimTree toggle window' })
-map('n', '<leader>e', '<cmd>NvimTreeFocus<cr>', { desc = 'NvimTree focus window' })
+map('n', '<M-o>', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 
 --  Copilot
 local auto_trigger_enabled = true
@@ -267,28 +302,24 @@ map('n', '<leader>ts', '<cmd>Trouble symbols toggle focus=false<CR>', { desc = '
 --   vim.diagnostic.setqflist { severity = { min = vim.diagnostic.severity.WARN } }
 -- end, { desc = '[D]iagnostics [Q]uickfix' })
 
--- Telescope x LSP's
-
---  Telescope navigations
+-- Telescope
+map(
+    'n',
+    '<leader>fL',
+    '<cmd>lua require("telescope.builtin").find_files({ search_dirs = { vim.fn.getcwd(), "packages/types/src" } })<cr>',
+    { desc = 'Find Files in Search Dirs' }
+)
 map('n', '<leader>fl', '<cmd>Telescope find_files<cr>', { desc = 'Find [F]i[L]es' })
 map('n', '<leader>fa', '<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>', { desc = '[F]ind [A]ll Files' })
 map('n', '<leader>fd', '<cmd>Telescope diagnostics<cr>', { desc = '[F]ind [D]iagnostics' })
-map('n', '<leader>fp', '<cmd>Telescope buffers<CR>', { desc = '[F]ind Buffers in [Project]' })
-map('n', '<leader>fw', '<cmd>Telescope live_grep<CR>', { desc = '[F]ind [W]ords' })
-map('n', '<leader>fs', '<cmd>Telescope grep_string<cr>', { desc = '[F]ind Current [S]tring' }) -- find string under cursor
+map('n', '<leader>fs', '<cmd>Telescope grep_string<cr>', { desc = '[F]ind Current [S]tring' })
 map('n', '<leader>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', { desc = '[F]ind Curr Buf Fu[ZZ]y' })
--- map('n', '<leader>fo', function()
---     require('telescope.builtin').oldfiles { cwd_only = true }
--- end, { desc = '[F]ind [O]ecent Files' })
-map('n', '<leader>o', function()
-    require('telescope.builtin').oldfiles {
-        cwd_only = true,
-        path_display = { 'filename_first' },
-        filter = function(item)
-            return item ~= vim.api.nvim_buf_get_name(0) -- exlude current buf
-        end,
-    }
-end, { desc = '[F]ind [O]ld Files' })
+map('n', '<leader>fp', '<cmd>Telescope buffers<cr>', { desc = '[F]ind Buffers in [Project]' })
+map('n', '<leader>fo', '<cmd>Telescope recent_files workspace=CWD<cr>', { desc = 'Recent files' }) -- better builtin.oldfiles
+map('n', '<leader>fw', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", { desc = 'Find Words' }) -- better builtin.live_grep (can pass ripgrep args)
+map('n', '<leader>fr', '<cmd>Telescope frecency workspace=CWD<cr>', { desc = '[F]ind Buffers in [Project]' }) -- uses mozilla's frecency algorithm
+map('n', '<leader>fS', '<cmd>Telescope luasnip<CR>', { desc = '[F]ind [S]nippets' })
+map('n', '<leader>ft', '<cmd>TodoTelescope keywords=TODO,FIX,BUG,NOTE<CR>', { desc = '[F]ind [T]odo' })
 
 -- Telescope docs/help/infos
 map('n', '<leader>fn', '<cmd>Telescope notify<cr>', { desc = '[F]ind [N]otif History' })
@@ -304,12 +335,33 @@ map('n', '<leader>fe', '<cmd>lua require("telescope.builtin").find_files { cwd =
 map('n', '<leader>cm', '<cmd>Telescope git_commits<CR>', { desc = 'telescope git commits' })
 map('n', '<leader>gt', '<cmd>Telescope git_status<CR>', { desc = 'telescope git status' })
 
--- Telescope plugin integrations
-map('n', '<leader>fS', '<cmd>Telescope luasnip<CR>', { desc = '[F]ind [S]nippets' })
-map('n', '<leader>ft', '<cmd>TodoTelescope keywords=TODO,FIX,BUG,NOTE<CR>', { desc = '[F]ind [T]odo' })
-
 local diag = vim.diagnostic
 local sev = diag.severity
+
+-- LSP's
+map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', { desc = '[G]oto [D]efinition' })
+map('n', 'grn', vim.lsp.buf.rename, { desc = 'LSP [R]e[n]ame' })
+map('n', 'grr', '<cmd>Telescope lsp_references<CR>', { desc = '[L]sp [R]eferences' })
+-- map('n', 'grr', vim.lsp.buf.references, { desc = 'LSP [R]eferences' })
+map('n', 'grt', '<cmd>Telescope lsp_type_definitions<CR>', { desc = '[G]oto [T]ype Def' })
+map('n', 'gri', '<cmd>Telescope lsp_implementations<CR>', { desc = '[G]oto [I]mplementation' })
+map('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP [G]oto [D]eclaration' })
+map('n', 'ga', vim.lsp.buf.code_action, { desc = 'Code Action' })
+
+map('n', 'gs', vim.lsp.buf.signature_help, { desc = '[S]ignature Help' })
+map('n', 'gS', '<cmd>Telescope lsp_document_symbols<CR>', { desc = 'Doc [S]ymbols' })
+map('n', 'grw', '<cmd>Telescope lsp_workspace_symbols<CR>', { desc = '[W]orkspace Symbols' })
+map('n', 'grd', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', { desc = '[D]ynamic Workspace Symbols' })
+
+map('n', 'glr', '<cmd>LspRestart<cr>')
+map('n', 'gli', '<cmd>LspInfo<cr>')
+
+-- Lsp workspace dir
+map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace dir' })
+map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Remove workspace dir' })
+map('n', '<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+end, { desc = 'List workspace folders' })
 
 -- Warnings
 map('n', '<M-w>', function()
@@ -338,7 +390,7 @@ map('n', '<M-H>', function()
     diag.jump { count = -1, severity = sev.HINT, float = true }
 end, { desc = 'Previous hint diagnostic' })
 
--- General Navigation
+-- Next/prev
 map('n', ']d', function()
     diag.jump { count = 1, float = true }
 end, { desc = 'Go to [N]ext diagnostic' })
@@ -351,27 +403,3 @@ map('n', '<M-d>', vim.diagnostic.open_float, { desc = '[D]iagnostic Open Current
 map('n', '<M-t>', function()
     vim.diagnostic.config { virtual_text = not vim.diagnostic.config().virtual_text }
 end, { desc = '[T]oggle [D]iagnostics Text' })
-
-map('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', { desc = '[G]oto [D]efinition' })
-map('n', 'grn', vim.lsp.buf.rename, { desc = 'LSP [R]e[n]ame' })
-map('n', 'grr', '<cmd>Telescope lsp_references<CR>', { desc = '[L]sp [R]eferences' })
--- map('n', 'grr', vim.lsp.buf.references, { desc = 'LSP [R]eferences' })
-map('n', 'grt', '<cmd>Telescope lsp_type_definitions<CR>', { desc = '[G]oto [T]ype Def' })
-map('n', 'gri', '<cmd>Telescope lsp_implementations<CR>', { desc = '[G]oto [I]mplementation' })
-map('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP [G]oto [D]eclaration' })
-map('n', 'ga', vim.lsp.buf.code_action, { desc = 'Code Action' })
-
-map('n', 'gs', vim.lsp.buf.signature_help, { desc = '[S]ignature Help' })
-map('n', 'gS', '<cmd>Telescope lsp_document_symbols<CR>', { desc = 'Doc [S]ymbols' })
-map('n', 'grw', '<cmd>Telescope lsp_workspace_symbols<CR>', { desc = '[W]orkspace Symbols' })
-map('n', 'grd', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', { desc = '[D]ynamic Workspace Symbols' })
-
-map('n', 'glr', '<cmd>LspRestart<cr>')
-map('n', 'gli', '<cmd>LspInfo<cr>')
-
--- Lsp workspace dir
-map('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Add workspace dir' })
-map('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Remove workspace dir' })
-map('n', '<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-end, { desc = 'List workspace folders' })

@@ -3,30 +3,30 @@ local function augroup(name)
 end
 
 -- LSP file renaming integration for nvim-tree
-local Snacks = require 'snacks'
-local prev = { new_name = '', old_name = '' } -- prevents duplicate events
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'NvimTreeSetup',
-    callback = function()
-        local events = require('nvim-tree.api').events
-        events.subscribe(events.Event.NodeRenamed, function(data)
-            if prev.new_name ~= data.new_name or prev.old_name ~= data.old_name then
-                data = data
-                Snacks.rename.on_rename_file(data.old_name, data.new_name)
-            end
-        end)
-    end,
-})
-
--- LSP file renaming integration for oil.nvim
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'OilActionsPost',
-    callback = function(event)
-        if event.data.actions[1].type == 'move' then
-            Snacks.rename.on_rename_file(event.data.actions[1].src_url, event.data.actions[1].dest_url)
-        end
-    end,
-})
+-- local Snacks = require 'snacks'
+-- local prev = { new_name = '', old_name = '' } -- prevents duplicate events
+-- vim.api.nvim_create_autocmd('User', {
+--     pattern = 'NvimTreeSetup',
+--     callback = function()
+--         local events = require('nvim-tree.api').events
+--         events.subscribe(events.Event.NodeRenamed, function(data)
+--             if prev.new_name ~= data.new_name or prev.old_name ~= data.old_name then
+--                 data = data
+--                 Snacks.rename.on_rename_file(data.old_name, data.new_name)
+--             end
+--         end)
+--     end,
+-- })
+--
+-- -- LSP file renaming integration for oil.nvim
+-- vim.api.nvim_create_autocmd('User', {
+--     pattern = 'OilActionsPost',
+--     callback = function(event)
+--         if event.data.actions[1].type == 'move' then
+--             Snacks.rename.on_rename_file(event.data.actions[1].src_url, event.data.actions[1].dest_url)
+--         end
+--     end,
+-- })
 
 -- Useful with nvimlsp-config event trigger and other plugins that behave similarly
 -- https://github.com/NvChad/NvChad/blob/v2.5/lua/nvchad/autocmds.lua
@@ -107,7 +107,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 
 -- max N bufs, auto-delete oldest buf if more than N.
 -- this is to prevent auto-session from restoring too many bufs
-local MAX = 20
+local MAX = 50
 local buffers = {}
 local present = {}
 
