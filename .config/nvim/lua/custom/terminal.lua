@@ -19,7 +19,7 @@ function M._open_window(buf, pos, id)
         win = api.nvim_get_current_win()
         api.nvim_win_set_height(win, 15)
     elseif pos == 'float' then
-        local w, h = math.floor(vim.o.columns * 0.7), math.floor(vim.o.lines * 0.7)
+        local w, h = math.floor(vim.o.columns * 0.6), math.floor(vim.o.lines * 0.6)
         win = api.nvim_open_win(buf, true, {
             relative = 'editor',
             width = w,

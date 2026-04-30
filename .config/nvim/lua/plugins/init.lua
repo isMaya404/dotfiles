@@ -6,10 +6,10 @@ return {
         'gbprod/nord.nvim',
         lazy = false,
         priority = 1000,
-        overrides = {
-            NormalFloat = { bg = 'none' },
-            FloatBorder = { bg = 'none' },
-        },
+        -- overrides = {
+        --     NormalFloat = { bg = 'none' },
+        --     FloatBorder = { bg = 'none' },
+        -- },
         config = function()
             require('nord').setup {
                 transparent = false,
@@ -17,6 +17,25 @@ return {
             vim.cmd.colorscheme 'nord'
         end,
     },
+    -- {
+    --     'rose-pine/neovim',
+    --     name = 'rose-pine',
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         require('rose-pine').setup {
+    --             dark_variant = 'main', -- main, moon
+    --             styles = {
+    --                 transparency = true,
+    --             },
+    --             highlight_groups = {
+    --                 NormalFloat = { bg = 'none' },
+    --                 FloatBorder = { bg = 'none' },
+    --             },
+    --         }
+    --         vim.cmd 'colorscheme rose-pine'
+    --     end,
+    -- },
 
     -- install = {
     --     colorscheme = { 'nord' },
@@ -169,7 +188,7 @@ return {
                 desc = 'Harpoon Add',
             },
             {
-                '<C-j>',
+                '<leader>j',
                 function()
                     require('harpoon'):list():select(1)
                     vim.cmd 'doautocmd User HarpoonUpdated'
@@ -177,7 +196,7 @@ return {
                 desc = 'Harpoon Jump 1',
             },
             {
-                '<C-k>',
+                '<leader>k',
                 function()
                     require('harpoon'):list():select(2)
                     vim.cmd 'doautocmd User HarpoonUpdated'
@@ -185,7 +204,7 @@ return {
                 desc = 'Harpoon Jump 2',
             },
             {
-                '<C-l>',
+                '<leader>l',
                 function()
                     require('harpoon'):list():select(3)
                     vim.cmd 'doautocmd User HarpoonUpdated'
@@ -193,7 +212,7 @@ return {
                 desc = 'Harpoon Jump 3',
             },
             {
-                '<C-p>',
+                '<leader>p',
                 function()
                     require('harpoon'):list():select(4)
                     vim.cmd 'doautocmd User HarpoonUpdated'

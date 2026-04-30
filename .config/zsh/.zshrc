@@ -317,6 +317,7 @@ fi
 # View man pages inside vim
 export MANPAGER="vim -M +MANPAGER -"
 
+export PATH="$HOME/.local/share/pnpm:$PATH"
 export PATH="$HOME/.asdf/shims:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"

@@ -72,6 +72,7 @@ local m = 'custom.mappings.'
 if not vim.g.vscode then
     require 'custom.highlights'
     require 'custom.autocmds'
+    require 'custom.tabline'
     require 'custom.opts'
     require 'custom.statusline'
     require 'custom.commands'

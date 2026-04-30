@@ -49,9 +49,9 @@ map('v', '<', '<gv', { remap = true })
 map('v', '>', '>gv', { remap = true })
 
 -- Terminal
--- map({ 'n', 't' }, '<M-m>', function()
---     require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
--- end, { desc = 'toggle floating term' })
+map({ 'n', 't' }, '<M-i>', function()
+    require('custom.terminal').toggle { pos = 'float', id = 'floatTerm' }
+end, { desc = 'toggle floating term' })
 -- map('t', '<M-n>', '<C-\\><C-N>', { desc = 'terminal escape terminal mode' })
 
 -- Buffers
@@ -66,7 +66,7 @@ map('v', '>', '>gv', { remap = true })
 -- map_buffer_cmd('<S-Tab>', 'bprev', 'Prev Buffer')
 map('n', '<Tab>', ':bnext<CR>', opts)
 map('n', '<S-Tab>', ':bprevious<CR>', opts)
-map('n', '<leader>j', '<C-^>', { desc = 'Switch to last buffer' })
+map('n', '<leader>,', '<C-^>', { desc = 'Switch to last buffer' })
 map('n', '<leader>X', function()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         local bt = vim.bo[buf].buftype
@@ -103,14 +103,19 @@ map({ 'n', 'x' }, '<C-w>l', '<Nop>')
 map({ 'n', 'x' }, '<C-w><C-l>', '<Nop>')
 
 -- map new window navigations
-map({ 'n', 'x' }, '<C-w>j', '<C-w>h')
-map({ 'n', 'x' }, '<C-w><C-j>', '<C-w>h')
-map({ 'n', 'x' }, '<C-w>k', '<C-w>j')
-map({ 'n', 'x' }, '<C-w><C-k>', '<C-w>j')
-map({ 'n', 'x' }, '<C-w>l', '<C-w>k')
-map({ 'n', 'x' }, '<C-w><C-l>', '<C-w>k')
-map({ 'n', 'x' }, '<C-w>p', '<C-w>l')
-map({ 'n', 'x' }, '<C-w><C-p>', '<C-w>l')
+map({ 'n', 'x' }, '<C-j>', '<C-w>h')
+map({ 'n', 'x' }, '<C-k>', '<C-w>j')
+map({ 'n', 'x' }, '<C-l>', '<C-w>k')
+map({ 'n', 'x' }, '<C-p>', '<C-w>l')
+
+-- map({ 'n', 'x' }, '<C-w>j', '<C-w>h')
+-- map({ 'n', 'x' }, '<C-w><C-j>', '<C-w>h')
+-- map({ 'n', 'x' }, '<C-w>k', '<C-w>j')
+-- map({ 'n', 'x' }, '<C-w><C-k>', '<C-w>j')
+-- map({ 'n', 'x' }, '<C-w>l', '<C-w>k')
+-- map({ 'n', 'x' }, '<C-w><C-l>', '<C-w>k')
+-- map({ 'n', 'x' }, '<C-w>p', '<C-w>l')
+-- map({ 'n', 'x' }, '<C-w><C-p>', '<C-w>l')
 
 map({ 'n', 'x' }, '<leader>wo', '<C-w>o')
 map({ 'n', 'x' }, '<leader>wv', '<C-w>v')
@@ -164,7 +169,7 @@ map('n', '<leader>e', function()
     end, 5)
 end, { desc = 'NvimTree focus window' })
 
-map('n', '<leader>,', function()
+map('n', '<leader>N', function()
     local nnp = require 'no-neck-pain'
     local nnp_state = require 'no-neck-pain.state'
     local nt_view = require 'nvim-tree.view'

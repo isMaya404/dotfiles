@@ -1,5 +1,4 @@
 /* .......Mauve....................... */
-/* --- 👍 designed by https://github.com/CelestiaKai  👍 --- */
 
 * {
   font-family: "JetBrainsMono Nerd Font";
@@ -13,6 +12,7 @@
 window#waybar {
   background: #11111b;
   color: #cba6f7;
+  border-radius: 10px;
 }
 
 window#waybar.hidden {
@@ -38,8 +38,9 @@ tooltip {
 /*-----module groups----*/
 .modules-right {
   border: 3px solid #11111b;
-  border-radius: 10px 10px 10px 10px;
-  background-color: #313244;
+  border-radius: 10px;
+  /* border-radius: 10px 10px 10px 10px; */
+  /* background-color: #313244; */
   padding-top: 2px;
   padding-bottom: 2px;
   padding-right: 4px;
@@ -55,9 +56,9 @@ tooltip {
 
 .modules-left {
   /*background-color: #1e1e2e;*/
+  /* background-color: #313244; */
   border: 3px solid #11111b;
-  border-radius: 10px 10px 10px 10px;
-  background-color: #313244;
+  border-radius: 10px;
   padding-top: 2px;
   padding-bottom: 2px;
   padding-right: 4px;

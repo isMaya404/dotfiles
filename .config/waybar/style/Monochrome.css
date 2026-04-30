@@ -1,5 +1,7 @@
 /*  Black & White MonoChrome */
 
+/* @import "../../.config/waybar/wallust/colors-waybar.css"; */
+
 * {
   font-family: "JetBrainsMono Nerd Font";
   font-weight: bold;
@@ -34,9 +36,9 @@ tooltip label {
 .modules-right {
   background-color: black;
   color: white;
-  border-bottom: 1px;
+  border-width: 1px 1px 2px 1px;
   border-style: solid;
-  border-color: white;
+  border-color: #1e1e2e;
   border-radius: 10px;
   padding-top: 2px;
   padding-bottom: 2px;
@@ -46,9 +48,9 @@ tooltip label {
 .modules-center {
   background-color: black;
   color: white;
-  border-bottom: 1px;
+  border-width: 1px 1px 2px 1px;
   border-style: solid;
-  border-color: white;
+  border-color: #1e1e2e;
   border-radius: 10px;
   padding-top: 2px;
   padding-bottom: 2px;
@@ -58,9 +60,9 @@ tooltip label {
 .modules-left {
   background-color: black;
   color: white;
-  border-bottom: 1px;
+  border-width: 1px 1px 2px 1px;
   border-style: solid;
-  border-color: white;
+  border-color: #1e1e2e;
   border-radius: 10px;
   padding-top: 2px;
   padding-bottom: 2px;
@@ -107,10 +109,10 @@ tooltip label {
   padding: 0px 5px;
   border-radius: 5px;
   margin: 0px 5px;
-  /*background-color: black;*/
-  /*color: white;*/
-  color: @bg_yellow;
-  background-color: @aqua;
+  background-color: black;
+  color: white;
+  /* color: @bg_yellow; */
+  /* background-color: @aqua; */
 }
 
 #backlight,
