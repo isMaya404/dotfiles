@@ -3,10 +3,6 @@ if vim.loader then
     vim.loader.enable()
 end
 
--- if not vim.lsp.config then
---     vim.lsp.config = require 'lspconfig'
--- end
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 

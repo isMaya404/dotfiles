@@ -47,4 +47,3 @@ map({ 'n', 'x', 'o' }, 'm', 'o', opts)
 map({ 'n', 'x', 'o' }, 'M', 'O', opts)
 map({ 'n', 'x', 'o' }, 'y', 'm', opts)
 map({ 'n', 'x', 'o' }, 'Y', 'J', opts)
-

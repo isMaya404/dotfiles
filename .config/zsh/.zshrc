@@ -275,6 +275,7 @@ alias lla='ls -la'
 
 alias yacleanf='yay -Sc --noconfirm' 
 alias parucleanf='paru -Sc --noconfirm' 
+alias paccleanf='pacman -Sc --noconfirm' 
 alias t='thunar' 
 
 alias a='tmux a'

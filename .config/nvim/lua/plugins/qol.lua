@@ -97,4 +97,56 @@ return {
             -- require 'configs.image_nvim.luarocks' -- deps
         end,
     },
+
+    -- enhances nvim's native comment strings
+    {
+        'folke/ts-comments.nvim',
+        opts = {},
+        event = 'VeryLazy',
+    },
+
+    -- active scope indentation guide
+    {
+        'echasnovski/mini.indentscope',
+        version = false,
+        event = { 'BufReadPost', 'BufNewFile' },
+        -- opts = {
+        --   symbol = '│',
+        --   options = { try_as_border = true },
+        -- },
+        --
+        opts = function()
+            local indentscope = require 'mini.indentscope'
+            return {
+                symbol = '│',
+                options = { try_as_border = true },
+                draw = {
+                    delay = 0,
+                    animation = indentscope.gen_animation.none(),
+                },
+            }
+        end,
+        init = function()
+            vim.api.nvim_create_autocmd('FileType', {
+                pattern = {
+                    'help',
+                    'alpha',
+                    'dashboard',
+                    'neo-tree',
+                    'Trouble',
+                    'lazy',
+                    'mason',
+                    'notify',
+                    'toggleterm',
+                    'snacks_dashboard',
+                    'snacks_notif',
+                    'snacks_terminal',
+                    'snacks_win',
+                },
+                callback = function()
+                    vim.b.miniindentscope_disable = true
+                end,
+            })
+        end,
+    },
 }

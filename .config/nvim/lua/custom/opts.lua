@@ -1,10 +1,24 @@
 local o = vim.opt
 
+-- o.foldmethod = 'expr'
+-- o.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+-- vim.o.autocomplete = true
+
+-- vim.api.nvim_create_autocmd('LspAttach', {
+--     callback = function(args)
+--         local client = vim.lsp.get_client_by_id(args.data.client_id)
+--         if client and client:supports_method 'textDocument/completion' then
+--             vim.lsp.completion.enable(true, args.data.client_id, args.buf, { autotrigger = true })
+--         end
+--     end,
+-- })
 -- key delays (too low will break bindings)
 o.timeoutlen = 500 -- 1000 default
 o.ttimeoutlen = 0 -- 50 default
 
-o.termguicolors = true
 o.swapfile = false
 o.list = false
 o.mouse = 'a'
@@ -15,6 +29,7 @@ o.cursorline = true -- to highlight current line number (cursorline itself is tr
 o.cursorcolumn = false
 o.autowrite = true -- automatically write buffers when running certain commands (but not on every switch)
 o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals'
+o.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
 o.completeopt = 'menu,menuone,noinsert'
 o.winblend = 0
 -- o.guicursor = 'n-v-c-i-r-ci:block-blinkon3-blinkoff3-blinkwait1'
@@ -25,9 +40,10 @@ o.guicursor =
 --     'i-ci-r-cr-t:block-blinkon3-blinkoff3-blinkwait1-Cursor/lCursor',
 -- }
 
+o.smoothscroll = true
+-- o.mousescroll = 'ver:25,hor:6'
+
 o.foldenable = true
-o.foldmethod = 'expr'
-o.foldexpr = 'nvim_treesitter#foldexpr()'
 o.foldcolumn = '0' -- fold col width, 0 to hide
 o.foldlevel = 99 -- Prevent auto-closing of folds
 o.foldlevelstart = 99 -- Start unfolded
@@ -49,13 +65,13 @@ o.linebreak = true -- Wrap lines at convenient points
 o.pumblend = 10 -- popup blend
 o.pumheight = 10 -- maximum number of entries in a popup
 o.ruler = false -- disable the default ruler
-o.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
-o.shortmess:append { W = true, I = true, c = true, C = true }
+o.shortmess:append { W = true, c = true, C = true }
 o.scrolloff = 6
 o.sidescrolloff = 8
 o.signcolumn = 'yes'
 o.ignorecase = true
 o.smartcase = true
+o.autoindent = true
 o.smartindent = true
 o.spelllang = { 'en' }
 o.splitbelow = true

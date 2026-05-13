@@ -214,6 +214,22 @@ return {
             on_dir(project_root or deno_lock_root or deno_root)
         end
     end,
+
+    root_dir = function(bufnr, on_dir)
+        local root_markers = { 'deno.lock', 'deno.json', 'deno.jsonc' }
+        root_markers = vim.fn.has 'nvim-0.11.3' == 1 and { root_markers, { '.git' } } or vim.list_extend(root_markers, { '.git' })
+
+        local project_root = vim.fs.root(bufnr, root_markers)
+
+        -- exclude non deno roots
+        local non_deno_root = vim.fs.root(bufnr, { 'package.json', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' })
+        if non_deno_root and (not project_root or #non_deno_root >= #project_root) then
+            -- deno root is closer than or equal to package manager lock, abort
+            return
+        end
+
+        on_dir(project_root or vim.fn.getcwd())
+    end,
     ---@type lspconfig.settings.denols
     settings = {
         deno = {

@@ -23,7 +23,7 @@ lspconfig.util.default_config = vim.tbl_extend('force', lspconfig.util.default_c
 
 -- disable semantic tokens provider
 local function on_init(client, _)
-    if client.supports_method 'textDocument/semanticTokens' then
+    if client:supports_method 'textDocument/semanticTokens' then
         client.server_capabilities.semanticTokensProvider = nil
     end
 end
@@ -39,8 +39,8 @@ require('mason').setup()
 
 local servers = {
     -- lua_ls = require 'configs.lsp.lua',
-    -- tsgo = require 'configs.lsp.tsgo',
-    vtsls = require 'configs.lsp.vtsls',
+    tsgo = require 'configs.lsp.tsgo',
+    -- vtsls = require 'configs.lsp.vtsls',
     -- ts_ls = 'configs.lsp.ts',
     denols = require 'configs.lsp.deno',
     emmet_language_server = require 'configs.lsp.emmet',

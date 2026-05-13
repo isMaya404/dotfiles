@@ -341,17 +341,50 @@ return {
         },
     },
 
-    -- syntax highlighting, motions, folding, text objects, etc.
     {
-        'nvim-treesitter/nvim-treesitter',
+        'romus204/tree-sitter-manager.nvim',
         event = { 'BufReadPost', 'BufNewFile' },
-        cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
-        build = ':TSUpdate',
-        main = 'nvim-treesitter.configs', -- sets main module to use for opts
+        cmd = { 'TSManager' },
         config = function()
-            require 'configs.tree_sitter'
+            local tsm = require 'tree-sitter-manager'
+
+            tsm.setup {
+                ensure_installed = {
+                    'bash',
+                    'c',
+                    'diff',
+                    'html',
+                    'css',
+                    'ecma',
+                    'javascript',
+                    'typescript',
+                    'jsx',
+                    'tsx',
+                    'lua',
+                    'luadoc',
+                    'markdown',
+                    'markdown_inline',
+                    'query',
+                    'vim',
+                    'vimdoc',
+                },
+                auto_install = true,
+                -- border = nil, "rounded" | "single", if nil, use the default border style defined by 'vim.o.winborder'. See :h 'winborder' for more info.
+                indent = true,
+                highlight = true,
+            }
+
+            -- Migrations from other TS managers can leave parsers installed but missing
+            -- queries, which breaks highlighting for TS/TSX.
+            -- local query_root = vim.fs.joinpath(vim.fn.stdpath 'data', 'site', 'queries')
+            -- local query_bootstrap = { 'ecma', 'typescript', 'tsx' }
+            -- for _, lang in ipairs(query_bootstrap) do
+            --     local highlights = vim.fs.joinpath(query_root, lang, 'highlights.scm')
+            --     if not vim.uv.fs_stat(highlights) then
+            --         tsm._install_single(lang)
+            --     end
+            -- end
         end,
-        -- opts = {},
     },
 
     -- -- linter
@@ -366,26 +399,26 @@ return {
     --     end,
     -- },
 
-    {
-        'mfussenegger/nvim-lint',
-        event = { 'BufReadPre', 'BufNewFile' },
-        config = function()
-            local lint = require 'lint'
-            lint.linters_by_ft = {
-                javascript = { 'eslint_d' },
-                typescript = { 'eslint_d' },
-                javascriptreact = { 'eslint_d' },
-                typescriptreact = { 'eslint_d' },
-            }
-
-            -- autocmd to trigger linting
-            vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'InsertLeave' }, {
-                callback = function()
-                    lint.try_lint()
-                end,
-            })
-        end,
-    },
+    -- {
+    --     'mfussenegger/nvim-lint',
+    --     event = { 'BufReadPre', 'BufNewFile' },
+    --     config = function()
+    --         local lint = require 'lint'
+    --         lint.linters_by_ft = {
+    --             javascript = { 'eslint_d' },
+    --             typescript = { 'eslint_d' },
+    --             javascriptreact = { 'eslint_d' },
+    --             typescriptreact = { 'eslint_d' },
+    --         }
+    --
+    --         -- autocmd to trigger linting
+    --         vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufEnter', 'InsertLeave' }, {
+    --             callback = function()
+    --                 lint.try_lint()
+    --             end,
+    --         })
+    --     end,
+    -- },
 
     -- formatter
     {
@@ -402,35 +435,9 @@ return {
         version = '^3.0.0',
         event = 'VeryLazy',
         config = function()
-            -- require 'configs.nvim_surround'
-            require('nvim-surround').setup {
-                keymaps = {
-                    normal = 'os',
-                    normal_cur = 'oss',
-                    -- normal_line = 'OS',
-                    -- normal_cur_line = 'OSS',
-                },
-            }
+            require 'configs.nvim_surround'
         end,
-        --     surr*ound_words             osiw)           (surround_words)
-        --     'change quot*es'            cs'"            "change quotes"
-        --     [delete ar*ound me!]        ds[             delete around me!
-        --     *make strings               os$"            "make strings"
-        --     remove <h1>HTML t*ags</h1>    dst             remove HTML tags
-        --     <h1>or tag* types</h1>        csth1<CR>       <h1>or tag types</h1>
-
-        -- :h nvim-surround.usage
     },
-
-    -- {
-    --     'iamcco/markdown-preview.nvim',
-    --     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    --     build = 'cd app && npm install',
-    --     init = function()
-    --         vim.g.mkdp_filetypes = { 'markdown' }
-    --     end,
-    --     ft = { 'markdown' },
-    -- },
 
     -- better loclist && qflist
     {
@@ -452,13 +459,6 @@ return {
     --     end,
     -- },
 
-    -- enhances nvim's native comment strings
-    {
-        'folke/ts-comments.nvim',
-        opts = {},
-        event = 'VeryLazy',
-    },
-
     -- provide bg color on color vals
     {
         'brenoprata10/nvim-highlight-colors',
@@ -474,51 +474,6 @@ return {
     --     event = 'VeryLazy',
     --     version = '*',
     -- },
-
-    -- active scope indentation guide
-    {
-        'echasnovski/mini.indentscope',
-        version = false,
-        event = { 'BufReadPost', 'BufNewFile' },
-        -- opts = {
-        --   symbol = '│',
-        --   options = { try_as_border = true },
-        -- },
-        --
-        opts = function()
-            local indentscope = require 'mini.indentscope'
-            return {
-                symbol = '│',
-                options = { try_as_border = true },
-                draw = {
-                    delay = 0,
-                    animation = indentscope.gen_animation.none(),
-                },
-            }
-        end,
-        init = function()
-            vim.api.nvim_create_autocmd('FileType', {
-                pattern = {
-                    'help',
-                    'alpha',
-                    'dashboard',
-                    'neo-tree',
-                    'Trouble',
-                    'lazy',
-                    'mason',
-                    'notify',
-                    'toggleterm',
-                    'snacks_dashboard',
-                    'snacks_notif',
-                    'snacks_terminal',
-                    'snacks_win',
-                },
-                callback = function()
-                    vim.b.miniindentscope_disable = true
-                end,
-            })
-        end,
-    },
 
     -- tests
     -- {
@@ -540,67 +495,14 @@ return {
     --     end,
     -- },
 
-    -- ai integration
     {
-        'yetone/avante.nvim',
-        event = 'VeryLazy',
-        version = false, -- should always be false
-        build = 'make',
-        dependencies = {
-            'MunifTanjim/nui.nvim',
-            'zbirenbaum/copilot.lua', -- for providers='copilot'
-            {
-                -- support for image pasting
-                'HakonHarnes/img-clip.nvim',
-                event = 'VeryLazy',
-                opts = {
-                    default = {
-                        embed_image_as_base64 = false,
-                        prompt_for_file_name = false,
-                        drag_and_drop = {
-                            insert_mode = true,
-                        },
-                        use_absolute_path = true,
-                    },
-                },
-            },
-
-            -- {
-            --     'MeanderingProgrammer/render-markdown.nvim',
-            --     opts = {
-            --         file_types = { 'markdown', 'Avante' },
-            --     },
-            --     ft = { 'markdown', 'Avante' },
-            -- },
-        },
+        'zbirenbaum/copilot.lua',
+        event = 'InsertEnter',
+        -- dependencies = {
+        -- 'copilotlsp-nvim/copilot-lsp', -- for Next Edit Suggestion (NES)
+        -- },
         config = function()
-            return require 'configs.avante'
+            require 'configs.copilot'
         end,
-    },
-
-    -- {
-    --     'zbirenbaum/copilot.lua',
-    --     event = 'InsertEnter',
-    --     -- dependencies = {
-    --         -- 'copilotlsp-nvim/copilot-lsp', -- for NES
-    --     -- },
-    --     config = function()
-    --         require 'configs.copilot'
-    --     end,
-    -- },
-
-    {
-        'CopilotC-Nvim/CopilotChat.nvim',
-        event = 'VeryLazy',
-        build = 'make tiktoken',
-        opts = {
-            model = 'gpt-5.2',
-            temperature = 0.1, -- Lower = focused, higher = creative
-            window = {
-                layout = 'vertical',
-                width = 0.4,
-            },
-            auto_insert_mode = true,
-        },
     },
 }
