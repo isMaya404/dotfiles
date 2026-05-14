@@ -35,7 +35,7 @@ telescope.setup {
     },
     defaults = {
         path_display = { 'filename_first' },
-        file_ignore_patterns = { 'repomix', '_shared/schemas/' },
+        file_ignore_patterns = { 'node_modules', 'repomix', '_shared/schemas/' },
         mappings = {
             i = {
                 ['<C-t>'] = open_with_trouble,

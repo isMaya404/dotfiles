@@ -202,7 +202,7 @@ return {
         -- The project root is where the LSP can be started from
         local root_markers = { 'deno.lock', 'deno.json', 'deno.jsonc' }
         -- Give the root markers equal priority by wrapping them in a table
-        root_markers = vim.fn.has 'nvim-0.11.3' == 1 and { root_markers, { '.git' } } or vim.list_extend(root_markers, { '.git' })
+        root_markers = { root_markers, { '.git' } } or vim.list_extend(root_markers, { '.git' })
         -- only include deno projects
         local deno_root = vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' })
         local deno_lock_root = vim.fs.root(bufnr, { 'deno.lock' })

@@ -344,7 +344,7 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd z zsh)"
 # eval "$(starship init zsh)"
 
-
 # ------------------------------------------------------------
 # zprof | head -n 30  # Display the profiling report
 export PATH="$PATH:$HOME/.pub-cache/bin"
+

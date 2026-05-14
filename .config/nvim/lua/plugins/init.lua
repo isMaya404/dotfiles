@@ -499,14 +499,14 @@ return {
     --     end,
     -- },
 
-    {
-        'zbirenbaum/copilot.lua',
-        event = 'InsertEnter',
-        -- dependencies = {
-        -- 'copilotlsp-nvim/copilot-lsp', -- for Next Edit Suggestion (NES)
-        -- },
-        config = function()
-            require 'configs.copilot'
-        end,
-    },
+    -- {
+    --     'zbirenbaum/copilot.lua',
+    --     event = 'InsertEnter',
+    --     -- dependencies = {
+    --     -- 'copilotlsp-nvim/copilot-lsp', -- for Next Edit Suggestion (NES)
+    --     -- },
+    --     config = function()
+    --         require 'configs.copilot'
+    --     end,
+    -- },
 }
