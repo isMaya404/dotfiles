@@ -3,6 +3,14 @@ if vim.loader then
     vim.loader.enable()
 end
 
+vim.filetype.add {
+    filename = {
+        ['tsconfig.json'] = 'jsonc',
+        ['.eslintrc.json'] = 'jsonc',
+        ['deno.json'] = 'jsonc',
+    },
+}
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 

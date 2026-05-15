@@ -1,11 +1,3 @@
-vim.filetype.add {
-    filename = {
-        ['tsconfig.json'] = 'jsonc',
-        ['.eslintrc.json'] = 'jsonc',
-        ['deno.json'] = 'jsonc',
-    },
-}
-
 return {
     cmd = { 'vscode-json-language-server', '--stdio' },
     filetypes = { 'json', 'jsonc' },

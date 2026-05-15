@@ -132,8 +132,8 @@ map({ 'n', 'x' }, '<C-w>r', '<C-l>', { desc = 'redraw screen' })
 -- Bash Scripts
 -- map({ 'n' }, '<M-idk', ':!tmux-windowizer $(git rev-parse --abbrev-ref HEAD) pnpm dev<CR><CR>')
 map({ 'n' }, '<M-1>', ':!tmux-windowizer nn ')
-map({ 'n' }, '<M-0>', ':!tmux-windowizer dev:fe pnpm dev:frontend<CR><CR>')
-map({ 'n' }, '<M-9>', ':!tmux-windowizer dev:be pnpm dev:backend<CR><CR>')
+map({ 'n' }, '<M-0>', ':!tmux-windowizer dev:fe pnpm dev:fe<CR><CR>')
+map({ 'n' }, '<M-9>', ':!tmux-windowizer dev:be pnpm dev:be<CR><CR>')
 
 --------------------------------------- Plugin Mappings ---------------------------------------
 
