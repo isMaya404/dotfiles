@@ -16,8 +16,8 @@ vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 --     end,
 -- })
 -- key delays (too low will break bindings)
-o.timeoutlen = 500 -- 1000 default
-o.ttimeoutlen = 0 -- 50 default
+o.timeoutlen = 550 -- 1000 default
+o.ttimeoutlen = 10 -- 50 default
 
 o.swapfile = false
 o.list = false
