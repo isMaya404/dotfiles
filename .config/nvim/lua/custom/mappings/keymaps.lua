@@ -208,10 +208,10 @@ end, { desc = 'Rename Current File' })
 -- map('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>')
 
 -- Ts-Tools
-map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>', { desc = 'TS [R]emove [U]nused Imports' })
-map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>', { desc = 'TS Remove All [U]nused Statements' })
-map('n', 'gmi', '<Cmd>TSToolsAddMissingImports<CR>', { desc = 'TS Add [M]issing [I]mports' })
-map('n', 'glf', '<Cmd>TSToolsFixAll<CR>', { desc = 'TS Fix all' })
+-- map('n', 'gru', '<Cmd>TSToolsRemoveUnusedImports<CR>', { desc = 'TS [R]emove [U]nused Imports' })
+-- map('n', 'grU', '<Cmd>TSToolsRemoveUnused<CR>', { desc = 'TS Remove All [U]nused Statements' })
+-- map('n', 'gmi', '<Cmd>TSToolsAddMissingImports<CR>', { desc = 'TS Add [M]issing [I]mports' })
+-- map('n', 'glf', '<Cmd>TSToolsFixAll<CR>', { desc = 'TS Fix all' })
 
 map('n', '<M-o>', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 

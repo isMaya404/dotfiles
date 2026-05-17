@@ -191,7 +191,7 @@ bindkey -M vicmd 'J' beginning-of-line
 bindkey -M vicmd 'k' down-line-or-history
 
 bindkey -M vicmd 'l' up-line-or-history
-bindkey -M vicmd 'L' move-to-middle-line #  custom widget
+bindkey -M vicmd 'L' move-to-middle-of-line #  custom widget
 
 bindkey -M vicmd 'p' forward-char
 bindkey -M vicmd 'P' end-of-line

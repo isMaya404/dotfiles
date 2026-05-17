@@ -3,9 +3,7 @@
 
 set -euo pipefail
 
-# qs hogs too much ram.
-
-# # 1) Try Quickshell via IPC (works if QS is running and listening)
+# 1) Try Quickshell via IPC (works if QS is running and listening)
 # if pgrep -x quickshell >/dev/null 2>&1; then
 #   if qs ipc -c overview call overview toggle >/dev/null 2>&1; then
 #     exit 0

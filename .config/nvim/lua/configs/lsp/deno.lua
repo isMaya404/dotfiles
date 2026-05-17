@@ -264,6 +264,13 @@ return {
             desc = 'Cache a module and all of its dependencies.',
         })
 
+        vim.keymap.set('n', 'gmi', function()
+            vim.lsp.buf.code_action {
+                apply = true,
+                context = { only = { 'source.addMissingImports' }, diagnostics = {} },
+            }
+        end, { desc = 'Deno: Organize Imports' })
+
         vim.keymap.set('n', 'gru', function()
             vim.lsp.buf.code_action {
                 apply = true,
